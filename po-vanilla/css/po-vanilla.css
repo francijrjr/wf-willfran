@@ -2493,18 +2493,29 @@ kbd {
 /* ==========================================================================
    PO-LOADING (Indicador de Carregamento & Spinner Oficial Portinari)
    ========================================================================== */
-.po-loading {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  margin: 0 auto;
-  border: 4px solid var(--brand-soft);
-  border-top-color: var(--brand);
-  border-radius: 50%;
-  box-sizing: border-box;
-  animation: po-spin 0.75s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  flex-shrink: 0;
-  vertical-align: middle;
+.po-loading,
+.po-loading-spinner {
+  display: inline-block !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  border: 4px solid var(--brand-soft) !important;
+  border-top-color: var(--brand) !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  animation: po-spin 0.75s linear infinite !important;
+  flex-shrink: 0 !important;
+  vertical-align: middle !important;
+  position: static !important;
+  gap: 0 !important;
 }
 
 @keyframes po-spin {
@@ -2513,19 +2524,86 @@ kbd {
 }
 
 /* Tamanhos Oficiais PO UI */
-.po-loading.xs, .po-loading-xs { width: 16px; height: 16px; border-width: 2px; }
-.po-loading.sm, .po-loading-sm { width: 24px; height: 24px; border-width: 3px; }
-.po-loading.md, .po-loading-md { width: 40px; height: 40px; border-width: 4px; }
-.po-loading.lg, .po-loading-lg { width: 56px; height: 56px; border-width: 5px; }
-.po-loading.xl, .po-loading-xl { width: 72px; height: 72px; border-width: 6px; }
+.po-loading.xs, .po-loading-xs, .po-loading-spinner.xs {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+  border-width: 2px !important;
+}
+
+.po-loading.sm, .po-loading-sm, .po-loading-spinner.sm {
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
+  border-width: 3px !important;
+}
+
+.po-loading.md, .po-loading-md, .po-loading-spinner.md {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  border-width: 4px !important;
+}
+
+.po-loading.lg, .po-loading-lg, .po-loading-spinner.lg {
+  width: 56px !important;
+  height: 56px !important;
+  min-width: 56px !important;
+  min-height: 56px !important;
+  max-width: 56px !important;
+  max-height: 56px !important;
+  border-width: 5px !important;
+}
+
+.po-loading.xl, .po-loading-xl, .po-loading-spinner.xl {
+  width: 72px !important;
+  height: 72px !important;
+  min-width: 72px !important;
+  min-height: 72px !important;
+  max-width: 72px !important;
+  max-height: 72px !important;
+  border-width: 6px !important;
+}
 
 /* Cores Semânticas Oficiais */
-.po-loading.primary { border-color: var(--brand-soft); border-top-color: var(--brand); }
-.po-loading.success { border-color: var(--success-soft); border-top-color: var(--success); }
-.po-loading.warning { border-color: var(--warning-soft); border-top-color: var(--warning); }
-.po-loading.danger { border-color: var(--danger-soft); border-top-color: var(--danger); }
-.po-loading.neutral { border-color: var(--line); border-top-color: var(--muted); }
-.po-loading.white { border-color: rgba(255, 255, 255, 0.25); border-top-color: #ffffff; }
+.po-loading.primary, .po-loading-spinner.primary {
+  border-color: var(--brand-soft) !important;
+  border-top-color: var(--brand) !important;
+}
+
+.po-loading.success, .po-loading-spinner.success {
+  border-color: var(--success-soft) !important;
+  border-top-color: var(--success) !important;
+}
+
+.po-loading.warning, .po-loading-spinner.warning {
+  border-color: var(--warning-soft) !important;
+  border-top-color: var(--warning) !important;
+}
+
+.po-loading.danger, .po-loading-spinner.danger {
+  border-color: var(--danger-soft) !important;
+  border-top-color: var(--danger) !important;
+}
+
+.po-loading.neutral, .po-loading-spinner.neutral {
+  border-color: var(--line) !important;
+  border-top-color: var(--muted) !important;
+}
+
+.po-loading.white, .po-loading-spinner.white {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  border-top-color: #ffffff !important;
+}
 
 /* Layout de Container e Texto Informativo */
 .po-loading-container {

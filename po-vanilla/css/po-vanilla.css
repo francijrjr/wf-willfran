@@ -2307,7 +2307,112 @@ kbd {
 .po-gauge { --value: 72; width: 170px; aspect-ratio: 2/1; position: relative; overflow: hidden; margin: auto; }.po-gauge::before { content: ""; position: absolute; inset: 0; border-radius: 170px 170px 0 0; background: conic-gradient(from 270deg at 50% 100%, var(--brand) calc(var(--value)*1.8deg), var(--line) 0 180deg, transparent 0); }.po-gauge::after { content: attr(data-value); width: 110px; height: 55px; position: absolute; left: 30px; bottom: 0; display: grid; place-items: end center; padding-bottom: 3px; background: var(--surface); border-radius: 110px 110px 0 0; font: 800 24px Manrope; }
 .po-tree ul { list-style: none; margin: 5px 0 5px 18px; padding: 0; }.po-tree li { padding: 5px; font-size: 12px; }.po-tree button { width: 20px; height: 20px; padding: 0; color: var(--brand); background: var(--brand-soft); border: 0; border-radius: 3px; }.po-tree .collapsed { display: none; }
 .po-listbox { max-height: 230px; overflow: auto; border: 1px solid var(--line); border-radius: 6px; }.po-listbox button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 12px; color: var(--ink); background: var(--surface); border: 0; border-bottom: 1px solid var(--line); text-align: left; }.po-listbox button:hover, .po-listbox button.selected { color: var(--brand); background: var(--brand-soft); }
-.po-loading { width: 38px; height: 38px; margin: auto; border: 4px solid var(--brand-soft); border-top-color: var(--brand); border-radius: 50%; animation: spin .8s linear infinite; } @keyframes spin { to { transform: rotate(360deg); } }
+/* ==========================================================================
+   PO-LOADING (Indicador de Carregamento & Spinner Oficial Portinari)
+   ========================================================================== */
+.po-loading {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  border: 4px solid var(--brand-soft);
+  border-top-color: var(--brand);
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: po-spin 0.75s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+@keyframes po-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Tamanhos Oficiais PO UI */
+.po-loading.xs, .po-loading-xs { width: 16px; height: 16px; border-width: 2px; }
+.po-loading.sm, .po-loading-sm { width: 24px; height: 24px; border-width: 3px; }
+.po-loading.md, .po-loading-md { width: 40px; height: 40px; border-width: 4px; }
+.po-loading.lg, .po-loading-lg { width: 56px; height: 56px; border-width: 5px; }
+.po-loading.xl, .po-loading-xl { width: 72px; height: 72px; border-width: 6px; }
+
+/* Cores Semânticas Oficiais */
+.po-loading.primary { border-color: var(--brand-soft); border-top-color: var(--brand); }
+.po-loading.success { border-color: var(--success-soft); border-top-color: var(--success); }
+.po-loading.warning { border-color: var(--warning-soft); border-top-color: var(--warning); }
+.po-loading.danger { border-color: var(--danger-soft); border-top-color: var(--danger); }
+.po-loading.neutral { border-color: var(--line); border-top-color: var(--muted); }
+.po-loading.white { border-color: rgba(255, 255, 255, 0.25); border-top-color: #ffffff; }
+
+/* Layout de Container e Texto Informativo */
+.po-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+}
+
+.po-loading-title {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.po-loading-text {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* Loading Card com Efeito de Superfície */
+.po-loading-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.po-loading-indeterminate-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.po-loading-indeterminate-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: var(--brand);
+  animation: po-indeterminate 1.4s ease-in-out infinite;
+}
+
+@keyframes po-indeterminate {
+  0% { transform: translateX(-100%); width: 20%; }
+  50% { transform: translateX(100%); width: 60%; }
+  100% { transform: translateX(350%); width: 20%; }
+}
 .po-skeleton { height: 14px; overflow: hidden; background: var(--surface-2); border-radius: 4px; }.po-skeleton::after { content: ""; width: 50%; height: 100%; display: block; background: linear-gradient(90deg, transparent, color-mix(in srgb, white 60%, transparent), transparent); animation: skeleton 1.4s infinite; } @keyframes skeleton { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
 .po-disclaimer { display: inline-flex; gap: 7px; align-items: center; padding: 6px 9px; color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px; font-size: 11px; }.po-disclaimer button { color: var(--muted); background: none; border: 0; }
 .po-widget { padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 7px; box-shadow: 0 7px 20px rgba(30,20,36,.06); }.po-info { display: grid; gap: 3px; }.po-info span { color: var(--muted); font-size: 10px; }.po-info b { font-size: 14px; }

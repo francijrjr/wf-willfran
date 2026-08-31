@@ -1094,9 +1094,178 @@ function createPreview(name) {
     `, 'Chips de Filtro Rápido'),
 
     'po-loading': wrap(`
-      <div class="showcase-stack" style="text-align:center">
-        <div class="po-loading"></div>
-        <p style="color:var(--muted);font-size:12px;margin:0">Carregando dados com spinner oficial...</p>
+      <div class="showcase-stack">
+        <!-- 1. Tamanhos Oficiais PO UI -->
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. Tamanhos Oficiais Portinari (PO UI)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Desde botões compactos até telas completas de espera</p>
+            </div>
+            <span class="po-tag brand">5 Tamanhos</span>
+          </div>
+          
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:16px;text-align:center">
+            <div style="padding:16px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)">
+              <div style="height:80px;display:flex;align-items:center;justify-content:center">
+                <div class="po-loading xs"></div>
+              </div>
+              <b style="display:block;font-size:12px;color:var(--ink)">Extra Small (XS)</b>
+              <span style="font-size:11px;color:var(--muted)">16px · Em linha / Botões</span>
+            </div>
+
+            <div style="padding:16px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)">
+              <div style="height:80px;display:flex;align-items:center;justify-content:center">
+                <div class="po-loading sm"></div>
+              </div>
+              <b style="display:block;font-size:12px;color:var(--ink)">Small (SM)</b>
+              <span style="font-size:11px;color:var(--muted)">24px · Inputs / Tabelas</span>
+            </div>
+
+            <div style="padding:16px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)">
+              <div style="height:80px;display:flex;align-items:center;justify-content:center">
+                <div class="po-loading md"></div>
+              </div>
+              <b style="display:block;font-size:12px;color:var(--ink)">Medium (MD)</b>
+              <span style="font-size:11px;color:var(--muted)">40px · Padrão / Cards</span>
+            </div>
+
+            <div style="padding:16px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)">
+              <div style="height:80px;display:flex;align-items:center;justify-content:center">
+                <div class="po-loading lg"></div>
+              </div>
+              <b style="display:block;font-size:12px;color:var(--ink)">Large (LG)</b>
+              <span style="font-size:11px;color:var(--muted)">56px · Modais / Painéis</span>
+            </div>
+
+            <div style="padding:16px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)">
+              <div style="height:80px;display:flex;align-items:center;justify-content:center">
+                <div class="po-loading xl"></div>
+              </div>
+              <b style="display:block;font-size:12px;color:var(--ink)">Extra Large (XL)</b>
+              <span style="font-size:11px;color:var(--muted)">72px · Fullscreen Splash</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Variantes Semânticas de Cor -->
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">2. Cores Semânticas de Estado</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Spinners adaptados para estados de fluxo e feedback de ações</p>
+            </div>
+            <span class="po-tag">Semântica</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:16px;text-align:center">
+            <div style="padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)">
+              <div class="po-loading primary md" style="margin-bottom:8px"></div>
+              <span class="po-tag brand" style="font-size:10px">Primary (Eggplant)</span>
+            </div>
+
+            <div style="padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)">
+              <div class="po-loading success md" style="margin-bottom:8px"></div>
+              <span class="po-tag success" style="font-size:10px">Success</span>
+            </div>
+
+            <div style="padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)">
+              <div class="po-loading warning md" style="margin-bottom:8px"></div>
+              <span class="po-tag warning" style="font-size:10px">Warning</span>
+            </div>
+
+            <div style="padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)">
+              <div class="po-loading danger md" style="margin-bottom:8px"></div>
+              <span class="po-tag danger" style="font-size:10px">Danger</span>
+            </div>
+
+            <div style="padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)">
+              <div class="po-loading neutral md" style="margin-bottom:8px"></div>
+              <span class="po-tag neutral" style="font-size:10px">Neutral</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Exemplos Reais em Componentes (Inline em Botões e Card com Barra) -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px">
+          <!-- Botões com Loading -->
+          <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+            <h4 style="margin:0 0 12px;font-size:14px;font-weight:700;color:var(--brand)">Loading Integrado em Botões</h4>
+            <p style="margin:0 0 16px;font-size:12px;color:var(--muted)">Feedback visual instantâneo durante envio de formulários.</p>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <button class="po-button primary" disabled style="justify-content:center">
+                <span class="po-loading xs white" style="margin:0"></span> Processando Pagamento...
+              </button>
+              <button class="po-button ghost" disabled style="justify-content:center">
+                <span class="po-loading xs primary" style="margin:0"></span> Sincronizando com ERP...
+              </button>
+            </div>
+          </div>
+
+          <!-- Card de Carregamento com Barra Indeterminada -->
+          <div class="po-loading-card">
+            <div class="po-loading-indeterminate-bar"></div>
+            <div class="po-loading md primary"></div>
+            <div>
+              <h5 class="po-loading-title">Gerando Relatório de Vendas</h5>
+              <p class="po-loading-text">Consolidando dados de 4 filiais ativas...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. PO Loading Labs Interativo -->
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">3. Laboratório Interativo (PO Loading Labs)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Personalize e teste o spinner e simule requisições assíncronas em tempo real</p>
+            </div>
+            <span class="po-tag success">Interativo</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:20px;align-items:start">
+            <!-- Painel de Controles -->
+            <div style="display:grid;gap:14px">
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px">Tamanho do Spinner</label>
+                <div class="po-button-group" id="loadingLabSizeGroup" style="width:100%;display:grid;grid-template-columns:repeat(5, 1fr)">
+                  <button type="button" class="po-button sm" data-load-size="xs">XS</button>
+                  <button type="button" class="po-button sm" data-load-size="sm">SM</button>
+                  <button type="button" class="po-button sm active solid" data-load-size="md">MD</button>
+                  <button type="button" class="po-button sm" data-load-size="lg">LG</button>
+                  <button type="button" class="po-button sm" data-load-size="xl">XL</button>
+                </div>
+              </div>
+
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px">Cor Semântica</label>
+                <select class="po-control" id="loadingLabColorSelect">
+                  <option value="primary" selected>Primary (Portinari Eggplant)</option>
+                  <option value="success">Success (Verde)</option>
+                  <option value="warning">Warning (Laranja)</option>
+                  <option value="danger">Danger (Vermelho)</option>
+                  <option value="neutral">Neutral (Cinza Corporativo)</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px">Texto de Mensagem</label>
+                <input class="po-control" id="loadingLabTextInput" value="Carregando dados da aplicação..." placeholder="Digite a mensagem de espera">
+              </div>
+
+              <button class="po-button primary" id="loadingLabSimulateBtn" style="width:100%;margin-top:4px">
+                <i data-lucide="play"></i> Simular Processamento Assíncrono (3 Etapas)
+              </button>
+            </div>
+
+            <!-- Palco de Visualização em Tempo Real -->
+            <div id="loadingLabStage" style="min-height:220px;border:1px dashed var(--line-strong);border-radius:8px;background:var(--surface-2);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;position:relative">
+              <div id="loadingLabSpinner" class="po-loading md primary" style="margin-bottom:12px"></div>
+              <h5 id="loadingLabTitle" style="margin:0 0 4px;font:700 14px 'Manrope',sans-serif;color:var(--ink)">Aguarde um momento</h5>
+              <p id="loadingLabSubtitle" style="margin:0;font-size:12px;color:var(--muted)">Carregando dados da aplicação...</p>
+            </div>
+          </div>
+        </div>
       </div>
     `, 'Indicador de Carregamento (PO Loading)'),
 
@@ -4606,6 +4775,74 @@ function bindPreviewEvents(name) {
   if (pageEditCancelBtn) {
     pageEditCancelBtn.addEventListener('click', () => {
       toast('Edição cancelada. Os dados não foram alterados.', 'info');
+    });
+  }
+
+  // 14. PO Loading Labs Interativo
+  const loadingLabSpinner = root.querySelector('#loadingLabSpinner');
+  const loadingLabTitle = root.querySelector('#loadingLabTitle');
+  const loadingLabSubtitle = root.querySelector('#loadingLabSubtitle');
+  const loadingLabSizeGroup = root.querySelector('#loadingLabSizeGroup');
+  const loadingLabColorSelect = root.querySelector('#loadingLabColorSelect');
+  const loadingLabTextInput = root.querySelector('#loadingLabTextInput');
+  const loadingLabSimulateBtn = root.querySelector('#loadingLabSimulateBtn');
+
+  if (loadingLabSpinner) {
+    let currentSize = 'md';
+    let currentColor = 'primary';
+
+    const updateLabSpinner = () => {
+      loadingLabSpinner.className = `po-loading ${currentSize} ${currentColor}`;
+    };
+
+    loadingLabSizeGroup?.querySelectorAll('[data-load-size]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        loadingLabSizeGroup.querySelectorAll('[data-load-size]').forEach(b => {
+          b.classList.remove('active', 'solid');
+        });
+        btn.classList.add('active', 'solid');
+        currentSize = btn.dataset.loadSize;
+        updateLabSpinner();
+        toast(`Tamanho do spinner: ${currentSize.toUpperCase()}`);
+      });
+    });
+
+    loadingLabColorSelect?.addEventListener('change', () => {
+      currentColor = loadingLabColorSelect.value;
+      updateLabSpinner();
+      toast(`Cor do spinner alterada para: ${currentColor}`);
+    });
+
+    loadingLabTextInput?.addEventListener('input', () => {
+      const val = loadingLabTextInput.value.trim() || 'Aguarde um momento...';
+      if (loadingLabSubtitle) loadingLabSubtitle.textContent = val;
+    });
+
+    loadingLabSimulateBtn?.addEventListener('click', () => {
+      loadingLabSimulateBtn.disabled = true;
+      if (loadingLabTitle) loadingLabTitle.textContent = '1/3 Conectando ao cluster ERP...';
+      if (loadingLabSubtitle) loadingLabSubtitle.textContent = 'Estabelecendo handshake TLS 1.3 seguro';
+      toast('Iniciando simulação de carregamento assíncrono...');
+
+      setTimeout(() => {
+        if (!document.body.contains(loadingLabSpinner)) return;
+        if (loadingLabTitle) loadingLabTitle.textContent = '2/3 Processando 1.450 registros...';
+        if (loadingLabSubtitle) loadingLabSubtitle.textContent = 'Executando conciliação fiscal e cálculo de tributos';
+
+        setTimeout(() => {
+          if (!document.body.contains(loadingLabSpinner)) return;
+          if (loadingLabTitle) loadingLabTitle.textContent = '3/3 Finalizando e renderizando...';
+          if (loadingLabSubtitle) loadingLabSubtitle.textContent = 'Compilando visualização de resultados na tela';
+
+          setTimeout(() => {
+            if (!document.body.contains(loadingLabSpinner)) return;
+            loadingLabSimulateBtn.disabled = false;
+            if (loadingLabTitle) loadingLabTitle.textContent = 'Processamento Concluído!';
+            if (loadingLabSubtitle) loadingLabSubtitle.textContent = 'Todos os dados foram sincronizados com sucesso.';
+            toast('Processo assíncrono concluído com êxito!', 'success');
+          }, 1000);
+        }, 1000);
+      }, 1000);
     });
   }
 }

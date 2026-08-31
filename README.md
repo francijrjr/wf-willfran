@@ -68,28 +68,22 @@ Você pode utilizar o pacote pré-empacotado localizado na pasta `po-vanilla/`:
   <meta charset="UTF-8">
   <title>Meu Sistema Corporativo</title>
   
-  <!-- 1. Fonte Oficial (Google Fonts) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   
-  <!-- 2. Ícones Lucide -->
   <script src="https://unpkg.com/lucide@latest"></script>
   
-  <!-- 3. Estilos WF willFran -->
   <link rel="stylesheet" href="po-vanilla/css/po-vanilla.css">
 </head>
 <body>
 
-  <!-- Exemplo: Botão Portinari -->
   <button class="po-button primary">
     <i data-lucide="check"></i> Confirmar Operação
   </button>
 
-  <!-- Exemplo: Tag Semântica -->
   <span class="po-tag success">Homologado</span>
 
-  <!-- 4. Script Inicializador -->
   <script src="po-vanilla/js/po-vanilla.js"></script>
   <script>
     lucide.createIcons();

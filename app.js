@@ -2005,116 +2005,504 @@ function createPreview(name) {
       </div>
     `, 'Temporizador / Cronômetro (PO Timer)'),
 
-    // 8. TEMPLATES DE PÁGINA
+    // ==========================================
+    // 8. TEMPLATES DE PÁGINA COMPLETOS & PROFISSIONAIS
     'po-page-default': wrap(`
-      <div class="po-page-demo">
-        <div class="po-toolbar-demo">
-          <h3 style="margin:0;font:800 18px 'Manrope',sans-serif">Gestão de Pedidos</h3>
+      <div class="po-page-demo" style="border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow-sm)">
+        <!-- Top Toolbar / Header -->
+        <div class="po-toolbar-demo" style="padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div>
+            <nav class="po-breadcrumb" style="margin-bottom:4px">
+              <div class="po-breadcrumb-items">
+                <ul class="po-breadcrumb-item-container" style="font-size:11px">
+                  <li class="po-breadcrumb-item"><a href="#" class="po-breadcrumb-link">Início</a><i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i></li>
+                  <li class="po-breadcrumb-item"><a href="#" class="po-breadcrumb-link">Gestão</a><i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i></li>
+                  <li class="po-breadcrumb-item"><span class="po-breadcrumb-item-activate">Pedidos de Venda</span></li>
+                </ul>
+              </div>
+            </nav>
+            <div style="display:flex;align-items:center;gap:10px">
+              <h3 style="margin:0;font:800 20px 'Manrope',sans-serif;color:var(--ink)">Gestão de Pedidos</h3>
+              <span class="po-tag success" id="defaultOrdersCountBadge">3 Pedidos</span>
+            </div>
+          </div>
           <div class="showcase-row">
-            <button class="po-button ghost">Exportar</button>
-            <button class="po-button primary"><i data-lucide="plus"></i> Novo Registro</button>
+            <button class="po-button ghost" data-toast="Exportando relatório em formato CSV..."><i data-lucide="download"></i> Exportar</button>
+            <button class="po-button ghost" data-toast="Imprimindo página de pedidos..."><i data-lucide="printer"></i> Imprimir</button>
+            <button class="po-button primary" data-toast="Abrindo formulário de novo pedido..."><i data-lucide="plus"></i> Novo Pedido</button>
           </div>
         </div>
-        <div class="po-page-body">
-          <div class="po-skeleton" style="width:40%;margin-bottom:12px"></div>
-          <div class="po-skeleton" style="width:100%"></div>
+
+        <!-- KPI Metrics Summary Bar -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;padding:16px 20px;background:var(--surface-2);border-bottom:1px solid var(--line)">
+          <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
+            <small style="color:var(--muted);font-weight:700">FATURAMENTO TOTAL</small>
+            <div style="font:800 20px 'Manrope',sans-serif;color:var(--brand);margin-top:2px">R$ 148.520,00</div>
+          </div>
+          <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
+            <small style="color:var(--muted);font-weight:700">PEDIDOS PENDENTES</small>
+            <div style="font:800 20px 'Manrope',sans-serif;color:var(--warning);margin-top:2px">12 Pedidos</div>
+          </div>
+          <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
+            <small style="color:var(--muted);font-weight:700">TICKET MÉDIO</small>
+            <div style="font:800 20px 'Manrope',sans-serif;color:var(--success);margin-top:2px">R$ 4.368,00</div>
+          </div>
+        </div>
+
+        <!-- Filter Bar with Disclaimers -->
+        <div style="padding:14px 20px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:240px">
+            <div style="position:relative;width:100%">
+              <input class="po-control" id="defaultPageSearchInput" placeholder="Buscar pedido por cliente, código ou valor..." style="padding-left:36px;width:100%">
+              <i data-lucide="search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)"></i>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap" id="defaultDisclaimersContainer">
+            <span class="po-disclaimer" data-disclaimer="status">Status: Em Aberto <button type="button" class="po-disclaimer-remove" data-remove-disclaimer="status" aria-label="Remover filtro"><i data-lucide="x" style="width:12px;height:12px"></i></button></span>
+            <span class="po-disclaimer" data-disclaimer="periodo">Período: Este Mês <button type="button" class="po-disclaimer-remove" data-remove-disclaimer="periodo" aria-label="Remover filtro"><i data-lucide="x" style="width:12px;height:12px"></i></button></span>
+            <div class="dropdown-wrap" style="position:relative;display:inline-block">
+              <button class="po-button ghost sm" id="defaultAddFilterBtn" style="font-size:11px"><i data-lucide="plus"></i> Adicionar Filtro</button>
+              <div class="po-dropdown-menu" id="defaultAddFilterMenu" hidden style="position:absolute;right:0;top:100%;z-index:50;min-width:180px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px;box-shadow:var(--shadow)">
+                <button type="button" class="po-dropdown-item" data-add-disclaimer="Prioridade: Alta" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:0;cursor:pointer;color:var(--ink)">Prioridade: Alta</button>
+                <button type="button" class="po-dropdown-item" data-add-disclaimer="Região: Nordeste" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:0;cursor:pointer;color:var(--ink)">Região: Nordeste</button>
+                <button type="button" class="po-dropdown-item" data-add-disclaimer="Status: Faturado" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:0;cursor:pointer;color:var(--ink)">Status: Faturado</button>
+              </div>
+            </div>
+            <button class="po-button ghost sm" id="defaultClearFiltersBtn" style="font-size:11px;color:var(--danger)"><i data-lucide="trash-2"></i> Limpar</button>
+          </div>
+        </div>
+
+        <!-- Page Body Content -->
+        <div class="po-page-body" style="padding:20px;background:var(--surface)">
+          <table class="po-table" id="defaultOrdersTable">
+            <thead>
+              <tr><th>Pedido</th><th>Cliente</th><th>Emissão</th><th>Valor</th><th>Status</th><th>Ações</th></tr>
+            </thead>
+            <tbody>
+              <tr data-order-row="ped-8941" data-status="Faturado"><td><b>#PED-8941</b></td><td>Clínica Aurora Saúde</td><td>30/08/2026</td><td>R$ 4.820,00</td><td><span class="po-tag success">Faturado</span></td><td><button class="po-button ghost sm" data-toast="Visualizando pedido #8941">Ver</button></td></tr>
+              <tr data-order-row="ped-8940" data-status="Aguardando"><td><b>#PED-8940</b></td><td>Mercado Central Sul</td><td>29/08/2026</td><td>R$ 1.250,00</td><td><span class="po-tag warning">Aguardando</span></td><td><button class="po-button ghost sm" data-toast="Visualizando pedido #8940">Ver</button></td></tr>
+              <tr data-order-row="ped-8939" data-status="Em Separação"><td><b>#PED-8939</b></td><td>Indústria Alpha Tech</td><td>28/08/2026</td><td>R$ 18.900,00</td><td><span class="po-tag brand">Em Separação</span></td><td><button class="po-button ghost sm" data-toast="Visualizando pedido #8939">Ver</button></td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     `, 'Template: Página Padrão (Page Default)'),
 
     'po-page-list': wrap(`
-      <div class="po-page-demo">
-        <div class="po-toolbar-demo">
-          <h3 style="margin:0;font:800 18px 'Manrope',sans-serif">Catálogo de Clientes</h3>
-          <button class="po-button primary"><i data-lucide="user-plus"></i> Novo Cliente</button>
+      <div class="po-page-demo" style="border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow-sm)">
+        <div class="po-toolbar-demo" style="padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div>
+            <h3 style="margin:0;font:800 20px 'Manrope',sans-serif;color:var(--ink)">Catálogo de Clientes</h3>
+            <small style="color:var(--muted)" id="listPageTotalCount">3 clientes exibidos de 142</small>
+          </div>
+          <div class="showcase-row">
+            <button class="po-button ghost" data-toast="Exportando lista de clientes em Excel..."><i data-lucide="file-spreadsheet"></i> Exportar</button>
+            <button class="po-button primary" data-toast="Abrindo cadastro de novo cliente..."><i data-lucide="user-plus"></i> Novo Cliente</button>
+          </div>
         </div>
-        <div style="padding:14px 20px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;gap:10px">
-          <input class="po-control" placeholder="Buscar por cliente, CNPJ ou cidade..." style="flex:1">
-          <button class="po-button ghost"><i data-lucide="filter"></i> Filtros</button>
+
+        <!-- Search and Action Filters -->
+        <div style="padding:12px 20px;background:var(--surface-2);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+          <div style="flex:1;min-width:240px;position:relative">
+            <input class="po-control" id="listPageSearchInput" placeholder="Buscar por Razão Social, CNPJ ou Cidade..." style="padding-left:36px;width:100%">
+            <i data-lucide="search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)"></i>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button class="po-button ghost sm" id="listFilterActiveBtn"><i data-lucide="check-circle-2"></i> Somente Ativos</button>
+            <button class="po-button ghost sm" id="listFilterAllBtn"><i data-lucide="list"></i> Ver Todos</button>
+          </div>
         </div>
-        <div class="po-page-body">
-          <table class="po-table">
-            <thead><tr><th>Cliente</th><th>Cidade</th><th>Status</th></tr></thead>
+
+        <!-- Selection Batch Bar -->
+        <div id="listPageBatchBar" hidden style="padding:8px 20px;background:var(--brand-soft);border-bottom:1px solid var(--brand);display:flex;align-items:center;justify-content:space-between;font-size:12px">
+          <span><b id="listPageSelectedCount">0</b> registros selecionados</span>
+          <div style="display:flex;gap:8px">
+            <button class="po-button ghost sm" id="listBatchExportBtn"><i data-lucide="download"></i> Exportar Selecionados</button>
+            <button class="po-button ghost sm" style="color:var(--danger)" id="listBatchDeleteBtn"><i data-lucide="trash-2"></i> Excluir</button>
+          </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="po-page-body" style="padding:0;background:var(--surface);overflow-x:auto">
+          <table class="po-table" id="listPageTable">
+            <thead>
+              <tr>
+                <th style="width:40px"><input type="checkbox" id="listPageSelectAll" aria-label="Selecionar todos"></th>
+                <th>Cliente / Razão Social</th>
+                <th>CNPJ / CPF</th>
+                <th>Localidade</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td>Clínica Aurora</td><td>Fortaleza</td><td><span class="po-tag success">Ativo</span></td></tr>
-              <tr><td>Mercado Central</td><td>Recife</td><td><span class="po-tag warning">Pendente</span></td></tr>
+              <tr data-client-row="aurora" data-status="Ativo">
+                <td><input type="checkbox" class="list-row-check"></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span class="po-avatar sm">CA</span>
+                    <div><b>Clínica Aurora Saúde S/A</b><br><small style="color:var(--muted)">contato@aurora.com.br</small></div>
+                  </div>
+                </td>
+                <td>12.345.678/0001-90</td>
+                <td>Fortaleza / CE</td>
+                <td><span class="po-tag success">Ativo</span></td>
+                <td>
+                  <div style="display:flex;gap:4px">
+                    <button class="po-button ghost sm" title="Editar" data-toast="Editando Clínica Aurora"><i data-lucide="pencil"></i></button>
+                    <button class="po-button ghost sm" title="Visualizar" data-toast="Visualizando Clínica Aurora"><i data-lucide="eye"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr data-client-row="mercado" data-status="Pendente">
+                <td><input type="checkbox" class="list-row-check"></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span class="po-avatar sm" style="background:#0d593f">MC</span>
+                    <div><b>Mercado Central de Alimentos</b><br><small style="color:var(--muted)">financeiro@mercadocentral.com</small></div>
+                  </div>
+                </td>
+                <td>98.765.432/0001-10</td>
+                <td>Recife / PE</td>
+                <td><span class="po-tag warning">Pendente</span></td>
+                <td>
+                  <div style="display:flex;gap:4px">
+                    <button class="po-button ghost sm" title="Editar" data-toast="Editando Mercado Central"><i data-lucide="pencil"></i></button>
+                    <button class="po-button ghost sm" title="Visualizar" data-toast="Visualizando Mercado Central"><i data-lucide="eye"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr data-client-row="techlog" data-status="Ativo">
+                <td><input type="checkbox" class="list-row-check"></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span class="po-avatar sm" style="background:#5b21b6">TL</span>
+                    <div><b>TechLog Soluções Logísticas</b><br><small style="color:var(--muted)">suporte@techlog.io</small></div>
+                  </div>
+                </td>
+                <td>45.123.789/0001-55</td>
+                <td>São Paulo / SP</td>
+                <td><span class="po-tag success">Ativo</span></td>
+                <td>
+                  <div style="display:flex;gap:4px">
+                    <button class="po-button ghost sm" title="Editar" data-toast="Editando TechLog"><i data-lucide="pencil"></i></button>
+                    <button class="po-button ghost sm" title="Visualizar" data-toast="Visualizando TechLog"><i data-lucide="eye"></i></button>
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
+        </div>
+
+        <!-- Pagination Footer -->
+        <div style="padding:12px 20px;background:var(--surface-2);border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px" id="listPagination">
+          <span style="color:var(--muted)">Página <b id="listCurrentPageNum">1</b> de <b>5</b> (Total: 142)</span>
+          <div style="display:flex;align-items:center;gap:4px">
+            <button class="po-button ghost sm" id="listPrevPageBtn"><i data-lucide="chevron-left"></i> Anterior</button>
+            <button class="po-button primary sm list-page-num" data-page="1">1</button>
+            <button class="po-button ghost sm list-page-num" data-page="2">2</button>
+            <button class="po-button ghost sm list-page-num" data-page="3">3</button>
+            <button class="po-button ghost sm" id="listNextPageBtn">Próximo <i data-lucide="chevron-right"></i></button>
+          </div>
         </div>
       </div>
     `, 'Template: Listagem de Registros (Page List)'),
 
     'po-page-detail': wrap(`
-      <div class="po-page-demo">
-        <div class="po-toolbar-demo">
-          <div>
-            <small style="color:var(--muted);font-weight:700">DETALHES DO REGISTRO</small>
-            <h3 style="margin:2px 0 0;font:800 18px 'Manrope',sans-serif">Clínica Aurora Saúde S/A</h3>
+      <div class="showcase-stack">
+        <!-- PO Page Detail Completa -->
+        <div class="po-detail-card-container">
+          <!-- Header Bar -->
+          <div class="po-detail-header-bar">
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                <button class="po-button ghost sm" data-toast="Retornando para a listagem de clientes..."><i data-lucide="arrow-left"></i> Voltar</button>
+                <span class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></span>
+                <span style="font-size:12px;color:var(--muted)">Clientes</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                <span class="po-avatar md" style="background:var(--brand)">CA</span>
+                <div>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <h3 style="margin:0;font:800 22px 'Manrope',sans-serif;color:var(--ink)" id="detailTitleText">Clínica Aurora Saúde S/A</h3>
+                    <span class="po-tag success" id="detailStatusBadge">Homologado</span>
+                  </div>
+                  <small style="color:var(--muted)">Código: #CLI-2026-994 · CNPJ: 12.345.678/0001-90</small>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="po-button ghost" data-toast="Gerando relatório em PDF..."><i data-lucide="printer"></i> Imprimir</button>
+              <button class="po-button ghost" data-toast="Duplicando cadastro de cliente..."><i data-lucide="copy"></i> Duplicar</button>
+              <button class="po-button primary" data-toast="Abrindo tela de edição do cadastro..."><i data-lucide="pencil"></i> Editar Cadastro</button>
+            </div>
           </div>
-          <div class="showcase-row">
-            <button class="po-button ghost">Voltar</button>
-            <button class="po-button primary">Editar</button>
+
+          <!-- Summary Metrics -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:12px;padding:16px 24px;background:var(--surface-2);border-bottom:1px solid var(--line)">
+            <div style="padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
+              <small style="color:var(--muted);font-weight:700">LIMITE TOTAL</small>
+              <div style="font:800 18px 'Manrope',sans-serif;color:var(--brand);margin-top:2px" id="detailCreditVal">R$ 150.000,00</div>
+            </div>
+            <div style="padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
+              <small style="color:var(--muted);font-weight:700">SALDO UTILIZADO</small>
+              <div style="font:800 18px 'Manrope',sans-serif;color:var(--ink);margin-top:2px">R$ 38.450,00</div>
+            </div>
+            <div style="padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
+              <small style="color:var(--muted);font-weight:700">FATURAMENTO 2026</small>
+              <div style="font:800 18px 'Manrope',sans-serif;color:var(--success);margin-top:2px">R$ 294.180,00</div>
+            </div>
+            <div style="padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
+              <small style="color:var(--muted);font-weight:700">SCORE</small>
+              <div style="font:800 18px 'Manrope',sans-serif;color:var(--brand);margin-top:2px">980 / 1000</div>
+            </div>
+          </div>
+
+          <!-- Body Content -->
+          <div style="padding:24px;display:grid;gap:24px">
+            <!-- Seção 1: Dados Cadastrais -->
+            <div>
+              <div class="po-detail-section-title"><i data-lucide="building-2"></i> 1. Identificação Corporativa</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px">
+                <div class="po-detail-info-card"><span>Razão Social</span><b>Clínica Aurora Saúde S/A</b></div>
+                <div class="po-detail-info-card"><span>Nome Fantasia</span><b>Aurora Saúde & Diagnósticos</b></div>
+                <div class="po-detail-info-card"><span>CNPJ</span><b>12.345.678/0001-90</b></div>
+                <div class="po-detail-info-card"><span>Inscrição Estadual</span><b>06.123.456-7</b></div>
+                <div class="po-detail-info-card"><span>CNAE Principal</span><b>8630-5/03 - Médica Ambulatorial</b></div>
+                <div class="po-detail-info-card"><span>Regime Tributário</span><b>Lucro Presumido</b></div>
+              </div>
+            </div>
+
+            <!-- Seção 2: Contato e Endereço -->
+            <div>
+              <div class="po-detail-section-title"><i data-lucide="map-pin"></i> 2. Contato & Localização</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px">
+                <div class="po-detail-info-card"><span>E-mail Corporativo</span><b style="color:var(--brand)">contato@aurorasaude.com.br</b></div>
+                <div class="po-detail-info-card"><span>Telefone Principal</span><b>(85) 3456-7890</b></div>
+                <div class="po-detail-info-card"><span>Responsável Legal</span><b>Dra. Marina Almeida Santos</b></div>
+                <div class="po-detail-info-card"><span>Endereço</span><b>Av. Santos Dumont, 1200 - Sala 801</b></div>
+                <div class="po-detail-info-card"><span>Cidade / UF</span><b>Fortaleza / CE</b></div>
+                <div class="po-detail-info-card"><span>CEP</span><b>60150-160</b></div>
+              </div>
+            </div>
+
+            <!-- Seção 3: Documentos Anexos -->
+            <div>
+              <div class="po-detail-section-title"><i data-lucide="paperclip"></i> 3. Documentos Anexados</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:12px">
+                <div class="po-file-card">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <i data-lucide="file-text" style="color:var(--danger);width:22px;height:22px"></i>
+                    <div><b>Contrato_Social_2026.pdf</b><br><small style="color:var(--muted)">2.4 MB · 14/01/2026</small></div>
+                  </div>
+                  <button class="po-button ghost sm" data-toast="Baixando Contrato Social..."><i data-lucide="download"></i></button>
+                </div>
+
+                <div class="po-file-card">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <i data-lucide="file-spreadsheet" style="color:var(--success);width:22px;height:22px"></i>
+                    <div><b>Balanco_Patrimonial_2025.xlsx</b><br><small style="color:var(--muted)">4.1 MB · 20/03/2026</small></div>
+                  </div>
+                  <button class="po-button ghost sm" data-toast="Baixando Balanço Patrimonial..."><i data-lucide="download"></i></button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="po-page-body">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-            <div class="po-info"><span>CNPJ</span><b>12.345.678/0001-90</b></div>
-            <div class="po-info"><span>Cidade</span><b>Fortaleza/CE</b></div>
-            <div class="po-info"><span>Responsável</span><b>Marina Almeida</b></div>
-            <div class="po-info"><span>Situação</span><b style="color:var(--success)">Regular</b></div>
+
+        <!-- PO Page Detail Labs -->
+        <div style="border:1px solid var(--line);border-radius:10px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">PO Page Detail Labs (Controles Dinâmicos)</h4>
+            <span class="po-tag brand">Laboratório</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;align-items:flex-end">
+            <div>
+              <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:4px">Status do Registro</label>
+              <select class="po-control" id="detailLabStatusSelect">
+                <option value="success" selected>Homologado (Ativo)</option>
+                <option value="warning">Em Análise / Pendente</option>
+                <option value="danger">Bloqueado / Inadimplente</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:4px">Alterar Limite de Crédito (R$)</label>
+              <input class="po-control" id="detailLabCreditInput" value="150.000,00">
+            </div>
+
+            <button class="po-button primary" id="detailLabApplyBtn"><i data-lucide="check"></i> Atualizar Ficha</button>
           </div>
         </div>
       </div>
     `, 'Template: Detalhes de Registro (Page Detail)'),
 
     'po-page-edit': wrap(`
-      <div class="po-page-demo">
-        <div class="po-toolbar-demo">
-          <h3 style="margin:0;font:800 18px 'Manrope',sans-serif">Editar Cadastro</h3>
+      <div class="po-page-demo" style="border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow-sm)">
+        <div class="po-toolbar-demo" style="padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div>
+            <h3 style="margin:0;font:800 20px 'Manrope',sans-serif;color:var(--ink)">Editar Registro de Cliente</h3>
+            <small style="color:var(--muted)">Preencha os campos obrigatórios marcados com (*)</small>
+          </div>
           <div class="showcase-row">
-            <button class="po-button ghost">Cancelar</button>
-            <button class="po-button primary"><i data-lucide="save"></i> Salvar Alterações</button>
+            <button class="po-button ghost" id="pageEditCancelBtn">Cancelar</button>
+            <button class="po-button primary" id="pageEditSaveBtn"><i data-lucide="save"></i> Salvar Alterações</button>
           </div>
         </div>
-        <div class="po-page-body">
-          <div class="showcase-stack">
-            ${field('Razão Social', '<input value="Clínica Aurora Saúde S/A">')}
-            <div class="showcase-row">
-              <div style="flex:1">${field('E-mail', '<input value="contato@aurorasaude.com.br">')}</div>
-              <div style="flex:1">${field('Telefone', '<input value="(85) 3456-7890">')}</div>
+
+        <form id="pageEditForm" class="po-page-body" style="padding:22px;background:var(--surface);display:grid;gap:24px" onsubmit="event.preventDefault();">
+          <!-- Seção 1 -->
+          <div>
+            <h4 style="margin:0 0 14px;font:700 14px 'Manrope',sans-serif;color:var(--brand);display:flex;align-items:center;gap:6px"><i data-lucide="building-2"></i> 1. Identificação Corporativa</h4>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px">
+              ${field('Razão Social *', '<input class="po-control" id="pageEditRazaoSocial" value="Clínica Aurora Saúde S/A">')}
+              ${field('Nome Fantasia', '<input class="po-control" id="pageEditNomeFantasia" value="Aurora Saúde">')}
+              ${field('CNPJ *', '<input class="po-control" id="pageEditCnpj" value="12.345.678/0001-90">')}
+              ${field('Inscrição Estadual', '<input class="po-control" id="pageEditInscricao" value="06.123.456-7">')}
             </div>
           </div>
-        </div>
+
+          <!-- Seção 2 -->
+          <div style="border-top:1px solid var(--line);padding-top:18px">
+            <h4 style="margin:0 0 14px;font:700 14px 'Manrope',sans-serif;color:var(--brand);display:flex;align-items:center;gap:6px"><i data-lucide="map-pin"></i> 2. Contato & Endereço</h4>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px">
+              ${field('E-mail Comercial *', '<input class="po-control" id="pageEditEmail" type="email" value="financeiro@aurora.com.br">')}
+              ${field('Telefone de Contato', '<input class="po-control" id="pageEditTelefone" value="(85) 3456-7890">')}
+              ${field('CEP', '<input class="po-control" id="pageEditCep" value="60150-160">')}
+              ${field('Cidade / UF', '<input class="po-control" id="pageEditCidade" value="Fortaleza / CE">')}
+            </div>
+          </div>
+
+          <!-- Seção 3 -->
+          <div style="border-top:1px solid var(--line);padding-top:18px">
+            <h4 style="margin:0 0 14px;font:700 14px 'Manrope',sans-serif;color:var(--brand);display:flex;align-items:center;gap:6px"><i data-lucide="dollar-sign"></i> 3. Condições Comerciais</h4>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px">
+              ${field('Limite de Crédito (R$)', '<input class="po-control" id="pageEditLimite" value="150.000,00">')}
+              ${field('Forma de Pagamento Padrão', '<select class="po-control" id="pageEditFormaPag"><option selected>Boleto Bancário (30 dias)</option><option>PIX à Vista</option><option>Cartão Corporativo</option></select>')}
+            </div>
+          </div>
+        </form>
       </div>
     `, 'Template: Edição de Registro (Page Edit)'),
 
     'po-page-login': wrap(`
-      <div style="max-width:380px;margin:0 auto;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)">
-        <div class="po-logo-demo" style="text-align:center;margin-bottom:20px;font-size:24px">WF <span>willFran</span></div>
-        <div class="showcase-stack">
-          ${field('Usuário ou E-mail', '<input placeholder="nome@empresa.com">')}
-          ${field('Senha', '<input type="password" placeholder="••••••••">')}
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px">
-            <label class="po-checkbox"><input type="checkbox" checked> Lembrar-me</label>
-            <a href="#">Esqueceu a senha?</a>
+      <div class="po-login-card-container">
+        <div class="po-login-header">
+          <div class="brand">
+            <span class="brand-mark" aria-hidden="true">
+              <i></i><i></i><i></i><i></i>
+            </span>
+            <span style="font-size:22px"><b>WF</b> willFran</span>
           </div>
-          <button class="po-button primary" style="width:100%;margin-top:6px" data-toast="Login efetuado com sucesso!">Acessar Sistema</button>
+          <h2>Acesso ao Portal Corporativo</h2>
+          <p>Entre com suas credenciais de usuário</p>
+        </div>
+
+        <form class="showcase-stack" id="pageLoginForm" onsubmit="event.preventDefault();">
+          <div>
+            <label style="display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px">Usuário ou E-mail *</label>
+            <div style="position:relative">
+              <input class="po-control" id="loginUsername" placeholder="nome@empresa.com" value="diretoria@empresa.com" style="padding-left:36px;width:100%">
+              <i data-lucide="mail" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)"></i>
+            </div>
+          </div>
+
+          <div>
+            <label style="display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px">Senha de Acesso *</label>
+            <div style="position:relative">
+              <input class="po-control" id="loginPassword" type="password" value="SenhaForte@2026" placeholder="••••••••" style="padding-left:36px;padding-right:36px;width:100%">
+              <i data-lucide="lock" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)"></i>
+              <button type="button" id="loginTogglePass" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:0;padding:4px;color:var(--muted);cursor:pointer" aria-label="Mostrar/Ocultar Senha">
+                <i data-lucide="eye" style="width:16px;height:16px"></i>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label style="display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px">Ambiente</label>
+            <select class="po-control" id="loginEnvSelect">
+              <option value="prd" selected>Produção - Servidor Principal (PRD)</option>
+              <option value="hml">Homologação / Testes (HML)</option>
+            </select>
+          </div>
+
+          <div class="po-login-row-remember" style="display:flex;align-items:center;justify-content:space-between;width:100%;gap:12px;margin:8px 0 4px">
+            <label class="po-checkbox" style="display:inline-flex;align-items:center;gap:8px;white-space:nowrap;margin:0;cursor:pointer">
+              <input type="checkbox" id="loginRememberCheck" checked style="margin:0;width:16px;height:16px;flex-shrink:0">
+              <span style="white-space:nowrap;font-size:13px">Lembrar meu usuário</span>
+            </label>
+            <a href="#" id="loginForgotPassLink" style="color:var(--brand);font-weight:600;font-size:12px;text-decoration:none;white-space:nowrap;flex-shrink:0">Esqueceu a senha?</a>
+          </div>
+
+          <button class="po-button primary" id="loginSubmitBtn" style="width:100%;margin-top:8px;font-size:14px;min-height:44px"><i data-lucide="log-in"></i> Acessar Sistema</button>
+        </form>
+
+        <div style="margin-top:20px;text-align:center">
+          <span style="font-size:11px;color:var(--muted);position:relative;display:block;margin-bottom:12px">ou acesse com conta corporativa</span>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <button class="po-button ghost sm" data-toast="Autenticando via TOTVS ID..."><i data-lucide="shield"></i> TOTVS ID</button>
+            <button class="po-button ghost sm" data-toast="Autenticando via Microsoft 365..."><i data-lucide="layout-grid"></i> Microsoft 365</button>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:24px;padding-top:14px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)">
+          WF willFran · Design System Sem Framework · v4.12.0
         </div>
       </div>
     `, 'Template: Tela de Autenticação (Page Login)'),
 
     'po-page-dynamic-table': wrap(`
-      <div class="po-page-demo">
-        <div class="po-toolbar-demo">
-          <h3 style="margin:0;font:800 18px 'Manrope',sans-serif">Tabela Dinâmica Automática</h3>
-          <button class="po-button primary"><i data-lucide="refresh-cw"></i> Recarregar Schema</button>
+      <div class="po-page-demo" style="border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow-sm)">
+        <div class="po-toolbar-demo" style="padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div>
+            <h3 style="margin:0;font:800 20px 'Manrope',sans-serif;color:var(--ink)">Tabela Dinâmica Automática (JSON Schema)</h3>
+            <small style="color:var(--muted)">Colunas e dados gerados dinamicamente a partir de metadados</small>
+          </div>
+          <div class="showcase-row">
+            <button class="po-button ghost" id="toggleSchemaBtn" data-toast="Alternando visualização de schema JSON..."><i data-lucide="code"></i> Ver Schema JSON</button>
+            <button class="po-button primary" data-toast="Schema recarregado com sucesso!"><i data-lucide="refresh-cw"></i> Recarregar Schema</button>
+          </div>
         </div>
-        <div class="po-page-body">
+
+        <div class="po-page-body" style="padding:0;background:var(--surface);overflow-x:auto">
           <table class="po-table">
-            <thead><tr><th>ID</th><th>Título</th><th>Tipo</th><th>Ações</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Serviço Integrado</th>
+                <th>Tipo de Protocolo</th>
+                <th>Frequência</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td>001</td><td>Integração ERP Protheus</td><td>API REST</td><td><span class="po-tag success">OK</span></td></tr>
-              <tr><td>002</td><td>Sincronização Fiscal</td><td>Job Cron</td><td><span class="po-tag brand">Ativo</span></td></tr>
+              <tr>
+                <td><b>#INT-001</b></td>
+                <td>Integração ERP Protheus</td>
+                <td>REST API</td>
+                <td>Tempo Real (Webhook)</td>
+                <td><span class="po-tag success">Operacional</span></td>
+                <td><button class="po-button ghost sm" data-toast="Executando teste no serviço #INT-001"><i data-lucide="play"></i> Testar</button></td>
+              </tr>
+              <tr>
+                <td><b>#INT-002</b></td>
+                <td>Sincronização Fiscal SEFAZ</td>
+                <td>SOAP XML</td>
+                <td>A cada 15 minutos</td>
+                <td><span class="po-tag brand">Ativo</span></td>
+                <td><button class="po-button ghost sm" data-toast="Executando teste no serviço #INT-002"><i data-lucide="play"></i> Testar</button></td>
+              </tr>
+              <tr>
+                <td><b>#INT-003</b></td>
+                <td>Backup em Nuvem AWS S3</td>
+                <td>CLI S3 Sync</td>
+                <td>Diário (02:00h)</td>
+                <td><span class="po-tag success">Concluído</span></td>
+                <td><button class="po-button ghost sm" data-toast="Executando teste no serviço #INT-003"><i data-lucide="play"></i> Testar</button></td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -2122,63 +2510,268 @@ function createPreview(name) {
     `, 'Template: Tabela Dinâmica Automática'),
 
     'po-page-dynamic-edit': wrap(`
-      <div class="po-page-demo">
-        <div class="po-toolbar-demo">
-          <h3 style="margin:0;font:800 18px 'Manrope',sans-serif">Formulário Dinâmico Automatizado</h3>
-          <button class="po-button primary"><i data-lucide="check"></i> Confirmar</button>
+      <div class="po-page-demo" style="border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow-sm)">
+        <div class="po-toolbar-demo" style="padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div>
+            <h3 style="margin:0;font:800 20px 'Manrope',sans-serif;color:var(--ink)">Formulário Dinâmico Automatizado</h3>
+            <small style="color:var(--muted)">Inputs, seletores e validações gerados por JSON Schema</small>
+          </div>
+          <div class="showcase-row">
+            <button class="po-button ghost" data-toast="Edição dinâmica cancelada.">Descartar</button>
+            <button class="po-button primary" data-toast="Parâmetros dinâmicos validados e salvos!"><i data-lucide="check"></i> Salvar Parâmetros</button>
+          </div>
         </div>
-        <div class="po-page-body">
-          <div class="showcase-stack">
-            ${field('Parâmetro de Configuração', '<input value="CONF_TIMEOUT_SEC">')}
-            ${field('Valor Definido', '<input value="3600">')}
+
+        <div class="po-page-body" style="padding:22px;background:var(--surface)">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:16px">
+            ${field('Nome do Parâmetro (Key)', '<input value="CONF_MAX_UPLOAD_SIZE_MB">')}
+            ${field('Tipo de Dado', '<select><option selected>Numérico (Integer)</option><option>Texto (String)</option><option>Booleano (Boolean)</option></select>')}
+            ${field('Valor Configurado', '<input value="50">')}
+            ${field('Ambiente Alvo', '<select><option selected>Produção (PRD)</option><option>Homologação (HML)</option><option>Desenvolvimento (DEV)</option></select>')}
           </div>
         </div>
       </div>
     `, 'Template: Edição Dinâmica Automatizada'),
 
     'po-page-dynamic-detail': wrap(`
-      <div class="po-page-demo">
-        <div class="po-toolbar-demo">
-          <h3 style="margin:0;font:800 18px 'Manrope',sans-serif">Visualização de Schema Dinâmico</h3>
+      <div class="showcase-stack">
+        <!-- Sample 1: PO Page Dynamic Detail Renderizado -->
+        <div class="po-detail-card-container" id="dynamicDetailCard">
+          <!-- Top Header with Actions -->
+          <div class="po-detail-header-bar">
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                <button class="po-button ghost sm" data-toast="Retornando para listagem dinâmica..."><i data-lucide="arrow-left"></i> Voltar</button>
+                <span class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></span>
+                <span style="font-size:12px;color:var(--muted)" id="dynamicDetailCategoryBreadcrumb">Serviços / Integrações ERP</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                <span class="po-avatar md" style="background:var(--brand)" id="dynamicDetailAvatar">ERP</span>
+                <div>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <h3 style="margin:0;font:800 22px 'Manrope',sans-serif;color:var(--ink)" id="dynamicDetailTitle">Integração TOTVS Protheus REST API</h3>
+                    <span class="po-tag success" id="dynamicDetailStatusTag">Operacional</span>
+                  </div>
+                  <small style="color:var(--muted)" id="dynamicDetailSubtitle">Schema: SCH-PROTHEUS-V2 · ID do Registro: #INT-2026-9081</small>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="po-button ghost" id="dynamicDetailToggleJsonBtn"><i data-lucide="code"></i> Ver Schema JSON</button>
+              <button class="po-button ghost" data-toast="Gerando relatório de metadados..."><i data-lucide="printer"></i> Imprimir</button>
+              <button class="po-button primary" data-toast="Abrindo edição dinâmica deste schema..."><i data-lucide="pencil"></i> Editar Registro</button>
+            </div>
+          </div>
+
+          <!-- KPI Summary Strip -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:12px;padding:16px 24px;background:var(--surface-2);border-bottom:1px solid var(--line)" id="dynamicDetailKpis">
+            <div style="padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
+              <small style="color:var(--muted);font-weight:700">PROTOCOLO</small>
+              <div style="font:800 16px 'Manrope',sans-serif;color:var(--brand);margin-top:2px" id="dynamicKpiProtocol">REST API (JSON)</div>
+            </div>
+            <div style="padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
+              <small style="color:var(--muted);font-weight:700">TAXA DE DISPONIBILIDADE</small>
+              <div style="font:800 16px 'Manrope',sans-serif;color:var(--success);margin-top:2px" id="dynamicKpiUptime">99.98% (SLA AAA)</div>
+            </div>
+            <div style="padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
+              <small style="color:var(--muted);font-weight:700">REQUISIÇÕES / DIA</small>
+              <div style="font:800 16px 'Manrope',sans-serif;color:var(--ink);margin-top:2px" id="dynamicKpiReqs">148.920 reqs</div>
+            </div>
+            <div style="padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
+              <small style="color:var(--muted);font-weight:700">ÚLTIMA SINCRONIZAÇÃO</small>
+              <div style="font:800 16px 'Manrope',sans-serif;color:var(--brand);margin-top:2px" id="dynamicKpiSync">Hoje, 14:32:05</div>
+            </div>
+          </div>
+
+          <!-- Dynamic Rendered View Content -->
+          <div id="dynamicDetailRenderedView" style="padding:24px;display:grid;gap:24px">
+            <!-- Seção 1: Configuração Técnica -->
+            <div>
+              <div class="po-detail-section-title"><i data-lucide="server"></i> 1. Especificações Técnicas do Endpoint</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px" id="dynamicFieldsSection1">
+                <div class="po-detail-info-card"><span>Nome do Serviço</span><b>Integração TOTVS Protheus</b></div>
+                <div class="po-detail-info-card"><span>URL Base do Endpoint</span><b style="color:var(--brand);font-family:monospace">https://api.erp.totvs.com.br/v2</b></div>
+                <div class="po-detail-info-card"><span>Método HTTP Padrão</span><b>POST / GET (OAuth 2.0)</b></div>
+                <div class="po-detail-info-card"><span>Tempo Limite (Timeout)</span><b>30 segundos</b></div>
+                <div class="po-detail-info-card"><span>Tentativas em Falha (Retry)</span><b>3 tentativas automáticas</b></div>
+                <div class="po-detail-info-card"><span>Ambiente Conectado</span><b>Produção (PRD-CLUSTER-01)</b></div>
+              </div>
+            </div>
+
+            <!-- Seção 2: Parâmetros Fiscais & Segurança -->
+            <div>
+              <div class="po-detail-section-title"><i data-lucide="shield-check"></i> 2. Parâmetros de Autenticação & Faturamento</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px" id="dynamicFieldsSection2">
+                <div class="po-detail-info-card"><span>Tipo de Credencial</span><b>Client ID + Secret Key (Bearer Token)</b></div>
+                <div class="po-detail-info-card"><span>Filial Autorizada</span><b>Filial 01 - Matriz São Paulo/SP</b></div>
+                <div class="po-detail-info-card"><span>Validação de Esquema</span><b style="color:var(--success)">JSON-Schema Draft-07 (Válido)</b></div>
+                <div class="po-detail-info-card"><span>Notificação de Erro</span><b>webhook-ops@empresa.com.br</b></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic JSON Schema Inspector (Toggleable) -->
+          <div id="dynamicDetailJsonView" hidden style="padding:24px;background:#15121c;color:#e8e4ee;border-top:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <span style="font-size:12px;font-weight:700;color:var(--brand-soft)"><i data-lucide="file-json"></i> Schema JSON Definidor deste Registro</span>
+              <button class="po-button ghost sm" style="color:#ffffff" data-toast="Schema JSON copiado para a área de transferência!"><i data-lucide="copy"></i> Copiar JSON</button>
+            </div>
+            <pre style="margin:0;padding:16px;background:#0d0a14;border-radius:8px;font-size:12px;line-height:1.6;overflow-x:auto;color:#a3e635" id="dynamicJsonCodeBlock">{
+  "title": "Integração TOTVS Protheus REST API",
+  "version": "2.4.0",
+  "schemaId": "SCH-PROTHEUS-V2",
+  "status": "Operacional",
+  "fields": [
+    { "property": "serviceName", "label": "Nome do Serviço", "type": "string", "value": "Integração TOTVS Protheus" },
+    { "property": "endpointUrl", "label": "URL Base do Endpoint", "type": "url", "value": "https://api.erp.totvs.com.br/v2" },
+    { "property": "httpMethod", "label": "Método HTTP", "type": "string", "value": "POST / GET" },
+    { "property": "timeout", "label": "Timeout (s)", "type": "number", "value": 30 },
+    { "property": "authType", "label": "Tipo de Autenticação", "type": "string", "value": "OAuth 2.0 Bearer" },
+    { "property": "status", "label": "Status", "type": "tag", "value": "Operacional", "color": "success" }
+  ],
+  "actions": [
+    { "action": "edit", "label": "Editar Registro", "icon": "pencil" },
+    { "action": "print", "label": "Imprimir", "icon": "printer" },
+    { "action": "back", "label": "Voltar", "icon": "arrow-left" }
+  ]
+}</pre>
+          </div>
         </div>
-        <div class="po-page-body">
-          <div class="po-info"><span>Identificador</span><b>SCH-9940-DYNAMIC</b></div>
-          <div class="po-info" style="margin-top:10px"><span>Regra Aplicada</span><b>Renderização com metadados PO UI</b></div>
+
+        <!-- Sample 2: PO Page Dynamic Detail Labs (Alternador de Schemas em Tempo Real) -->
+        <div style="border:1px solid var(--line);border-radius:10px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">PO Page Dynamic Detail Labs (Alternar Schema Dinâmico)</h4>
+            <span class="po-tag brand">Laboratório de Metadados</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:12px;align-items:flex-end">
+            <div>
+              <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:4px">Selecione o Schema Dinâmico de Teste</label>
+              <select class="po-control" id="dynamicLabSchemaSelect">
+                <option value="protheus" selected>1. Integração ERP Protheus (Tecnologia/API)</option>
+                <option value="cliente">2. Cadastro de Cliente Corporativo (Comercial)</option>
+                <option value="nfe">3. Nota Fiscal Eletrônica NF-e (Fiscal)</option>
+              </select>
+            </div>
+
+            <button class="po-button primary" id="dynamicLabApplySchemaBtn"><i data-lucide="refresh-cw"></i> Carregar e Renderizar Schema</button>
+          </div>
         </div>
       </div>
-    `, 'Template: Detalhes Dinâmicos'),
+    `, 'Template: Detalhes Dinâmicos (Page Dynamic Detail)'),
 
     'po-page-change-password': wrap(`
-      <div style="max-width:420px;margin:0 auto;padding:24px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
-        <h3 style="margin:0 0 16px;font:800 18px 'Manrope',sans-serif">Troca de Senha Obrigatória</h3>
-        <div class="showcase-stack">
-          ${field('Senha Atual', '<input type="password">')}
-          ${field('Nova Senha', '<input type="password">')}
-          ${field('Confirmar Nova Senha', '<input type="password">')}
-          <button class="po-button primary" style="width:100%" data-toast="Senha atualizada com sucesso!">Salvar Nova Senha</button>
+      <div style="max-width:440px;margin:0 auto;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+          <div style="width:40px;height:40px;display:grid;place-items:center;background:var(--brand-soft);color:var(--brand);border-radius:8px">
+            <i data-lucide="key-round"></i>
+          </div>
+          <div>
+            <h3 style="margin:0;font:800 18px 'Manrope',sans-serif;color:var(--ink)">Troca Obrigatória de Senha</h3>
+            <small style="color:var(--muted)">Por política de segurança, redefina sua senha de acesso</small>
+          </div>
         </div>
+
+        <form class="showcase-stack" onsubmit="event.preventDefault();">
+          <div>
+            <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px">Senha Atual</label>
+            <input class="po-control" type="password" placeholder="Digite a senha temporária" style="width:100%">
+          </div>
+
+          <div>
+            <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px">Nova Senha</label>
+            <input class="po-control" id="changePassInput" type="password" value="Portinari@2026" placeholder="Digite a nova senha forte" style="width:100%">
+            
+            <!-- Password Strength Bar -->
+            <div style="margin-top:8px">
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;margin-bottom:4px">
+                <span style="color:var(--muted)">Força da Senha:</span>
+                <span id="changePassStrengthLabel" style="color:var(--success)">Forte</span>
+              </div>
+              <div style="height:6px;background:var(--surface-2);border-radius:10px;overflow:hidden">
+                <div id="changePassStrengthBar" style="width:90%;height:100%;background:var(--success);transition:all 0.3s ease"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Requirements Checklist -->
+          <div style="background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font-size:11px;display:grid;gap:4px">
+            <span style="color:var(--success);display:flex;align-items:center;gap:6px"><i data-lucide="check" style="width:13px;height:13px"></i> Mínimo de 8 caracteres</span>
+            <span style="color:var(--success);display:flex;align-items:center;gap:6px"><i data-lucide="check" style="width:13px;height:13px"></i> Ao menos uma letra maiúscula e minúscula</span>
+            <span style="color:var(--success);display:flex;align-items:center;gap:6px"><i data-lucide="check" style="width:13px;height:13px"></i> Pelo menos 1 número</span>
+            <span style="color:var(--success);display:flex;align-items:center;gap:6px"><i data-lucide="check" style="width:13px;height:13px"></i> Caractere especial (!@#$%)</span>
+          </div>
+
+          <div>
+            <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px">Confirmar Nova Senha</label>
+            <input class="po-control" type="password" value="Portinari@2026" placeholder="Repita a nova senha exatamente igual" style="width:100%">
+          </div>
+
+          <button class="po-button primary" id="changePassSubmitBtn" style="width:100%;margin-top:6px" data-toast="Senha atualizada com sucesso! Redirecionando..."><i data-lucide="shield-check"></i> Atualizar Senha e Continuar</button>
+        </form>
       </div>
-    `, 'Template: Troca de Senha'),
+    `, 'Template: Troca de Senha (Change Password)'),
 
     'po-page-blocked-user': wrap(`
-      <div style="text-align:center;padding:40px 20px">
-        <div style="width:56px;height:56px;margin:0 auto 16px;display:grid;place-items:center;background:var(--danger-soft);color:var(--danger);border-radius:50%">
-          <i data-lucide="shield-alert" style="width:28px;height:28px"></i>
+      <div style="max-width:520px;margin:0 auto;padding:40px 28px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);text-align:center">
+        <div style="width:68px;height:68px;margin:0 auto 20px;display:grid;place-items:center;background:var(--danger-soft);color:var(--danger);border-radius:50%;border:4px solid color-mix(in srgb, var(--danger) 15%, transparent)">
+          <i data-lucide="shield-ban" style="width:34px;height:34px"></i>
         </div>
-        <h2 style="margin:0 0 8px;font:800 22px 'Manrope',sans-serif">Acesso Temporariamente Suspenso</h2>
-        <p style="margin:0 0 20px;color:var(--muted);max-width:420px;margin-inline:auto">Sua conta foi bloqueada por excesso de tentativas incorretas. Entre em contato com o suporte de TI.</p>
-        <button class="po-button primary"><i data-lucide="life-buoy"></i> Contatar Suporte</button>
+
+        <span class="po-tag danger" style="margin-bottom:10px">BLOQUEIO PREVENTIVO DE SEGURANÇA</span>
+        <h2 style="margin:4px 0 10px;font:800 24px 'Manrope',sans-serif;color:var(--ink)">Acesso Temporariamente Suspenso</h2>
+        <p style="margin:0 0 20px;color:var(--muted);font-size:13px;line-height:1.6">
+          Sua conta foi temporariamente bloqueada após <b>5 tentativas consecutivas</b> de autenticação com credenciais incorretas.
+        </p>
+
+        <!-- Countdown Timer Card -->
+        <div style="padding:14px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:10px">
+          <i data-lucide="clock" style="color:var(--brand)"></i>
+          <span style="font-size:13px">Tempo restante de espera: <b id="blockedTimerCountdown" style="color:var(--brand);font-size:16px">14:59 min</b></span>
+        </div>
+
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          <button class="po-button ghost" data-toast="Tentando autenticação novamente..."><i data-lucide="rotate-ccw"></i> Tentar Novamente</button>
+          <button class="po-button primary" data-toast="Abrindo chamado prioritário com o Help Desk de TI..."><i data-lucide="headset"></i> Falar com Suporte de TI</button>
+        </div>
+
+        <div style="margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)">
+          ID do Incidente: <b>#SEC-2026-8819</b> · Endereço IP: <b>189.40.12.98</b>
+        </div>
       </div>
-    `, 'Template: Usuário Bloqueado'),
+    `, 'Template: Usuário Bloqueado (Blocked User)'),
 
     'po-modal-password-recovery': wrap(`
-      <div style="max-width:420px;margin:0 auto;padding:24px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
-        <h3 style="margin:0 0 8px;font:800 18px 'Manrope',sans-serif">Recuperar Senha</h3>
-        <p style="margin:0 0 16px;font-size:13px;color:var(--muted)">Informe seu e-mail cadastrado para receber as instruções.</p>
-        <div class="showcase-stack">
-          ${field('E-mail Cadastrado', '<input type="email" placeholder="usuario@empresa.com">')}
-          <button class="po-button primary" data-toast="Instruções enviadas para seu e-mail!">Enviar Instruções</button>
+      <div style="max-width:460px;margin:0 auto;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="width:36px;height:36px;display:grid;place-items:center;background:var(--brand-soft);color:var(--brand);border-radius:8px">
+              <i data-lucide="mail-question"></i>
+            </div>
+            <div>
+              <h3 style="margin:0;font:800 18px 'Manrope',sans-serif;color:var(--ink)">Recuperar Senha</h3>
+              <small style="color:var(--muted)">Redefinição segura por e-mail</small>
+            </div>
+          </div>
+          <button class="icon-button sm" data-toast="Modal fechado." aria-label="Fechar"><i data-lucide="x"></i></button>
         </div>
+
+        <p style="margin:0 0 16px;font-size:13px;color:var(--muted);line-height:1.5">
+          Informe seu e-mail corporativo cadastrado. Enviaremos um link temporário para você criar uma nova senha.
+        </p>
+
+        <form class="showcase-stack" id="recoveryPassForm" onsubmit="event.preventDefault();">
+          <div>
+            <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px">E-mail Cadastrado</label>
+            <input class="po-control" id="recoveryEmailInput" type="email" value="colaborador@empresa.com" placeholder="seu-email@empresa.com" style="width:100%">
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:10px">
+            <button class="po-button ghost" type="button" data-toast="Operação cancelada.">Cancelar</button>
+            <button class="po-button primary" id="recoverySubmitBtn" type="button" data-toast="Instruções de recuperação enviadas com sucesso para o e-mail!"><i data-lucide="send"></i> Enviar Instruções</button>
+          </div>
+        </form>
       </div>
     `, 'Template: Modal de Recuperação de Senha')
   };
@@ -3431,6 +4024,588 @@ function bindPreviewEvents(name) {
         timerStart.innerHTML = `<i data-lucide="play"></i> Iniciar`;
         refreshIcons();
       }
+    });
+  }
+
+  // Page Templates Interactivity
+  // 1. Login Show/Hide Password Toggle
+  const loginPassInput = root.querySelector('#loginPassword');
+  const loginTogglePass = root.querySelector('#loginTogglePass');
+  if (loginTogglePass && loginPassInput) {
+    loginTogglePass.addEventListener('click', () => {
+      const isPass = loginPassInput.type === 'password';
+      loginPassInput.type = isPass ? 'text' : 'password';
+      loginTogglePass.innerHTML = isPass ? '<i data-lucide="eye-off" style="width:16px;height:16px"></i>' : '<i data-lucide="eye" style="width:16px;height:16px"></i>';
+      refreshIcons();
+    });
+  }
+
+  // 2. Login Submit Button with simulated loading
+  const loginSubmitBtn = root.querySelector('#loginSubmitBtn');
+  if (loginSubmitBtn) {
+    loginSubmitBtn.addEventListener('click', () => {
+      loginSubmitBtn.disabled = true;
+      loginSubmitBtn.innerHTML = `<span class="po-loading-spinner" style="width:16px;height:16px;border-width:2px"></span> Autenticando...`;
+      setTimeout(() => {
+        loginSubmitBtn.disabled = false;
+        loginSubmitBtn.innerHTML = `<i data-lucide="check"></i> Acesso Permitido!`;
+        refreshIcons();
+        toast('Autenticação corporativa realizada com sucesso!', 'success');
+        setTimeout(() => {
+          loginSubmitBtn.innerHTML = `<i data-lucide="log-in"></i> Acessar Sistema`;
+          refreshIcons();
+        }, 2000);
+      }, 1000);
+    });
+  }
+
+  // 3. Password Strength Realtime Calculator
+  const changePassInput = root.querySelector('#changePassInput');
+  const strengthBar = root.querySelector('#changePassStrengthBar');
+  const strengthLabel = root.querySelector('#changePassStrengthLabel');
+  if (changePassInput && strengthBar && strengthLabel) {
+    changePassInput.addEventListener('input', () => {
+      const val = changePassInput.value;
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val)) score++;
+
+      if (score <= 1) {
+        strengthLabel.textContent = 'Fraca';
+        strengthLabel.style.color = 'var(--danger)';
+        strengthBar.style.width = '25%';
+        strengthBar.style.background = 'var(--danger)';
+      } else if (score === 2 || score === 3) {
+        strengthLabel.textContent = 'Média';
+        strengthLabel.style.color = 'var(--warning)';
+        strengthBar.style.width = '65%';
+        strengthBar.style.background = 'var(--warning)';
+      } else {
+        strengthLabel.textContent = 'Forte';
+        strengthLabel.style.color = 'var(--success)';
+        strengthBar.style.width = '100%';
+        strengthBar.style.background = 'var(--success)';
+      }
+    });
+  }
+
+  // 4. Blocked User Countdown Timer
+  const blockedCountdown = root.querySelector('#blockedTimerCountdown');
+  if (blockedCountdown) {
+    let remainingSec = 899; // 14:59
+    const timerInterval = setInterval(() => {
+      if (!document.body.contains(blockedCountdown)) {
+        clearInterval(timerInterval);
+        return;
+      }
+      if (remainingSec > 0) {
+        remainingSec--;
+        const m = String(Math.floor(remainingSec / 60)).padStart(2, '0');
+        const s = String(remainingSec % 60).padStart(2, '0');
+        blockedCountdown.textContent = `${m}:${s} min`;
+      }
+    }, 1000);
+  }
+
+  // 5. Password Recovery Feedback
+  const recoverySubmit = root.querySelector('#recoverySubmitBtn');
+  const recoveryForm = root.querySelector('#recoveryPassForm');
+  if (recoverySubmit && recoveryForm) {
+    recoverySubmit.addEventListener('click', () => {
+      const email = root.querySelector('#recoveryEmailInput')?.value || 'seu e-mail';
+      recoveryForm.innerHTML = `
+        <div style="text-align:center;padding:16px 0">
+          <div style="width:48px;height:48px;margin:0 auto 12px;display:grid;place-items:center;background:var(--success-soft);color:var(--success);border-radius:50%">
+            <i data-lucide="check" style="width:24px;height:24px"></i>
+          </div>
+          <h4 style="margin:0 0 6px;font:700 16px 'Manrope',sans-serif;color:var(--ink)">E-mail de Redefinição Enviado!</h4>
+          <p style="margin:0;font-size:12px;color:var(--muted)">As orientações para recuperação de senha foram enviadas para <b>${escapeHTML(email)}</b>.</p>
+        </div>
+      `;
+      refreshIcons();
+      toast(`Link de recuperação enviado para ${email}!`, 'success');
+    });
+  }
+
+  // 6. PO Page Detail Tabs Navigation
+  const detailTabsContainer = root.querySelector('#detailTabsContainer');
+  if (detailTabsContainer) {
+    detailTabsContainer.querySelectorAll('[data-detail-tab]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetTab = btn.dataset.detailTab;
+        detailTabsContainer.querySelectorAll('[data-detail-tab]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        root.querySelectorAll('[id^="detailTabContent-"]').forEach(content => {
+          content.hidden = true;
+        });
+        const activeContent = root.querySelector(`#detailTabContent-${targetTab}`);
+        if (activeContent) activeContent.hidden = false;
+        refreshIcons();
+        toast(`Visualizando aba: ${btn.textContent.trim()}`);
+      });
+    });
+  }
+
+  // 7. PO Page Detail Labs Status & Limit Changer
+  const detailLabApplyBtn = root.querySelector('#detailLabApplyBtn');
+  const detailLabStatus = root.querySelector('#detailLabStatusSelect');
+  const detailLabCredit = root.querySelector('#detailLabCreditInput');
+  const detailStatusBadge = root.querySelector('#detailStatusBadge');
+  const detailCreditVal = root.querySelector('#detailCreditVal');
+  if (detailLabApplyBtn) {
+    detailLabApplyBtn.addEventListener('click', () => {
+      if (detailStatusBadge && detailLabStatus) {
+        detailStatusBadge.className = `po-tag ${detailLabStatus.value}`;
+        detailStatusBadge.textContent = detailLabStatus.options[detailLabStatus.selectedIndex].text.split(' ')[0];
+      }
+      if (detailCreditVal && detailLabCredit) {
+        detailCreditVal.textContent = `R$ ${detailLabCredit.value}`;
+      }
+      toast('Ficha cadastral 360° atualizada com sucesso!', 'success');
+    });
+  }
+
+  // 8. PO Page Login Language Switcher
+  const loginLocaleSelect = root.querySelector('#loginLocaleSelect');
+  const loginFormHeaderTitle = root.querySelector('#loginFormHeaderTitle');
+  if (loginLocaleSelect && loginFormHeaderTitle) {
+    loginLocaleSelect.addEventListener('change', () => {
+      const loc = loginLocaleSelect.value;
+      if (loc === 'en') {
+        loginFormHeaderTitle.textContent = 'Sign in to your Account';
+        toast('Language switched to English (US)');
+      } else if (loc === 'es') {
+        loginFormHeaderTitle.textContent = 'Acceder a su Cuenta';
+        toast('Idioma cambiado a Español (ES)');
+      } else {
+        loginFormHeaderTitle.textContent = 'Acessar sua Conta';
+        toast('Idioma alterado para Português (BR)');
+      }
+    });
+  }
+
+  // 9. PO Page Login Flow Switcher
+  const splitLoginForm = root.querySelector('#splitLoginForm');
+  root.querySelector('#labFlowLoginBtn')?.addEventListener('click', () => {
+    if (loginFormHeaderTitle) loginFormHeaderTitle.textContent = 'Acessar sua Conta';
+    if (splitLoginForm) {
+      splitLoginForm.innerHTML = `
+        <div>
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px">E-mail ou Usuário</label>
+          <div style="position:relative">
+            <input class="po-control" id="loginUsername" placeholder="usuario@empresa.com" value="diretoria@empresa.com" style="padding-left:36px;width:100%">
+            <i data-lucide="mail" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)"></i>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px">Senha de Acesso</label>
+          <div style="position:relative">
+            <input class="po-control" id="loginPassword" type="password" value="SenhaForte@2026" placeholder="••••••••" style="padding-left:36px;padding-right:36px;width:100%">
+            <i data-lucide="lock" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)"></i>
+            <button type="button" id="loginTogglePass" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:0;padding:4px;color:var(--muted);cursor:pointer">
+              <i data-lucide="eye" style="width:16px;height:16px"></i>
+            </button>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px">Ambiente</label>
+          <select class="po-control">
+            <option value="prd" selected>Produção - Servidor Principal (PRD)</option>
+            <option value="hml">Homologação / Testes (HML)</option>
+          </select>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-top:2px">
+          <label class="po-checkbox" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" checked> Lembrar meu usuário</label>
+          <a href="#" id="loginForgotPassLink" style="color:var(--brand);font-weight:600">Esqueceu a senha?</a>
+        </div>
+        <button class="po-button primary" id="loginSubmitBtn" style="width:100%;margin-top:8px;font-size:14px;min-height:44px"><i data-lucide="log-in"></i> Acessar Sistema</button>
+      `;
+      refreshIcons();
+      toast('Exibindo fluxo 1: Login Corporativo Padrão.');
+    }
+  });
+
+  root.querySelector('#labFlowRecoveryBtn')?.addEventListener('click', () => {
+    if (loginFormHeaderTitle) loginFormHeaderTitle.textContent = 'Recuperar Senha de Acesso';
+    if (splitLoginForm) {
+      splitLoginForm.innerHTML = `
+        <p style="margin:0 0 12px;font-size:13px;color:var(--muted)">Informe seu e-mail corporativo cadastrado para receber as instruções de recuperação.</p>
+        <div>
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px">E-mail Cadastrado</label>
+          <input class="po-control" type="email" value="diretoria@empresa.com" style="width:100%">
+        </div>
+        <button class="po-button primary" style="width:100%;margin-top:8px" data-toast="Link de recuperação de senha enviado com sucesso!"><i data-lucide="send"></i> Enviar Link de Recuperação</button>
+      `;
+      refreshIcons();
+      toast('Exibindo fluxo 2: Recuperação de Senha.');
+    }
+  });
+
+  root.querySelector('#labFlow2FABtn')?.addEventListener('click', () => {
+    if (loginFormHeaderTitle) loginFormHeaderTitle.textContent = 'Autenticação em 2 Etapas (2FA)';
+    if (splitLoginForm) {
+      splitLoginForm.innerHTML = `
+        <p style="margin:0 0 12px;font-size:13px;color:var(--muted)">Insira o código de 6 dígitos gerado pelo seu app autenticador corporativo.</p>
+        <div>
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px">Código de Verificação (6 Dígitos)</label>
+          <input class="po-control" style="font-size:18px;letter-spacing:6px;text-align:center;font-weight:700" maxlength="6" value="794102">
+        </div>
+        <button class="po-button primary" style="width:100%;margin-top:8px" data-toast="Código 2FA validado com sucesso! Acesso concedido."><i data-lucide="shield-check"></i> Validar e Acessar</button>
+      `;
+      refreshIcons();
+      toast('Exibindo fluxo 3: Validação em 2 Etapas (2FA).');
+    }
+  });
+
+  // 10. PO Page Dynamic Detail JSON Toggle & Labs Schema Switcher
+  const toggleJsonBtn = root.querySelector('#dynamicDetailToggleJsonBtn');
+  const renderedView = root.querySelector('#dynamicDetailRenderedView');
+  const jsonView = root.querySelector('#dynamicDetailJsonView');
+  if (toggleJsonBtn && renderedView && jsonView) {
+    toggleJsonBtn.addEventListener('click', () => {
+      const isJsonVisible = !jsonView.hidden;
+      jsonView.hidden = isJsonVisible;
+      renderedView.hidden = !isJsonVisible;
+      toggleJsonBtn.innerHTML = isJsonVisible ? `<i data-lucide="code"></i> Ver Schema JSON` : `<i data-lucide="layout"></i> Ver Renderizado`;
+      refreshIcons();
+      toast(isJsonVisible ? 'Exibindo visualização renderizada dos metadados.' : 'Exibindo código fonte do Schema JSON.');
+    });
+  }
+
+  const labApplySchemaBtn = root.querySelector('#dynamicLabApplySchemaBtn');
+  const labSchemaSelect = root.querySelector('#dynamicLabSchemaSelect');
+  if (labApplySchemaBtn && labSchemaSelect) {
+    labApplySchemaBtn.addEventListener('click', () => {
+      const schemaKey = labSchemaSelect.value;
+      const titleEl = root.querySelector('#dynamicDetailTitle');
+      const subEl = root.querySelector('#dynamicDetailSubtitle');
+      const avatarEl = root.querySelector('#dynamicDetailAvatar');
+      const tagEl = root.querySelector('#dynamicDetailStatusTag');
+      const catEl = root.querySelector('#dynamicDetailCategoryBreadcrumb');
+      const kpi1 = root.querySelector('#dynamicKpiProtocol');
+      const kpi2 = root.querySelector('#dynamicKpiUptime');
+      const kpi3 = root.querySelector('#dynamicKpiReqs');
+      const kpi4 = root.querySelector('#dynamicKpiSync');
+      const sec1 = root.querySelector('#dynamicFieldsSection1');
+      const sec2 = root.querySelector('#dynamicFieldsSection2');
+      const jsonCode = root.querySelector('#dynamicJsonCodeBlock');
+
+      if (schemaKey === 'cliente') {
+        if (titleEl) titleEl.textContent = 'Clínica Aurora Saúde S/A';
+        if (subEl) subEl.textContent = 'Schema: SCH-CUSTOMER-V1 · ID: #CLI-2026-994';
+        if (avatarEl) { avatarEl.textContent = 'CA'; avatarEl.style.background = 'var(--brand)'; }
+        if (tagEl) { tagEl.className = 'po-tag success'; tagEl.textContent = 'Homologado'; }
+        if (catEl) catEl.textContent = 'Cadastros / Clientes Corporativos';
+        if (kpi1) kpi1.textContent = 'R$ 150.000,00';
+        if (kpi2) kpi2.textContent = '980 / 1000 (AAA)';
+        if (kpi3) kpi3.textContent = '18 Pedidos Ativos';
+        if (kpi4) kpi4.textContent = 'Hoje, 11:20:00';
+        if (sec1) {
+          sec1.innerHTML = `
+            <div class="po-detail-info-card"><span>Razão Social</span><b>Clínica Aurora Saúde S/A</b></div>
+            <div class="po-detail-info-card"><span>Nome Fantasia</span><b>Aurora Saúde</b></div>
+            <div class="po-detail-info-card"><span>CNPJ</span><b>12.345.678/0001-90</b></div>
+            <div class="po-detail-info-card"><span>Inscrição Estadual</span><b>06.123.456-7</b></div>
+            <div class="po-detail-info-card"><span>CNAE Principal</span><b>8630-5/03 - Ambulatorial</b></div>
+            <div class="po-detail-info-card"><span>Regime</span><b>Lucro Presumido</b></div>
+          `;
+        }
+        if (sec2) {
+          sec2.innerHTML = `
+            <div class="po-detail-info-card"><span>E-mail</span><b style="color:var(--brand)">contato@aurora.com.br</b></div>
+            <div class="po-detail-info-card"><span>Telefone</span><b>(85) 3456-7890</b></div>
+            <div class="po-detail-info-card"><span>Cidade / UF</span><b>Fortaleza / CE</b></div>
+            <div class="po-detail-info-card"><span>CEP</span><b>60150-160</b></div>
+          `;
+        }
+        if (jsonCode) {
+          jsonCode.textContent = JSON.stringify({
+            title: "Clínica Aurora Saúde S/A",
+            schemaId: "SCH-CUSTOMER-V1",
+            status: "Homologado",
+            cnpj: "12.345.678/0001-90",
+            email: "contato@aurora.com.br",
+            creditLimit: 150000
+          }, null, 2);
+        }
+        toast('Schema de "Cliente Corporativo" carregado e renderizado com sucesso!', 'success');
+      } else if (schemaKey === 'nfe') {
+        if (titleEl) titleEl.textContent = 'Nota Fiscal Eletrônica #NF-82941-SE';
+        if (subEl) subEl.textContent = 'Schema: SCH-NFE-V4 · Chave: 3526 0812 3456 7800 0190 5500 1000 0829 4110';
+        if (avatarEl) { avatarEl.textContent = 'NFe'; avatarEl.style.background = '#0d593f'; }
+        if (tagEl) { tagEl.className = 'po-tag success'; tagEl.textContent = 'Autorizada SEFAZ'; }
+        if (catEl) catEl.textContent = 'Fiscal / Documentos Eletrônicos';
+        if (kpi1) kpi1.textContent = 'R$ 48.950,00';
+        if (kpi2) kpi2.textContent = 'ICMS: R$ 8.811,00';
+        if (kpi3) kpi3.textContent = '14 Itens / Produtos';
+        if (kpi4) kpi4.textContent = '30/08/2026 10:14';
+        if (sec1) {
+          sec1.innerHTML = `
+            <div class="po-detail-info-card"><span>Número da Nota</span><b>82.941 (Série 1)</b></div>
+            <div class="po-detail-info-card"><span>Natureza da Operação</span><b>Venda de Mercadoria Produzida (CFOP 5.101)</b></div>
+            <div class="po-detail-info-card"><span>Destinatário</span><b>Hospital Santa Clara S/A</b></div>
+            <div class="po-detail-info-card"><span>CNPJ Destinatário</span><b>45.987.123/0001-44</b></div>
+            <div class="po-detail-info-card"><span>Data de Emissão</span><b>30/08/2026 às 10:14:22</b></div>
+            <div class="po-detail-info-card"><span>Protocolo de Autorização</span><b>135260984102941</b></div>
+          `;
+        }
+        if (sec2) {
+          sec2.innerHTML = `
+            <div class="po-detail-info-card"><span>Base de Cálculo ICMS</span><b>R$ 48.950,00</b></div>
+            <div class="po-detail-info-card"><span>Valor do IPI</span><b>R$ 2.447,50</b></div>
+            <div class="po-detail-info-card"><span>Valor do Frete</span><b>R$ 450,00 (FOB)</b></div>
+            <div class="po-detail-info-card"><span>Valor Total da NF-e</span><b style="color:var(--success)">R$ 51.847,50</b></div>
+          `;
+        }
+        if (jsonCode) {
+          jsonCode.textContent = JSON.stringify({
+            title: "Nota Fiscal Eletrônica #NF-82941-SE",
+            schemaId: "SCH-NFE-V4",
+            status: "Autorizada SEFAZ",
+            nfeNumber: 82941,
+            totalAmount: 51847.50,
+            protocol: "135260984102941"
+          }, null, 2);
+        }
+        toast('Schema de "Nota Fiscal Eletrônica (NF-e)" carregado e renderizado!', 'success');
+      } else {
+        if (titleEl) titleEl.textContent = 'Integração TOTVS Protheus REST API';
+        if (subEl) subEl.textContent = 'Schema: SCH-PROTHEUS-V2 · ID do Registro: #INT-2026-9081';
+        if (avatarEl) { avatarEl.textContent = 'ERP'; avatarEl.style.background = 'var(--brand)'; }
+        if (tagEl) { tagEl.className = 'po-tag success'; tagEl.textContent = 'Operacional'; }
+        if (catEl) catEl.textContent = 'Serviços / Integrações ERP';
+        if (kpi1) kpi1.textContent = 'REST API (JSON)';
+        if (kpi2) kpi2.textContent = '99.98% (SLA AAA)';
+        if (kpi3) kpi3.textContent = '148.920 reqs';
+        if (kpi4) kpi4.textContent = 'Hoje, 14:32:05';
+        if (sec1) {
+          sec1.innerHTML = `
+            <div class="po-detail-info-card"><span>Nome do Serviço</span><b>Integração TOTVS Protheus</b></div>
+            <div class="po-detail-info-card"><span>URL Base do Endpoint</span><b style="color:var(--brand);font-family:monospace">https://api.erp.totvs.com.br/v2</b></div>
+            <div class="po-detail-info-card"><span>Método HTTP Padrão</span><b>POST / GET (OAuth 2.0)</b></div>
+            <div class="po-detail-info-card"><span>Tempo Limite (Timeout)</span><b>30 segundos</b></div>
+            <div class="po-detail-info-card"><span>Tentativas em Falha</span><b>3 tentativas automáticas</b></div>
+            <div class="po-detail-info-card"><span>Ambiente Conectado</span><b>Produção (PRD-CLUSTER-01)</b></div>
+          `;
+        }
+        if (sec2) {
+          sec2.innerHTML = `
+            <div class="po-detail-info-card"><span>Tipo de Credencial</span><b>Client ID + Secret Key (Bearer Token)</b></div>
+            <div class="po-detail-info-card"><span>Filial Autorizada</span><b>Filial 01 - Matriz São Paulo/SP</b></div>
+            <div class="po-detail-info-card"><span>Validação de Esquema</span><b style="color:var(--success)">JSON-Schema Draft-07 (Válido)</b></div>
+            <div class="po-detail-info-card"><span>Notificação de Erro</span><b>webhook-ops@empresa.com.br</b></div>
+          `;
+        }
+        if (jsonCode) {
+          jsonCode.textContent = JSON.stringify({
+            title: "Integração TOTVS Protheus REST API",
+            schemaId: "SCH-PROTHEUS-V2",
+            status: "Operacional",
+            endpoint: "https://api.erp.totvs.com.br/v2",
+            timeout: 30
+          }, null, 2);
+        }
+        toast('Schema de "Integração ERP Protheus" restaurado!', 'success');
+      }
+      refreshIcons();
+    });
+  }
+
+  // 11. PO Page Default: Filtros, Disclaimers e Busca
+  const defaultSearchInput = root.querySelector('#defaultPageSearchInput');
+  const defaultOrdersTable = root.querySelector('#defaultOrdersTable');
+  const defaultDisclaimers = root.querySelector('#defaultDisclaimersContainer');
+  const defaultOrdersCount = root.querySelector('#defaultOrdersCountBadge');
+  const defaultAddFilterBtn = root.querySelector('#defaultAddFilterBtn');
+  const defaultAddFilterMenu = root.querySelector('#defaultAddFilterMenu');
+  const defaultClearBtn = root.querySelector('#defaultClearFiltersBtn');
+
+  if (defaultOrdersTable) {
+    const updateDefaultTable = () => {
+      const q = (defaultSearchInput?.value || '').toLowerCase().trim();
+      let visible = 0;
+      defaultOrdersTable.querySelectorAll('tbody tr').forEach(row => {
+        const text = row.textContent.toLowerCase();
+        const match = !q || text.includes(q);
+        row.hidden = !match;
+        if (match) visible++;
+      });
+      if (defaultOrdersCount) defaultOrdersCount.textContent = `${visible} ${visible === 1 ? 'Pedido' : 'Pedidos'}`;
+    };
+
+    defaultSearchInput?.addEventListener('input', updateDefaultTable);
+
+    defaultDisclaimers?.addEventListener('click', e => {
+      const removeBtn = e.target.closest('[data-remove-disclaimer]');
+      if (removeBtn) {
+        const tag = removeBtn.closest('.po-disclaimer');
+        if (tag) {
+          const name = tag.textContent.trim();
+          tag.remove();
+          toast(`Filtro "${name}" removido com sucesso!`);
+          updateDefaultTable();
+        }
+      }
+    });
+
+    defaultAddFilterBtn?.addEventListener('click', e => {
+      e.stopPropagation();
+      if (defaultAddFilterMenu) defaultAddFilterMenu.hidden = !defaultAddFilterMenu.hidden;
+    });
+
+    defaultAddFilterMenu?.querySelectorAll('[data-add-disclaimer]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.dataset.addDisclaimer;
+        if (defaultDisclaimers && defaultAddFilterBtn) {
+          const pill = document.createElement('span');
+          pill.className = 'po-disclaimer';
+          pill.innerHTML = `${escapeHTML(text)} <button type="button" class="po-disclaimer-remove" data-remove-disclaimer="custom" aria-label="Remover filtro"><i data-lucide="x" style="width:12px;height:12px"></i></button>`;
+          const parentWrap = defaultAddFilterBtn.closest('.dropdown-wrap') || defaultAddFilterBtn;
+          defaultDisclaimers.insertBefore(pill, parentWrap);
+          refreshIcons();
+          toast(`Filtro "${text}" adicionado com sucesso!`, 'success');
+        }
+        if (defaultAddFilterMenu) defaultAddFilterMenu.hidden = true;
+      });
+    });
+
+    defaultClearBtn?.addEventListener('click', () => {
+      if (defaultDisclaimers) {
+        defaultDisclaimers.querySelectorAll('.po-disclaimer').forEach(el => el.remove());
+      }
+      if (defaultSearchInput) defaultSearchInput.value = '';
+      updateDefaultTable();
+      toast('Todos os filtros foram limpos!', 'info');
+    });
+  }
+
+  // 12. PO Page List: Busca, Seleção em Lote, Filtros e Paginação
+  const listSearchInput = root.querySelector('#listPageSearchInput');
+  const listTable = root.querySelector('#listPageTable');
+  const listSelectAll = root.querySelector('#listPageSelectAll');
+  const listBatchBar = root.querySelector('#listPageBatchBar');
+  const listSelectedCount = root.querySelector('#listPageSelectedCount');
+  const listTotalCount = root.querySelector('#listPageTotalCount');
+  const listFilterActiveBtn = root.querySelector('#listFilterActiveBtn');
+  const listFilterAllBtn = root.querySelector('#listFilterAllBtn');
+  const listBatchExportBtn = root.querySelector('#listBatchExportBtn');
+  const listBatchDeleteBtn = root.querySelector('#listBatchDeleteBtn');
+
+  if (listTable) {
+    const updateListSelection = () => {
+      const checks = listTable.querySelectorAll('.list-row-check:checked');
+      const count = checks.length;
+      if (listSelectedCount) listSelectedCount.textContent = count;
+      if (listBatchBar) listBatchBar.hidden = count === 0;
+      if (listSelectAll) {
+        const total = listTable.querySelectorAll('.list-row-check').length;
+        listSelectAll.checked = count === total && total > 0;
+        listSelectAll.indeterminate = count > 0 && count < total;
+      }
+    };
+
+    listSelectAll?.addEventListener('change', () => {
+      const checked = listSelectAll.checked;
+      listTable.querySelectorAll('.list-row-check').forEach(chk => chk.checked = checked);
+      updateListSelection();
+    });
+
+    listTable.addEventListener('change', e => {
+      if (e.target.classList.contains('list-row-check')) {
+        updateListSelection();
+      }
+    });
+
+    listSearchInput?.addEventListener('input', () => {
+      const q = listSearchInput.value.toLowerCase().trim();
+      let visible = 0;
+      listTable.querySelectorAll('tbody tr').forEach(row => {
+        const text = row.textContent.toLowerCase();
+        const match = !q || text.includes(q);
+        row.hidden = !match;
+        if (match) visible++;
+      });
+      if (listTotalCount) listTotalCount.textContent = `${visible} ${visible === 1 ? 'cliente exibido' : 'clientes exibidos'} de 142`;
+    });
+
+    listFilterActiveBtn?.addEventListener('click', () => {
+      let visible = 0;
+      listTable.querySelectorAll('tbody tr').forEach(row => {
+        const isAtivo = row.dataset.status === 'Ativo';
+        row.hidden = !isAtivo;
+        if (isAtivo) visible++;
+      });
+      if (listTotalCount) listTotalCount.textContent = `${visible} clientes ativos exibidos de 142`;
+      toast('Filtrando: apenas clientes ativos.');
+    });
+
+    listFilterAllBtn?.addEventListener('click', () => {
+      listTable.querySelectorAll('tbody tr').forEach(row => row.hidden = false);
+      if (listTotalCount) listTotalCount.textContent = `3 clientes exibidos de 142`;
+      if (listSearchInput) listSearchInput.value = '';
+      toast('Exibindo todos os clientes.');
+    });
+
+    listBatchExportBtn?.addEventListener('click', () => {
+      toast(`Exportando ${listSelectedCount?.textContent || 0} registros selecionados em Excel...`, 'success');
+    });
+
+    listBatchDeleteBtn?.addEventListener('click', () => {
+      const checks = listTable.querySelectorAll('.list-row-check:checked');
+      checks.forEach(chk => chk.closest('tr')?.remove());
+      updateListSelection();
+      toast('Registros selecionados excluídos com sucesso!', 'success');
+    });
+
+    // Paginação
+    const listPagination = root.querySelector('#listPagination');
+    if (listPagination) {
+      listPagination.querySelectorAll('.list-page-num').forEach(btn => {
+        btn.addEventListener('click', () => {
+          listPagination.querySelectorAll('.list-page-num').forEach(b => {
+            b.className = 'po-button ghost sm list-page-num';
+          });
+          btn.className = 'po-button primary sm list-page-num';
+          const p = btn.dataset.page;
+          const currentNum = root.querySelector('#listCurrentPageNum');
+          if (currentNum) currentNum.textContent = p;
+          toast(`Carregando página ${p} da listagem...`);
+        });
+      });
+    }
+  }
+
+  // 13. PO Page Edit: Validação e Ações do Formulário
+  const pageEditSaveBtn = root.querySelector('#pageEditSaveBtn');
+  const pageEditCancelBtn = root.querySelector('#pageEditCancelBtn');
+  const pageEditRazao = root.querySelector('#pageEditRazaoSocial');
+  const pageEditCnpj = root.querySelector('#pageEditCnpj');
+  const pageEditEmail = root.querySelector('#pageEditEmail');
+
+  if (pageEditSaveBtn) {
+    pageEditSaveBtn.addEventListener('click', () => {
+      const razao = pageEditRazao?.value.trim();
+      const cnpj = pageEditCnpj?.value.trim();
+      const email = pageEditEmail?.value.trim();
+
+      if (!razao || !cnpj || !email) {
+        toast('Por favor, preencha todos os campos obrigatórios (*)!', 'danger');
+        if (!razao && pageEditRazao) pageEditRazao.focus();
+        else if (!cnpj && pageEditCnpj) pageEditCnpj.focus();
+        else if (!email && pageEditEmail) pageEditEmail.focus();
+        return;
+      }
+
+      toast(`Registro de "${razao}" atualizado e salvo com sucesso!`, 'success');
+    });
+  }
+
+  if (pageEditCancelBtn) {
+    pageEditCancelBtn.addEventListener('click', () => {
+      toast('Edição cancelada. Os dados não foram alterados.', 'info');
     });
   }
 }

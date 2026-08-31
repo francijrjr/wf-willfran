@@ -1656,6 +1656,44 @@ kbd {
 .po-tag.success, .po-badge.success { color: var(--success); background: var(--success-soft); }
 .po-tag.warning, .po-badge.warning { color: var(--warning); background: var(--warning-soft); }
 .po-tag.danger, .po-badge.danger { color: var(--danger); background: var(--danger-soft); }
+
+.po-disclaimer {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  transition: all var(--transition-fast);
+}
+
+.po-disclaimer:hover {
+  border-color: var(--brand);
+}
+
+.po-disclaimer .po-disclaimer-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.po-disclaimer .po-disclaimer-remove:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
 /* ==========================================================================
    PO-AVATAR (Avatares Oficiais PO UI / Portinari)
    ========================================================================== */
@@ -1718,7 +1756,49 @@ kbd {
 .po-avatar-status.away { background: #c86f0a; }
 .po-avatar-status.offline { background: #6f6a75; }
 .po-field { display: grid; gap: 6px; }.po-field > span { font-size: 11px; font-weight: 700; }.po-field small { color: var(--muted); font-size: 10px; }.po-control, .po-field input, .po-field select, .po-field textarea { width: 100%; min-height: 42px; padding: 9px 11px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 5px; outline: 0; }.po-field input:focus, .po-field select:focus, .po-field textarea:focus { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }.po-field textarea { min-height: 90px; resize: vertical; }
-.po-checkbox, .po-radio { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); font-size: 12px; }.po-checkbox input, .po-radio input { accent-color: var(--brand); }
+.po-checkbox, .po-radio, label.po-checkbox, label.po-radio {
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  color: var(--ink) !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+  align-self: auto !important;
+  position: static !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.po-checkbox input[type="checkbox"], .po-radio input[type="radio"] {
+  display: inline-block !important;
+  position: static !important;
+  opacity: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+  accent-color: var(--brand) !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  vertical-align: middle !important;
+}
 .po-switch { width: 42px; height: 24px; position: relative; display: inline-block; }.po-switch input { opacity: 0; }.po-switch i { position: absolute; inset: 0; background: #aaa4ae; border-radius: 20px; transition: .2s; }.po-switch i::after { content: ""; width: 18px; height: 18px; position: absolute; top: 3px; left: 3px; background: white; border-radius: 50%; transition: .2s; }.po-switch input:checked + i { background: var(--brand); }.po-switch input:checked + i::after { transform: translateX(18px); }
 .po-accordion { border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }.po-accordion button { width: 100%; display: flex; justify-content: space-between; padding: 14px 16px; color: var(--ink); background: var(--surface); border: 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 700; }.po-accordion button:last-of-type { border-bottom: 0; }.accordion-content { display: none; padding: 15px 16px; color: var(--muted); background: var(--surface-2); font-size: 12px; }.accordion-item.open .accordion-content { display: block; }.accordion-item.open button span { transform: rotate(45deg); }
 /* ==========================================
@@ -1862,6 +1942,212 @@ kbd {
   50% { box-shadow: 0 0 0 5px rgba(117, 51, 153, 0); }
 }
 .po-progress { height: 8px; overflow: hidden; background: var(--surface-2); border-radius: 10px; }.po-progress i { height: 100%; display: block; background: var(--brand); border-radius: inherit; transition: width .4s; }
+
+/* ==========================================================================
+   PAGE TEMPLATES (PO Page Login & PO Page Detail Oficial Portinari)
+   ========================================================================== */
+.po-login-card-container {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 36px 30px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  box-sizing: border-box;
+}
+
+.po-login-row-remember {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  margin: 8px 0 4px !important;
+  gap: 12px !important;
+  font-size: 13px !important;
+  box-sizing: border-box !important;
+}
+
+.po-login-row-remember .po-checkbox {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 13px !important;
+  color: var(--ink) !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+  flex-shrink: 0 !important;
+}
+
+.po-login-row-remember .po-checkbox span {
+  white-space: nowrap !important;
+  font-size: 13px !important;
+  color: var(--ink) !important;
+  display: inline-block !important;
+  line-height: 1 !important;
+}
+
+.po-login-row-remember .po-checkbox input[type="checkbox"] {
+  width: 16px !important;
+  height: 16px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  accent-color: var(--brand) !important;
+  flex-shrink: 0 !important;
+}
+
+.po-login-row-remember a {
+  color: var(--brand) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+  flex-shrink: 0 !important;
+}
+
+.po-login-row-remember a:hover {
+  text-decoration: underline !important;
+}
+
+.po-login-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.po-login-header .brand {
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.po-login-header h2 {
+  margin: 0 0 4px;
+  font: 800 22px 'Manrope', sans-serif;
+  color: var(--ink);
+}
+
+.po-login-header p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.po-detail-card-container {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  box-sizing: border-box;
+}
+
+.po-detail-header-bar {
+  padding: 20px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.po-detail-section-title {
+  font: 800 13px 'Manrope', sans-serif;
+  color: var(--brand);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.po-detail-info-card {
+  padding: 14px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: grid;
+  gap: 4px;
+}
+
+.po-detail-info-card span {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.po-detail-info-card b {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  word-break: break-word;
+}
+
+.po-timeline {
+  display: grid;
+  gap: 16px;
+  position: relative;
+  padding-left: 24px;
+}
+
+.po-timeline::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 7px;
+  width: 2px;
+  background: var(--line);
+}
+
+.po-timeline-item {
+  position: relative;
+}
+
+.po-timeline-dot {
+  position: absolute;
+  left: -24px;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--brand);
+}
+
+.po-timeline-dot.success { border-color: var(--success); }
+.po-timeline-dot.warning { border-color: var(--warning); }
+
+.po-file-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  transition: all var(--transition-fast);
+}
+
+.po-file-card:hover {
+  border-color: var(--brand);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
 .po-table { width: 100%; border-collapse: collapse; font-size: 12px; }.po-table th { padding: 11px; color: var(--muted); background: var(--surface-2); text-align: left; }.po-table td { padding: 12px 11px; border-bottom: 1px solid var(--line); }.po-table tbody tr:hover { background: var(--brand-soft); }
 .po-tabs-head { display: flex; gap: 2px; border-bottom: 1px solid var(--line); }.po-tabs-head button { padding: 10px 14px; color: var(--muted); background: none; border: 0; border-bottom: 2px solid transparent; }.po-tabs-head button.active { color: var(--brand); border-color: var(--brand); }.po-tab-content { padding: 20px 2px 5px; color: var(--muted); font-size: 12px; }
 .po-stepper { display: flex; align-items: start; }.po-step { flex: 1; position: relative; text-align: center; color: var(--muted); font-size: 10px; }.po-step::before { content: ""; position: absolute; z-index: 0; top: 13px; left: -50%; width: 100%; height: 2px; background: var(--line); }.po-step:first-child::before { display: none; }.po-step i { width: 28px; height: 28px; position: relative; z-index: 1; display: grid; place-items: center; margin: 0 auto 6px; color: var(--muted); background: var(--surface); border: 2px solid var(--line); border-radius: 50%; font-style: normal; }.po-step i .lucide { width: 14px; height: 14px; }.po-step.done i, .po-step.active i { color: white; background: var(--brand); border-color: var(--brand); }.po-step.done::before, .po-step.active::before { background: var(--brand); }

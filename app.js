@@ -577,91 +577,202 @@ function createPreview(name) {
     // 2. FORMULÁRIOS
     'po-field': wrap(`
       <div class="showcase-stack">
-        <!-- Sample 1: PO Field Basic -->
+        <!-- Sample 1: PO Field Basic & Variações de Estado -->
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <h4 style="margin:0 0 14px;font-size:14px;font-weight:700;color:var(--brand)">1. PO Field Basic</h4>
-          ${field('Razão Social da Empresa', '<input class="po-control" placeholder="Ex: TOTVS S/A">', 'Informe o nome completo conforme registro na Receita Federal.', true)}
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. Estrutura Padrão e Estados de Campo</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Rótulos, textos de ajuda, ícones de prefixo e estados de validação</p>
+            </div>
+            <span class="po-tag brand">PO Field</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px">
+            <!-- Campo Obrigatório com Ícone -->
+            <label class="po-field">
+              <span class="required"><i data-lucide="building" style="width:14px;height:14px;color:var(--brand)"></i> Razão Social da Empresa</span>
+              <div class="po-input-group has-icon-left">
+                <span class="po-input-icon-left"><i data-lucide="briefcase"></i></span>
+                <input class="po-control" value="TOTVS Soluções em Software S/A" placeholder="Digite a razão social">
+              </div>
+              <small><i data-lucide="info" style="width:12px;height:12px"></i> Conforme constar no Cartão CNPJ da Receita Federal.</small>
+            </label>
+
+            <!-- Campo Válido -->
+            <label class="po-field">
+              <span><i data-lucide="file-check" style="width:14px;height:14px;color:var(--success)"></i> Inscrição Estadual (IE)</span>
+              <div class="po-input-group has-icon-left has-icon-right">
+                <span class="po-input-icon-left"><i data-lucide="hash"></i></span>
+                <input class="po-control is-valid" value="109.876.543.210">
+                <span class="po-input-icon-btn" style="color:var(--success);cursor:default"><i data-lucide="check-circle"></i></span>
+              </div>
+              <small style="color:var(--success)"><i data-lucide="check" style="width:12px;height:12px"></i> Documento validado no SINTEGRA/SP.</small>
+            </label>
+
+            <!-- Campo com Erro -->
+            <label class="po-field">
+              <span class="required"><i data-lucide="mail" style="width:14px;height:14px;color:var(--danger)"></i> E-mail de Cobrança Fiscal</span>
+              <div class="po-input-group has-icon-left has-icon-right">
+                <span class="po-input-icon-left"><i data-lucide="mail"></i></span>
+                <input class="po-control is-invalid" value="financeiro@empresa">
+                <span class="po-input-icon-btn" style="color:var(--danger);cursor:default"><i data-lucide="alert-circle"></i></span>
+              </div>
+              <small class="error"><i data-lucide="alert-triangle" style="width:12px;height:12px"></i> Por favor, informe um endereço de e-mail válido com domínio (.com.br).</small>
+            </label>
+
+            <!-- Campo Desabilitado -->
+            <label class="po-field">
+              <span><i data-lucide="lock" style="width:14px;height:14px;color:var(--muted)"></i> Código Interno ERP (Somente Leitura)</span>
+              <div class="po-input-group has-icon-left">
+                <span class="po-input-icon-left"><i data-lucide="shield-check"></i></span>
+                <input class="po-control" value="CLI-2026-SP-00481" disabled>
+              </div>
+              <small><i data-lucide="lock" style="width:12px;height:12px"></i> Gerado automaticamente pela sequência do Protheus.</small>
+            </label>
+          </div>
         </div>
       </div>
     `, 'Estrutura Base de Campo (PO Field)'),
 
     'po-input': wrap(`
       <div class="showcase-stack">
-        <!-- Sample 1: PO Input Basic -->
+        <!-- 1. PO Input com Ícones e Limpeza -->
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">1. PO Input Basic</h4>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Input com Ícone de Prefixo e Limpeza</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Campos com ícones Lucide integrados e botão de limpar com um clique</p>
+            </div>
             <span class="po-tag">Amostra Básica</span>
           </div>
-          ${field('Nome Completo', `
-            <div class="po-input-group">
-              <input class="po-control" id="inputBasicDemo" value="Marina Silva Almeida" placeholder="Digite seu nome completo">
-              <button class="po-clean-btn" id="cleanInputBasicBtn" title="Limpar">${icon('x')}</button>
-            </div>
-          `, 'Como gostaria de ser chamado no sistema?')}
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px">
+            <label class="po-field">
+              <span class="required">Nome do Titular</span>
+              <div class="po-input-group has-icon-left has-icon-right">
+                <span class="po-input-icon-left"><i data-lucide="user"></i></span>
+                <input class="po-control" id="inputDemoName" value="Marina Silva Almeida" placeholder="Nome completo">
+                <button type="button" class="po-clean-btn" id="inputDemoCleanNameBtn" title="Limpar"><i data-lucide="x"></i></button>
+              </div>
+              <small>Nome como impresso no documento oficial.</small>
+            </label>
+
+            <label class="po-field">
+              <span>Cargo / Função</span>
+              <div class="po-input-group has-icon-left has-icon-right">
+                <span class="po-input-icon-left"><i data-lucide="badge-check"></i></span>
+                <input class="po-control" id="inputDemoRole" value="Diretora de Operações e Tecnologia" placeholder="Cargo">
+                <button type="button" class="po-clean-btn" id="inputDemoCleanRoleBtn" title="Limpar"><i data-lucide="x"></i></button>
+              </div>
+              <small>Setor ou departamento de lotação.</small>
+            </label>
+          </div>
         </div>
 
-        <!-- Sample 2: PO Input Labs -->
+        <!-- 2. PO Input Labs Interativo -->
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">2. PO Input Labs</h4>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">2. PO Input Labs (Laboratório)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Alterne propriedades e estados em tempo real</p>
+            </div>
             <span class="po-tag brand">Interativo</span>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:14px">
-            ${field('Campo de Teste', '<input class="po-control" id="labsInputTarget" placeholder="Digite aqui...">', 'Valores sincronizados em tempo real.')}
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;align-items:center">
             <div>
-              <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px">Propriedades</label>
-              <div style="display:flex;gap:12px;margin-top:8px">
-                <label class="po-checkbox"><input type="checkbox" id="labsInputReq"> Obrigatório (*)</label>
-                <label class="po-checkbox"><input type="checkbox" id="labsInputDis"> Desabilitado</label>
+              <label class="po-field">
+                <span id="inputLabsLabelText">Campo Interativo</span>
+                <div class="po-input-group has-icon-left has-icon-right" id="inputLabsGroup">
+                  <span class="po-input-icon-left"><i data-lucide="sparkles" id="inputLabsIcon"></i></span>
+                  <input class="po-control" id="inputLabsTarget" value="Texto para teste interativo">
+                  <button type="button" class="po-clean-btn" id="inputLabsCleanBtn"><i data-lucide="x"></i></button>
+                </div>
+                <small id="inputLabsHelperText">Dica sincronizada em tempo real.</small>
+              </label>
+            </div>
+
+            <div style="padding:14px;background:var(--surface-2);border-radius:8px;border:1px solid var(--line);display:grid;gap:8px">
+              <b style="font-size:12px;color:var(--ink)">Controles de Teste:</b>
+              <div style="display:flex;gap:14px;flex-wrap:wrap">
+                <label class="po-checkbox"><input type="checkbox" id="inputLabsReqCheck"> Obrigatório (*)</label>
+                <label class="po-checkbox"><input type="checkbox" id="inputLabsDisCheck"> Desabilitado</label>
+                <label class="po-checkbox"><input type="checkbox" id="inputLabsErrCheck"> Estado de Erro</label>
               </div>
             </div>
           </div>
         </div>
       </div>
-    `, 'PO Input: Basic, Limpeza e Labs'),
+    `, 'Campo de Texto (PO Input)'),
 
     'po-password': wrap(`
       <div class="showcase-stack">
-        <!-- Sample 1: PO Password Basic -->
+        <!-- 1. PO Password com Olho e Medidor -->
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">1. PO Password Basic</h4>
-            <span class="po-tag">Amostra Básica</span>
-          </div>
-          ${field('Senha de Acesso', `
-            <div class="po-input-group">
-              <input class="po-control" type="password" id="passwordDemo" value="Totvs@2026">
-              <button class="po-addon-btn" id="togglePassword" aria-label="Alternar visibilidade">${icon('eye')}</button>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Password com Visibilidade e Força</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Alternador com ícone de olho e cálculo de complexidade</p>
             </div>
-          `, 'Mínimo de 8 caracteres incluindo letras maiúsculas, minúsculas e símbolos.', true)}
-        </div>
-
-        <!-- Sample 2: PO Password Real World (Login Corporativo) -->
-        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">2. PO Password Login Corporativo</h4>
-            <span class="po-tag success">Caso Real</span>
+            <span class="po-tag success">Segurança</span>
           </div>
-          <div style="max-width:380px;margin:auto;display:grid;gap:12px">
-            ${field('E-mail Corporativo', '<input class="po-control" type="email" value="admin@totvs.com.br">')}
-            ${field('Senha', `
-              <div class="po-input-group">
-                <input class="po-control" type="password" id="loginPassInput" value="Portinari#2026">
-                <button class="po-addon-btn" id="toggleLoginPass">${icon('eye')}</button>
+
+          <div style="max-width:440px;display:grid;gap:14px">
+            <label class="po-field">
+              <span class="required">Senha Corporativa</span>
+              <div class="po-input-group has-icon-left has-icon-right">
+                <span class="po-input-icon-left"><i data-lucide="lock"></i></span>
+                <input class="po-control" type="password" id="passDemoInput" value="Totvs@Portinari2026" placeholder="••••••••">
+                <button type="button" class="po-addon-btn" id="passDemoToggleBtn" title="Alternar visibilidade"><i data-lucide="eye"></i></button>
               </div>
-            `)}
-            <button class="po-button primary full-width" data-toast="Autenticação efetuada com sucesso!"><i data-lucide="log-in"></i> Entrar no Portal</button>
+              <small>Mínimo de 8 caracteres com letras maiúsculas, números e símbolos.</small>
+            </label>
+
+            <!-- Medidor de Força -->
+            <div style="padding:12px 14px;background:var(--surface-2);border-radius:6px;border:1px solid var(--line)">
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;margin-bottom:6px">
+                <span style="color:var(--ink)">Força da Senha</span>
+                <span id="passDemoStrengthLabel" style="color:var(--success)">Forte (100%)</span>
+              </div>
+              <div style="height:6px;background:var(--line);border-radius:4px;overflow:hidden">
+                <div id="passDemoStrengthBar" style="width:100%;height:100%;background:var(--success);transition:all .3s"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    `, 'PO Password: Basic e Login Corporativo'),
+    `, 'Campo de Senha (PO Password)'),
 
     'po-number': wrap(`
       <div class="showcase-stack">
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <h4 style="margin:0 0 14px;font-size:14px;font-weight:700;color:var(--brand)">1. PO Number Basic</h4>
-          ${field('Quantidade de Licenças', '<input class="po-control" type="number" value="15" min="1" max="500">', 'Número de acessos simultâneos contratados.')}
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Number com Controles de Passo (+ / -)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Entrada numérica com ícones de incremento e limites de intervalo</p>
+            </div>
+            <span class="po-tag">Numérico</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:16px">
+            <label class="po-field">
+              <span class="required">Quantidade de Licenças</span>
+              <div class="po-input-group has-icon-left">
+                <span class="po-input-icon-left"><i data-lucide="users"></i></span>
+                <input class="po-control" type="number" id="numberDemoInput" value="25" min="1" max="500" step="1">
+              </div>
+              <small>Intervalo permitido: 1 a 500 usuários simultâneos.</small>
+            </label>
+
+            <label class="po-field">
+              <span>Dias de Tolerância para Vencimento</span>
+              <div class="po-input-group has-icon-left">
+                <span class="po-input-icon-left"><i data-lucide="clock"></i></span>
+                <input class="po-control" type="number" value="5" min="0" max="30">
+              </div>
+              <small>Número de dias úteis antes do bloqueio automático.</small>
+            </label>
+          </div>
         </div>
       </div>
     `, 'Campo Numérico (PO Number)'),
@@ -669,38 +780,119 @@ function createPreview(name) {
     'po-decimal': wrap(`
       <div class="showcase-stack">
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <h4 style="margin:0 0 14px;font-size:14px;font-weight:700;color:var(--brand)">1. PO Decimal / Moeda</h4>
-          ${field('Valor Unitário do Contrato (R$)', '<input class="po-control" value="8.450,00" style="text-align:right">', 'Formatação monetária padrão brasileira (BRL).')}
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Decimal e Valores Monetários (BRL)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Formatação de moeda com ícones fiscais e alinhamento à direita</p>
+            </div>
+            <span class="po-tag success">Monetário</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:16px">
+            <label class="po-field">
+              <span class="required">Valor Unitário do Contrato (R$)</span>
+              <div class="po-input-group has-icon-left">
+                <span class="po-input-icon-left"><i data-lucide="coins"></i></span>
+                <input class="po-control" value="14.850,00" style="text-align:right;font-weight:700;font-family:monospace">
+              </div>
+              <small>Moeda corrente: Real Brasileiro (BRL - R$).</small>
+            </label>
+
+            <label class="po-field">
+              <span>Alíquota de ISS Retido (%)</span>
+              <div class="po-input-group has-icon-left">
+                <span class="po-input-icon-left"><i data-lucide="percent"></i></span>
+                <input class="po-control" value="5,00" style="text-align:right;font-family:monospace">
+              </div>
+              <small>Percentual de retenção na fonte municipal.</small>
+            </label>
+          </div>
         </div>
       </div>
-    `, 'Campo Decimal / Monetário'),
+    `, 'Campo Decimal / Moeda (PO Decimal)'),
 
     'po-email': wrap(`
       <div class="showcase-stack">
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <h4 style="margin:0 0 14px;font-size:14px;font-weight:700;color:var(--brand)">1. PO Email</h4>
-          ${field('E-mail Corporativo', '<input class="po-control" type="email" placeholder="usuario@totvs.com.br">', 'Enviaremos a confirmação para este e-mail.', true)}
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Email com Ícone de Correio</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Validação de formato e envio de notificações</p>
+            </div>
+            <span class="po-tag">E-mail</span>
+          </div>
+
+          <div style="max-width:460px">
+            <label class="po-field">
+              <span class="required">E-mail Corporativo Principal</span>
+              <div class="po-input-group has-icon-left has-icon-right">
+                <span class="po-input-icon-left"><i data-lucide="mail"></i></span>
+                <input class="po-control" type="email" id="emailDemoInput" value="diretoria@empresa.com.br" placeholder="usuario@dominio.com.br">
+                <button type="button" class="po-clean-btn" id="emailDemoCleanBtn" title="Limpar"><i data-lucide="x"></i></button>
+              </div>
+              <small>Enviaremos cópias dos boletos e arquivos XML/DANFE.</small>
+            </label>
+          </div>
         </div>
       </div>
-    `, 'Campo de E-mail'),
+    `, 'Campo de E-mail (PO Email)'),
 
     'po-url': wrap(`
       <div class="showcase-stack">
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <h4 style="margin:0 0 14px;font-size:14px;font-weight:700;color:var(--brand)">1. PO URL</h4>
-          ${field('Website Oficial', '<input class="po-control" type="url" value="https://po-ui.io">', 'URL completa iniciando com https://')}
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO URL com Link Externo e Testador</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Entrada de endereços web com atalho para abertura em nova aba</p>
+            </div>
+            <span class="po-tag">Web URL</span>
+          </div>
+
+          <div style="max-width:500px">
+            <label class="po-field">
+              <span class="required">Website ou Endpoint de API</span>
+              <div class="po-input-group has-icon-left has-icon-right">
+                <span class="po-input-icon-left"><i data-lucide="globe"></i></span>
+                <input class="po-control" type="url" id="urlDemoInput" value="https://po-ui.io/documentation">
+                <button type="button" class="po-addon-btn" id="urlDemoTestBtn" title="Testar link"><i data-lucide="external-link"></i></button>
+              </div>
+              <small>Endereço seguro iniciado obrigatoriamente com https://</small>
+            </label>
+          </div>
         </div>
       </div>
-    `, 'Campo de URL'),
+    `, 'Campo de URL (PO URL)'),
 
     'po-datepicker': wrap(`
       <div class="showcase-stack">
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">1. PO Datepicker Basic</h4>
-            <span class="po-tag">Amostra Básica</span>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Datepicker com Atalhos Rápidos</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Seletor de data oficial com ícone de calendário e botões de preenchimento</p>
+            </div>
+            <span class="po-tag brand">Data</span>
           </div>
-          ${field('Data de Vencimento', '<input class="po-control" type="date" value="2026-08-30">', 'Formato oficial PO UI')}
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;align-items:start">
+            <label class="po-field">
+              <span class="required">Data de Emissão da NF-e</span>
+              <div class="po-input-group has-icon-left">
+                <span class="po-input-icon-left"><i data-lucide="calendar"></i></span>
+                <input class="po-control" type="date" id="datepickerDemoInput" value="2026-08-31">
+              </div>
+              <small>Padrão brasileiro no formato DD/MM/AAAA.</small>
+            </label>
+
+            <div style="padding:14px;background:var(--surface-2);border-radius:8px;border:1px solid var(--line)">
+              <b style="font-size:12px;color:var(--ink);display:block;margin-bottom:8px">Atalhos de Data Rápidos:</b>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button type="button" class="po-button sm ghost" id="dateShortcutTodayBtn"><i data-lucide="calendar-check"></i> Hoje</button>
+                <button type="button" class="po-button sm ghost" id="dateShortcutTomorrowBtn">+1 Dia</button>
+                <button type="button" class="po-button sm ghost" id="dateShortcutWeekBtn">+7 Dias</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     `, 'Seletor de Data (PO Datepicker)'),
@@ -708,34 +900,138 @@ function createPreview(name) {
     'po-datepicker-range': wrap(`
       <div class="showcase-stack">
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">1. PO Datepicker Range (Período)</h4>
-            <span class="po-tag success">Filtro de Período</span>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Datepicker Range (Filtro por Período)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Seleção combinada de data inicial e data final para relatórios</p>
+            </div>
+            <span class="po-tag success">Período</span>
           </div>
-          <div class="showcase-row" style="gap:14px">
-            <div style="flex:1">${field('Data Inicial', '<input class="po-control" type="date" value="2026-08-01">')}</div>
-            <div style="flex:1">${field('Data Final', '<input class="po-control" type="date" value="2026-08-31">')}</div>
+
+          <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+            <div style="flex:1;min-width:200px">
+              <label class="po-field">
+                <span class="required">Data Inicial</span>
+                <div class="po-input-group has-icon-left">
+                  <span class="po-input-icon-left"><i data-lucide="calendar"></i></span>
+                  <input class="po-control" type="date" id="rangeStartDemo" value="2026-08-01">
+                </div>
+              </label>
+            </div>
+
+            <div style="display:grid;place-items:center;padding-top:20px">
+              <i data-lucide="arrow-right" style="color:var(--muted)"></i>
+            </div>
+
+            <div style="flex:1;min-width:200px">
+              <label class="po-field">
+                <span class="required">Data Final</span>
+                <div class="po-input-group has-icon-left">
+                  <span class="po-input-icon-left"><i data-lucide="calendar"></i></span>
+                  <input class="po-control" type="date" id="rangeEndDemo" value="2026-08-31">
+                </div>
+              </label>
+            </div>
+
+            <div style="padding-top:20px">
+              <button class="po-button primary" id="rangeApplyBtn"><i data-lucide="filter"></i> Filtrar Período</button>
+            </div>
           </div>
         </div>
       </div>
     `, 'Intervalo de Datas (PO Datepicker Range)'),
 
+    'po-datetimepicker': wrap(`
+      <div class="showcase-stack">
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO DateTimePicker (Data e Hora Combinadas)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Agendamentos e timestamps com precisão de minutos e fuso horário</p>
+            </div>
+            <span class="po-tag">Data e Hora</span>
+          </div>
+
+          <div style="max-width:440px">
+            <label class="po-field">
+              <span class="required">Data e Hora do Agendamento Fiscal</span>
+              <div class="po-input-group has-icon-left">
+                <span class="po-input-icon-left"><i data-lucide="calendar-clock"></i></span>
+                <input class="po-control" type="datetime-local" value="2026-08-31T14:30">
+              </div>
+              <small>Fuso horário configurado: Brasília (GMT-3).</small>
+            </label>
+          </div>
+        </div>
+      </div>
+    `, 'Data e Hora (PO DateTimePicker)'),
+
+    'po-timepicker': wrap(`
+      <div class="showcase-stack">
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Timepicker (Seletor de Horário)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Entrada de horas no formato oficial de 24 horas (HH:mm)</p>
+            </div>
+            <span class="po-tag">Horário</span>
+          </div>
+
+          <div style="max-width:340px">
+            <label class="po-field">
+              <span class="required">Horário Limite para Transmissão</span>
+              <div class="po-input-group has-icon-left">
+                <span class="po-input-icon-left"><i data-lucide="clock"></i></span>
+                <input class="po-control" type="time" value="18:00">
+              </div>
+              <small>Lotes enviados após este horário serão processados no próximo dia útil.</small>
+            </label>
+          </div>
+        </div>
+      </div>
+    `, 'Seletor de Horário (PO Timepicker)'),
+
     'po-select': wrap(`
       <div class="showcase-stack">
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">1. PO Select Basic</h4>
-            <span class="po-tag">Amostra Básica</span>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Select com Categorias e Ícone</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Lista suspensa com suporte a opções estruturadas e estados</p>
+            </div>
+            <span class="po-tag">Seletor</span>
           </div>
-          ${field('Unidade Federativa (UF)', `
-            <select class="po-control">
-              <option value="SP">São Paulo (SP)</option>
-              <option value="RJ">Rio de Janeiro (RJ)</option>
-              <option value="MG">Minas Gerais (MG)</option>
-              <option value="CE" selected>Ceará (CE)</option>
-              <option value="PR">Paraná (PR)</option>
-            </select>
-          `, 'Selecione o estado do cliente')}
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px">
+            <label class="po-field">
+              <span class="required">Regime Tributário da Empresa</span>
+              <div class="po-input-group has-icon-left">
+                <span class="po-input-icon-left"><i data-lucide="layers"></i></span>
+                <select class="po-control">
+                  <option value="lucro_real">Lucro Real (Apuração Trimestral)</option>
+                  <option value="lucro_presumido" selected>Lucro Presumido (Padrão)</option>
+                  <option value="simples">Simples Nacional (ME / EPP)</option>
+                  <option value="mei">Microempreendedor Individual (MEI)</option>
+                </select>
+              </div>
+              <small>Define as regras de cálculo automático de PIS/COFINS e IRPJ.</small>
+            </label>
+
+            <label class="po-field">
+              <span>Unidade Federativa (UF)</span>
+              <div class="po-input-group has-icon-left">
+                <span class="po-input-icon-left"><i data-lucide="map-pin"></i></span>
+                <select class="po-control">
+                  <option value="SP" selected>São Paulo (SP)</option>
+                  <option value="RJ">Rio de Janeiro (RJ)</option>
+                  <option value="MG">Minas Gerais (MG)</option>
+                  <option value="CE">Ceará (CE)</option>
+                  <option value="PR">Paraná (PR)</option>
+                </select>
+              </div>
+              <small>Estado da matriz fiscal.</small>
+            </label>
+          </div>
         </div>
       </div>
     `, 'Menu Seletor (PO Select)'),
@@ -743,120 +1039,427 @@ function createPreview(name) {
     'po-multiselect': wrap(`
       <div class="showcase-stack">
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">1. PO Multiselect com Tags</h4>
-            <span class="po-tag brand">Seleção Múltipla</span>
-          </div>
-          ${field('Módulos Habilitados', `
-            <div class="po-multiselect-tags" id="multiselectContainer">
-              <span class="po-tag brand">Faturamento <button class="multiselect-remove">×</button></span>
-              <span class="po-tag brand">Financeiro <button class="multiselect-remove">×</button></span>
-              <span class="po-tag brand">Estoque <button class="multiselect-remove">×</button></span>
-              <span class="po-tag brand">RH <button class="multiselect-remove">×</button></span>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Multiselect com Tags Ativas</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Seleção múltipla com adição e remoção de etiquetas visuais</p>
             </div>
-          `, 'Remova tags clicando no X')}
+            <span class="po-tag brand">Múltipla Escolha</span>
+          </div>
+
+          <label class="po-field">
+            <span class="required">Módulos ERP Habilitados para a Filial</span>
+            <div style="border:1px solid var(--line);border-radius:var(--radius);padding:8px 12px;background:var(--surface);display:flex;flex-wrap:wrap;gap:8px;align-items:center" id="multiTagsContainer">
+              <span class="po-tag brand">Faturamento NF-e <button type="button" class="multiselect-remove" style="background:none;border:0;color:inherit;cursor:pointer;margin-left:4px">×</button></span>
+              <span class="po-tag brand">Financeiro / Contas a Pagar <button type="button" class="multiselect-remove" style="background:none;border:0;color:inherit;cursor:pointer;margin-left:4px">×</button></span>
+              <span class="po-tag brand">Estoque e Logística <button type="button" class="multiselect-remove" style="background:none;border:0;color:inherit;cursor:pointer;margin-left:4px">×</button></span>
+              <span class="po-tag brand">Recursos Humanos (RH) <button type="button" class="multiselect-remove" style="background:none;border:0;color:inherit;cursor:pointer;margin-left:4px">×</button></span>
+            </div>
+            <small>Clique no X para remover módulos não contratados.</small>
+          </label>
         </div>
       </div>
     `, 'Seleção Múltipla (PO Multiselect)'),
 
+    'po-combo': wrap(`
+      <div class="showcase-stack">
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Combo (Busca e Seleção Rápida)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Combo filtrável com digitação e carregamento dinâmico</p>
+            </div>
+            <span class="po-tag brand">PO Combo</span>
+          </div>
+
+          <div style="max-width:480px">
+            <label class="po-field">
+              <span class="required">Centro de Custo / Filial</span>
+              <div class="po-input-group has-icon-left has-icon-right">
+                <span class="po-input-icon-left"><i data-lucide="search"></i></span>
+                <input class="po-control" id="comboDemoInput" value="0101 - Matriz São Paulo / SP" placeholder="Digite para filtrar filiais...">
+                <button type="button" class="po-addon-btn" id="comboDemoArrowBtn"><i data-lucide="chevron-down"></i></button>
+              </div>
+              <small>Busca inteligente por código numérico ou nome da cidade.</small>
+            </label>
+          </div>
+        </div>
+      </div>
+    `, 'Caixa Combinada (PO Combo)'),
+
+    'po-autocomplete': wrap(`
+      <div class="showcase-stack">
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Autocomplete (Sugestões em Tempo Real)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Sugestões automáticas durante a digitação no campo</p>
+            </div>
+            <span class="po-tag success">Autocomplete</span>
+          </div>
+
+          <div style="max-width:480px;position:relative">
+            <label class="po-field">
+              <span class="required">Cidade e Estado de Destino</span>
+              <div class="po-input-group has-icon-left">
+                <span class="po-input-icon-left"><i data-lucide="map-pin"></i></span>
+                <input class="po-control" id="autoCompleteDemoInput" value="São Paulo" placeholder="Comece a digitar o nome da cidade...">
+              </div>
+              <small>Sugere automaticamente municípios com base na tabela do IBGE.</small>
+            </label>
+          </div>
+        </div>
+      </div>
+    `, 'Autocompletar (PO Autocomplete)'),
+
+    'po-lookup': wrap(`
+      <div class="showcase-stack">
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Lookup (Pesquisa Avançada com Modal)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Pesquisa em base relacional com seleção por tabela</p>
+            </div>
+            <span class="po-tag brand">PO Lookup</span>
+          </div>
+
+          <div style="max-width:520px">
+            <label class="po-field">
+              <span class="required">Cliente / Fornecedor Vinculado</span>
+              <div class="po-input-group has-icon-left has-icon-right">
+                <span class="po-input-icon-left"><i data-lucide="building-2"></i></span>
+                <input class="po-control" id="lookupDemoInput" value="CLI-001 - Hospital Santa Clara Saúde Ltda" readonly>
+                <button type="button" class="po-addon-btn" id="lookupDemoSearchBtn" title="Abrir busca avançada"><i data-lucide="search"></i></button>
+              </div>
+              <small>Clique na lupa para abrir o modal de pesquisa de clientes.</small>
+            </label>
+          </div>
+        </div>
+      </div>
+    `, 'Busca Avançada (PO Lookup)'),
+
+    'po-checkbox': wrap(`
+      <div class="showcase-stack">
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Checkbox com Alinhamento Perfeito</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Caixas de seleção independentes com estados ativo, inativo e desabilitado</p>
+            </div>
+            <span class="po-tag">Seleção</span>
+          </div>
+
+          <div style="display:grid;gap:12px">
+            <label class="po-checkbox">
+              <input type="checkbox" checked>
+              <span>Aceito expressamente os Termos de Uso e a Política de Privacidade (LGPD)</span>
+            </label>
+            <label class="po-checkbox">
+              <input type="checkbox" checked>
+              <span>Desejo receber notificações fiscais e relatórios automáticos por e-mail</span>
+            </label>
+            <label class="po-checkbox">
+              <input type="checkbox">
+              <span>Habilitar autenticação em duas etapas (2FA) para este usuário</span>
+            </label>
+            <label class="po-checkbox">
+              <input type="checkbox" disabled>
+              <span>Acesso administrativo à infraestrutura de servidores (Restrito)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    `, 'Caixas de Seleção (PO Checkbox)'),
+
+    'po-checkbox-group': wrap(`
+      <div class="showcase-stack">
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Checkbox Group (Agrupamento de Opções)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Grupo de checkboxes com controle coletivo e layout responsivo</p>
+            </div>
+            <span class="po-tag brand">Grupo</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;padding:16px;background:var(--surface-2);border-radius:8px;border:1px solid var(--line)">
+            <label class="po-checkbox"><input type="checkbox" checked> <span>Emissão de NF-e e NFS-e</span></label>
+            <label class="po-checkbox"><input type="checkbox" checked> <span>Transmissão SPED Fiscal</span></label>
+            <label class="po-checkbox"><input type="checkbox" checked> <span>Conciliação Bancária OFX</span></label>
+            <label class="po-checkbox"><input type="checkbox"> <span>Emissão de Boletos com Pix</span></label>
+            <label class="po-checkbox"><input type="checkbox"> <span>Integração com E-commerce</span></label>
+            <label class="po-checkbox"><input type="checkbox"> <span>Relatórios BI em Tempo Real</span></label>
+          </div>
+        </div>
+      </div>
+    `, 'Grupo de Seleção (PO Checkbox Group)'),
+
+    'po-radio': wrap(`
+      <div class="showcase-stack">
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Radio (Opção Exclusiva)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Seleção única de parâmetros operacionais</p>
+            </div>
+            <span class="po-tag">Opção Única</span>
+          </div>
+
+          <div style="display:flex;gap:24px;flex-wrap:wrap">
+            <label class="po-radio"><input type="radio" name="demoRadioSingle" checked> <span>Ambiente de Produção (PRD)</span></label>
+            <label class="po-radio"><input type="radio" name="demoRadioSingle"> <span>Homologação e Testes (HML)</span></label>
+            <label class="po-radio"><input type="radio" name="demoRadioSingle"> <span>Desenvolvimento Local (DEV)</span></label>
+          </div>
+        </div>
+      </div>
+    `, 'Botões de Opção (PO Radio)'),
+
+    'po-radio-group': wrap(`
+      <div class="showcase-stack">
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Radio Group (Cartões de Plano Selecionáveis)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Apresentação de opções em cartões estruturados com badges</p>
+            </div>
+            <span class="po-tag success">Planos</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:14px">
+            <div style="padding:16px;border:2px solid var(--brand);border-radius:8px;background:var(--brand-soft);cursor:pointer">
+              <label class="po-radio" style="font-weight:700;color:var(--brand)">
+                <input type="radio" name="radioPlanDemo" checked>
+                <span>Plano Enterprise</span>
+              </label>
+              <p style="margin:6px 0 0;font-size:12px;color:var(--ink)">Acesso ilimitado a todos os módulos e suporte 24/7 dedicado.</p>
+            </div>
+
+            <div style="padding:16px;border:1px solid var(--line);border-radius:8px;background:var(--surface);cursor:pointer">
+              <label class="po-radio" style="font-weight:700;color:var(--ink)">
+                <input type="radio" name="radioPlanDemo">
+                <span>Plano Business</span>
+              </label>
+              <p style="margin:6px 0 0;font-size:12px;color:var(--muted)">Até 50 usuários simultâneos com módulos fiscais e financeiros.</p>
+            </div>
+
+            <div style="padding:16px;border:1px solid var(--line);border-radius:8px;background:var(--surface);cursor:pointer">
+              <label class="po-radio" style="font-weight:700;color:var(--ink)">
+                <input type="radio" name="radioPlanDemo">
+                <span>Plano Starter</span>
+              </label>
+              <p style="margin:6px 0 0;font-size:12px;color:var(--muted)">Ideal para pequenas empresas iniciando a jornada ERP.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `, 'Grupo de Opções (PO Radio Group)'),
+
     'po-switch': wrap(`
       <div class="showcase-stack">
-        <!-- Sample 1: PO Switch Basic & Labs -->
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">1. PO Switch Basic</h4>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Switch com Indicador de Estado</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Interruptor deslizante com feedback textual instantâneo</p>
+            </div>
             <span class="po-tag">Interruptor</span>
           </div>
-          <div style="display:grid;gap:14px">
-            <div class="showcase-row">
-              <label class="po-switch"><input type="checkbox" id="switchDemo1" checked><i></i></label>
-              <span id="switchStatusText1">Notificações em tempo real: <b>Ativadas</b></span>
+
+          <div style="display:grid;gap:16px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surface-2);border-radius:6px;border:1px solid var(--line)">
+              <div>
+                <b style="display:block;font-size:13px;color:var(--ink)">Emissão Automática de NF-e na Conclusão do Pedido</b>
+                <span style="font-size:12px;color:var(--muted)">Transmite imediatamente para a SEFAZ assim que o pagamento for aprovado.</span>
+              </div>
+              <label class="po-switch"><input type="checkbox" checked><i></i></label>
             </div>
-            <div class="showcase-row">
-              <label class="po-switch"><input type="checkbox" id="switchDemo2"><i></i></label>
-              <span id="switchStatusText2">Sincronização em nuvem: <b>Desativada</b></span>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surface-2);border-radius:6px;border:1px solid var(--line)">
+              <div>
+                <b style="display:block;font-size:13px;color:var(--ink)">Sincronização Automática em Nuvem (Cluster AWS)</b>
+                <span style="font-size:12px;color:var(--muted)">Replicação contínua em tempo real a cada 60 segundos.</span>
+              </div>
+              <label class="po-switch"><input type="checkbox" checked><i></i></label>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surface-2);border-radius:6px;border:1px solid var(--line)">
+              <div>
+                <b style="display:block;font-size:13px;color:var(--ink)">Modo de Manutenção Programada</b>
+                <span style="font-size:12px;color:var(--muted)">Bloqueia novos acessos durante atualizações de versão.</span>
+              </div>
+              <label class="po-switch"><input type="checkbox"><i></i></label>
             </div>
           </div>
         </div>
       </div>
     `, 'Interruptor de Estado (PO Switch)'),
 
-    'po-checkbox': wrap(`
+    'po-textarea': wrap(`
       <div class="showcase-stack">
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <h4 style="margin:0 0 14px;font-size:14px;font-weight:700;color:var(--brand)">1. PO Checkbox</h4>
-          <div style="display:grid;gap:10px">
-            <label class="po-checkbox"><input type="checkbox" checked> Aceito os termos de uso e privacidade de dados</label>
-            <label class="po-checkbox"><input type="checkbox"> Desejo receber notificações fiscais por e-mail</label>
-            <label class="po-checkbox"><input type="checkbox" disabled> Acesso restrito a administradores</label>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Textarea com Contador de Caracteres</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Área de texto redimensionável para observações e pareceres</p>
+            </div>
+            <span class="po-tag">Texto Longo</span>
           </div>
-        </div>
-      </div>
-    `, 'Caixas de Seleção (PO Checkbox)'),
 
-    'po-radio': wrap(`
-      <div class="showcase-stack">
-        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <h4 style="margin:0 0 14px;font-size:14px;font-weight:700;color:var(--brand)">1. PO Radio Group</h4>
-          <div class="po-radio-group" style="display:flex;gap:20px">
-            <label class="po-radio"><input type="radio" name="planType" checked> Faturamento Mensal</label>
-            <label class="po-radio"><input type="radio" name="planType"> Semestral (-10%)</label>
-            <label class="po-radio"><input type="radio" name="planType"> Anual (-25%)</label>
-          </div>
+          <label class="po-field">
+            <span>Parecer Técnico / Observações da Auditoria</span>
+            <textarea class="po-control" id="textareaDemoInput" placeholder="Digite as observações detalhadas...">Cliente classificado com score de crédito AAA. Todas as certidões negativas de débito federal, estadual e municipal encontram-se rigorosamente em dia.</textarea>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px">
+              <small><i data-lucide="info" style="width:12px;height:12px"></i> Máximo de 500 caracteres permitidos.</small>
+              <small id="textareaDemoCounter" style="font-weight:700;color:var(--brand)">162 / 500</small>
+            </div>
+          </label>
         </div>
       </div>
-    `, 'Botões de Opção (PO Radio)'),
+    `, 'Área de Texto (PO Textarea)'),
 
     'po-upload': wrap(`
       <div class="showcase-stack">
         <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">1. PO Upload Drag & Drop</h4>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Upload Drag & Drop com Lista de Anexos</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Área de arrastar e soltar com visualização de arquivos enviados</p>
+            </div>
             <span class="po-tag success">Envio de Arquivos</span>
           </div>
-          <div class="po-upload" id="dropAreaDemo">
-            ${icon('cloud-upload')}
-            <p>Arraste e solte documentos aqui ou</p>
-            <label for="uploadFileDemo">procure no computador</label>
-            <input id="uploadFileDemo" type="file" multiple>
-            <small id="uploadStatusText">Formatos aceitos: PDF, PNG, JPG, XML (máx. 25MB)</small>
+
+          <div class="po-upload" id="dropAreaDemo" style="cursor:pointer;padding:32px 20px;border:2px dashed var(--brand);border-radius:8px;background:var(--surface-2);text-align:center">
+            <i data-lucide="cloud-upload" style="width:40px;height:40px;color:var(--brand);margin:0 auto 10px;display:block"></i>
+            <h5 style="margin:0 0 4px;font:700 15px 'Manrope',sans-serif;color:var(--ink)">Arraste e solte seus documentos fiscais aqui</h5>
+            <p style="margin:0 0 10px;font-size:12px;color:var(--muted)">ou clique para selecionar arquivos do seu computador</p>
+            <label for="uploadFileDemo" class="po-button sm primary" style="display:inline-flex;cursor:pointer">
+              <i data-lucide="folder-open"></i> Procurar Arquivos
+            </label>
+            <input id="uploadFileDemo" type="file" multiple style="display:none">
+            <div style="margin-top:12px;font-size:11px;color:var(--muted)">Formatos homologados: PDF, XML, XLSX, PNG, JPG (Máx. 25MB por arquivo)</div>
+          </div>
+
+          <!-- Lista de Arquivos Já Anexados -->
+          <div style="margin-top:16px;display:grid;gap:8px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:6px">
+              <div style="display:flex;align-items:center;gap:10px">
+                <i data-lucide="file-text" style="color:var(--brand);width:18px;height:18px"></i>
+                <div>
+                  <b style="font-size:12px;color:var(--ink)">Contrato_Social_Consolidado_2026.pdf</b>
+                  <span style="display:block;font-size:11px;color:var(--muted)">2.4 MB · Enviado há 10 minutos</span>
+                </div>
+              </div>
+              <button class="po-button icon-only ghost sm" data-toast="Arquivo removido!" style="color:var(--danger)"><i data-lucide="trash-2"></i></button>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:6px">
+              <div style="display:flex;align-items:center;gap:10px">
+                <i data-lucide="file-code" style="color:var(--success);width:18px;height:18px"></i>
+                <div>
+                  <b style="font-size:12px;color:var(--ink)">Certidao_Negativa_Tributos_Federais.xml</b>
+                  <span style="display:block;font-size:11px;color:var(--muted)">340 KB · Enviado agora</span>
+                </div>
+              </div>
+              <button class="po-button icon-only ghost sm" data-toast="Arquivo removido!" style="color:var(--danger)"><i data-lucide="trash-2"></i></button>
+            </div>
           </div>
         </div>
       </div>
     `, 'Envio de Arquivos (PO Upload)'),
 
     'po-rich-text': wrap(`
-      <div class="rich-toolbar">
-        <button data-cmd="bold" title="Negrito"><b>B</b></button>
-        <button data-cmd="italic" title="Itálico"><i>I</i></button>
-        <button data-cmd="underline" title="Sublinhado"><u>U</u></button>
-        <button data-cmd="insertUnorderedList" title="Lista">• Lista</button>
+      <div class="showcase-stack">
+        <div style="border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)">
+          <!-- Barra de Ferramentas com Ícones Lucide -->
+          <div style="display:flex;align-items:center;gap:4px;padding:8px 12px;background:var(--surface-2);border-bottom:1px solid var(--line);flex-wrap:wrap">
+            <button type="button" class="po-button icon-only ghost sm" data-cmd="bold" title="Negrito"><i data-lucide="bold"></i></button>
+            <button type="button" class="po-button icon-only ghost sm" data-cmd="italic" title="Itálico"><i data-lucide="italic"></i></button>
+            <button type="button" class="po-button icon-only ghost sm" data-cmd="underline" title="Sublinhado"><i data-lucide="underline"></i></button>
+            <div style="width:1px;height:20px;background:var(--line);margin:0 4px"></div>
+            <button type="button" class="po-button icon-only ghost sm" data-cmd="insertUnorderedList" title="Lista com Marcadores"><i data-lucide="list"></i></button>
+            <button type="button" class="po-button icon-only ghost sm" data-cmd="insertOrderedList" title="Lista Numerada"><i data-lucide="list-ordered"></i></button>
+            <div style="width:1px;height:20px;background:var(--line);margin:0 4px"></div>
+            <button type="button" class="po-button icon-only ghost sm" data-cmd="justifyLeft" title="Alinhar à Esquerda"><i data-lucide="align-left"></i></button>
+            <button type="button" class="po-button icon-only ghost sm" data-cmd="justifyCenter" title="Centralizar"><i data-lucide="align-center"></i></button>
+            <button type="button" class="po-button icon-only ghost sm" data-cmd="justifyRight" title="Alinhar à Direita"><i data-lucide="align-right"></i></button>
+          </div>
+          <!-- Área Editável -->
+          <div class="rich-editor" contenteditable="true" style="min-height:140px;padding:16px;font-size:13px;line-height:1.6;color:var(--ink);outline:0">
+            <p><b>Cláusula 1ª - Do Objeto do Contrato</b></p>
+            <p>O presente instrumento tem por objeto a prestação de serviços continuados de consultoria tributária e integração com o ecossistema <b>WF willFran</b>.</p>
+            <ul>
+              <li>Disponibilidade mínima do serviço garantida em 99.9% (SLA AAA).</li>
+              <li>Suporte técnico corporativo com atendimento em horário comercial.</li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="rich-editor" contenteditable="true">
-        Digite e formate o texto diretamente neste editor rich text compatível com PO UI.
-      </div>
-    `, 'Editor de Texto Formatado (Rich Text)'),
+    `, 'Editor de Texto Rico (PO Rich Text)'),
 
     'po-search-ai': wrap(`
       <div class="showcase-stack">
-        <div class="po-input-addon">
-          <input placeholder="Pergunte ao assistente de IA ou busque relatórios..." style="border-color:var(--brand)">
-          <button class="po-button primary"><i data-lucide="sparkles"></i> Gerar IA</button>
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Search AI (Busca Semântica Assistida por IA)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Processamento de linguagem natural com sugestões em tempo real</p>
+            </div>
+            <span class="po-tag brand"><i data-lucide="sparkles" style="width:12px;height:12px"></i> Inteligência Artificial</span>
+          </div>
+
+          <div style="display:grid;gap:12px">
+            <div class="po-input-group has-icon-left has-icon-right">
+              <span class="po-input-icon-left"><i data-lucide="sparkles" style="color:var(--brand)"></i></span>
+              <input class="po-control" id="searchAiInput" placeholder="Pergunte em linguagem natural: ex. 'Listar maiores compras de agosto'..." style="border-color:var(--brand);box-shadow:0 0 0 2px var(--brand-soft)">
+              <button class="po-button primary sm" id="searchAiSubmitBtn" style="position:absolute;right:6px;top:50%;transform:translateY(-50%)">
+                <i data-lucide="arrow-right"></i> Pesquisar
+              </button>
+            </div>
+
+            <!-- Sugestões em Chips -->
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <span style="font-size:11px;font-weight:700;color:var(--muted)">Sugestões de Consulta:</span>
+              <button type="button" class="po-tag brand" style="cursor:pointer" data-ai-query="Resumo financeiro do cliente Clínica Aurora">“Resumo Clínica Aurora”</button>
+              <button type="button" class="po-tag" style="cursor:pointer" data-ai-query="Pedidos pendentes de aprovação fiscal hoje">“Pendências fiscais hoje”</button>
+              <button type="button" class="po-tag" style="cursor:pointer" data-ai-query="Relatório de faturamento por estado">“Faturamento por estado”</button>
+            </div>
+          </div>
         </div>
-        <small style="color:var(--muted)">Exemplos: “Criar resumo do cliente Clínica Aurora”, “Listar vendas de agosto”</small>
       </div>
-    `, 'Busca Inteligente com IA (Search AI)'),
+    `, 'Busca com IA (PO Search AI)'),
 
     'po-clean': wrap(`
       <div class="showcase-stack">
-        ${field('Pesquisar Registros', `
-          <div class="po-input-group">
-            <input id="cleanDemoInput" value="Termo preenchido para demonstrar limpeza">
-            <button class="po-clean-btn" id="cleanDemoBtn" title="Limpar campo">${icon('x')}</button>
+        <div style="border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--surface)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--brand)">1. PO Clean (Ação de Limpeza de Formulários)</h4>
+              <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Restauração instantânea de múltiplos campos aos valores padrão</p>
+            </div>
+            <span class="po-tag danger">Limpeza</span>
           </div>
-        `, 'Clique no botão X para limpar instantaneamente')}
+
+          <form id="cleanDemoForm" onsubmit="event.preventDefault();" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:16px">
+            <label class="po-field">
+              <span>Termo de Pesquisa</span>
+              <input class="po-control" id="cleanDemoField1" value="Hospital Santa Clara">
+            </label>
+            <label class="po-field">
+              <span>Código da Filial</span>
+              <input class="po-control" id="cleanDemoField2" value="FILIAL-001-SP">
+            </label>
+            <label class="po-field">
+              <span>Data de Referência</span>
+              <input class="po-control" type="date" id="cleanDemoField3" value="2026-08-31">
+            </label>
+            <div style="grid-column:1/-1;display:flex;justify-content:flex-end;gap:10px;margin-top:8px">
+              <button type="button" class="po-button danger ghost" id="cleanDemoAllBtn"><i data-lucide="rotate-ccw"></i> Limpar Todos os Campos</button>
+              <button type="submit" class="po-button primary"><i data-lucide="search"></i> Executar Filtro</button>
+            </div>
+          </form>
+        </div>
       </div>
-    `, 'Ação de Limpeza Integrada (Clean)'),
+    `, 'Ação de Limpeza (PO Clean)'),
 
     // 3. DADOS & VISUALIZAÇÃO
     'po-table': wrap(`
@@ -4843,6 +5446,192 @@ function bindPreviewEvents(name) {
           }, 1000);
         }, 1000);
       }, 1000);
+    });
+  }
+
+  // 15. Form Components Interactivity (Limpeza, Olho de Senha, Atalhos e Labs)
+  // Limpeza genérica em qualquer input-group com .po-clean-btn
+  root.querySelectorAll('.po-clean-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const group = btn.closest('.po-input-group');
+      const input = group?.querySelector('input, textarea');
+      if (input) {
+        input.value = '';
+        input.focus();
+        input.dispatchEvent(new Event('input'));
+        toast('Campo limpo com sucesso!');
+      }
+    });
+  });
+
+  // Password demo com alternador de olho
+  const passDemoInput = root.querySelector('#passDemoInput');
+  const passDemoToggleBtn = root.querySelector('#passDemoToggleBtn');
+  const passDemoStrengthBar = root.querySelector('#passDemoStrengthBar');
+  const passDemoStrengthLabel = root.querySelector('#passDemoStrengthLabel');
+
+  if (passDemoToggleBtn && passDemoInput) {
+    passDemoToggleBtn.addEventListener('click', () => {
+      const isPass = passDemoInput.type === 'password';
+      passDemoInput.type = isPass ? 'text' : 'password';
+      passDemoToggleBtn.innerHTML = isPass ? '<i data-lucide="eye-off" style="width:16px;height:16px"></i>' : '<i data-lucide="eye" style="width:16px;height:16px"></i>';
+      refreshIcons();
+    });
+
+    passDemoInput.addEventListener('input', () => {
+      const val = passDemoInput.value;
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val)) score++;
+
+      if (passDemoStrengthLabel && passDemoStrengthBar) {
+        if (score <= 1) {
+          passDemoStrengthLabel.textContent = 'Fraca (25%)';
+          passDemoStrengthLabel.style.color = 'var(--danger)';
+          passDemoStrengthBar.style.width = '25%';
+          passDemoStrengthBar.style.background = 'var(--danger)';
+        } else if (score === 2 || score === 3) {
+          passDemoStrengthLabel.textContent = 'Média (65%)';
+          passDemoStrengthLabel.style.color = 'var(--warning)';
+          passDemoStrengthBar.style.width = '65%';
+          passDemoStrengthBar.style.background = 'var(--warning)';
+        } else {
+          passDemoStrengthLabel.textContent = 'Forte (100%)';
+          passDemoStrengthLabel.style.color = 'var(--success)';
+          passDemoStrengthBar.style.width = '100%';
+          passDemoStrengthBar.style.background = 'var(--success)';
+        }
+      }
+    });
+  }
+
+  // URL test button
+  const urlDemoInput = root.querySelector('#urlDemoInput');
+  const urlDemoTestBtn = root.querySelector('#urlDemoTestBtn');
+  if (urlDemoTestBtn && urlDemoInput) {
+    urlDemoTestBtn.addEventListener('click', () => {
+      const url = urlDemoInput.value.trim();
+      if (url.startsWith('http')) {
+        window.open(url, '_blank');
+      } else {
+        toast('Informe uma URL completa válida com http:// ou https://', 'warning');
+      }
+    });
+  }
+
+  // Datepicker shortcuts
+  const datepickerDemoInput = root.querySelector('#datepickerDemoInput');
+  root.querySelector('#dateShortcutTodayBtn')?.addEventListener('click', () => {
+    const today = new Date().toISOString().split('T')[0];
+    if (datepickerDemoInput) datepickerDemoInput.value = today;
+    toast(`Data definida para hoje: ${today}`);
+  });
+  root.querySelector('#dateShortcutTomorrowBtn')?.addEventListener('click', () => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    const tomorrow = d.toISOString().split('T')[0];
+    if (datepickerDemoInput) datepickerDemoInput.value = tomorrow;
+    toast(`Data definida para amanhã: ${tomorrow}`);
+  });
+  root.querySelector('#dateShortcutWeekBtn')?.addEventListener('click', () => {
+    const d = new Date();
+    d.setDate(d.getDate() + 7);
+    const nextWeek = d.toISOString().split('T')[0];
+    if (datepickerDemoInput) datepickerDemoInput.value = nextWeek;
+    toast(`Data definida para daqui a 7 dias: ${nextWeek}`);
+  });
+
+  // Multiselect tag removal
+  root.querySelector('#multiTagsContainer')?.addEventListener('click', e => {
+    const removeBtn = e.target.closest('.multiselect-remove');
+    if (removeBtn) {
+      const tag = removeBtn.closest('.po-tag');
+      if (tag) {
+        const txt = tag.textContent.replace('×', '').trim();
+        tag.remove();
+        toast(`Módulo "${txt}" removido!`);
+      }
+    }
+  });
+
+  // Textarea character counter
+  const textareaDemoInput = root.querySelector('#textareaDemoInput');
+  const textareaDemoCounter = root.querySelector('#textareaDemoCounter');
+  if (textareaDemoInput && textareaDemoCounter) {
+    textareaDemoInput.addEventListener('input', () => {
+      const len = textareaDemoInput.value.length;
+      textareaDemoCounter.textContent = `${len} / 500`;
+      if (len > 500) {
+        textareaDemoCounter.style.color = 'var(--danger)';
+      } else {
+        textareaDemoCounter.style.color = 'var(--brand)';
+      }
+    });
+  }
+
+  // Search AI suggestions
+  root.querySelectorAll('[data-ai-query]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const searchAiInput = root.querySelector('#searchAiInput');
+      if (searchAiInput) {
+        searchAiInput.value = btn.dataset.aiQuery;
+        toast(`Consulta IA preenchida: "${btn.dataset.aiQuery}"`);
+      }
+    });
+  });
+  root.querySelector('#searchAiSubmitBtn')?.addEventListener('click', () => {
+    const searchAiInput = root.querySelector('#searchAiInput');
+    const val = searchAiInput?.value.trim();
+    if (!val) {
+      toast('Digite uma pergunta ou selecione uma sugestão para o assistente IA!', 'warning');
+      return;
+    }
+    toast(`🤖 IA processando: "${val}"...`, 'info');
+  });
+
+  // Clean demo form
+  root.querySelector('#cleanDemoAllBtn')?.addEventListener('click', () => {
+    const f1 = root.querySelector('#cleanDemoField1');
+    const f2 = root.querySelector('#cleanDemoField2');
+    const f3 = root.querySelector('#cleanDemoField3');
+    if (f1) f1.value = '';
+    if (f2) f2.value = '';
+    if (f3) f3.value = '';
+    toast('Todos os campos foram limpos instantaneamente!', 'success');
+  });
+
+  // Input Labs
+  const inputLabsTarget = root.querySelector('#inputLabsTarget');
+  const inputLabsGroup = root.querySelector('#inputLabsGroup');
+  const inputLabsLabelText = root.querySelector('#inputLabsLabelText');
+  const inputLabsReqCheck = root.querySelector('#inputLabsReqCheck');
+  const inputLabsDisCheck = root.querySelector('#inputLabsDisCheck');
+  const inputLabsErrCheck = root.querySelector('#inputLabsErrCheck');
+
+  if (inputLabsTarget) {
+    inputLabsReqCheck?.addEventListener('change', () => {
+      if (inputLabsLabelText) {
+        inputLabsLabelText.className = inputLabsReqCheck.checked ? 'required' : '';
+      }
+    });
+    inputLabsDisCheck?.addEventListener('change', () => {
+      inputLabsTarget.disabled = inputLabsDisCheck.checked;
+    });
+    inputLabsErrCheck?.addEventListener('change', () => {
+      inputLabsTarget.classList.toggle('is-invalid', inputLabsErrCheck.checked);
+      const helper = root.querySelector('#inputLabsHelperText');
+      if (helper) {
+        if (inputLabsErrCheck.checked) {
+          helper.className = 'error';
+          helper.innerHTML = '<i data-lucide="alert-circle" style="width:12px;height:12px"></i> Campo com erro de preenchimento!';
+        } else {
+          helper.className = '';
+          helper.innerHTML = 'Dica sincronizada em tempo real.';
+        }
+        refreshIcons();
+      }
     });
   }
 }

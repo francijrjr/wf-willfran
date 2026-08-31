@@ -1274,15 +1274,15 @@ function createPreview(name) {
             <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">1. PO Breadcrumb Basic</h4>
             <span class="po-tag">Amostra Básica</span>
           </div>
-          <nav class="po-breadcrumb">
+          <nav class="po-breadcrumb" id="basicBreadcrumbNav">
             <div class="po-breadcrumb-items">
-              <ul class="po-breadcrumb-item-container">
+              <ul class="po-breadcrumb-item-container" id="basicBreadcrumbList">
                 <li class="po-breadcrumb-item">
-                  <a href="#/inicio" class="po-breadcrumb-link">PO Portal</a>
+                  <a href="#" class="po-breadcrumb-link" data-step="0">PO Portal</a>
                   <i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i>
                 </li>
                 <li class="po-breadcrumb-item">
-                  <span class="po-breadcrumb-item-activate" aria-current="page">PO Breadcrumb</span>
+                  <span class="po-breadcrumb-item-activate" data-step="1" aria-current="page">PO Breadcrumb</span>
                 </li>
               </ul>
             </div>
@@ -1295,24 +1295,13 @@ function createPreview(name) {
             <h4 style="margin:0;font-size:14px;font-weight:700;color:var(--brand)">2. PO Breadcrumb com Favorito (Favorite Service)</h4>
             <span class="po-tag success">Com Favoritar</span>
           </div>
-          <nav class="po-breadcrumb">
+          <nav class="po-breadcrumb" id="favBreadcrumbNav">
             <div class="po-breadcrumb-items">
-              <ul class="po-breadcrumb-item-container">
-                <li class="po-breadcrumb-item">
-                  <a href="#/inicio" class="po-breadcrumb-link">Início</a>
-                  <i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i>
-                </li>
-                <li class="po-breadcrumb-item">
-                  <a href="#/inicio" class="po-breadcrumb-link">Comercial</a>
-                  <i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i>
-                </li>
-                <li class="po-breadcrumb-item">
-                  <a href="#/inicio" class="po-breadcrumb-link">Clientes</a>
-                  <i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i>
-                </li>
-                <li class="po-breadcrumb-item">
-                  <span class="po-breadcrumb-item-activate" aria-current="page">Clínica Aurora Saúde</span>
-                </li>
+              <ul class="po-breadcrumb-item-container" id="favBreadcrumbList">
+                <li class="po-breadcrumb-item"><a href="#" class="po-breadcrumb-link" data-fav-step="0">Início</a><i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i></li>
+                <li class="po-breadcrumb-item"><a href="#" class="po-breadcrumb-link" data-fav-step="1">Comercial</a><i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i></li>
+                <li class="po-breadcrumb-item"><a href="#" class="po-breadcrumb-link" data-fav-step="2">Clientes</a><i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i></li>
+                <li class="po-breadcrumb-item"><span class="po-breadcrumb-item-activate" data-fav-step="3" aria-current="page">Clínica Aurora Saúde</span></li>
               </ul>
             </div>
             <button class="po-breadcrumb-favorite" data-favorite-btn title="Adicionar aos Favoritos" aria-label="Favoritar"><i data-lucide="star"></i></button>
@@ -2718,62 +2707,142 @@ function bindPreviewEvents(name) {
     });
   });
 
-  // Breadcrumb Interactive: Navegação e Retorno entre Níveis
+  // 1. PO Breadcrumb Basic: Navegação Bidirecional com botão >
+  const basicList = root.querySelector('#basicBreadcrumbList');
+  const basicSteps = ['PO Portal', 'PO Breadcrumb'];
+  let currentBasicIndex = 1;
+
+  function renderBasicBreadcrumb(idx) {
+    if (!basicList) return;
+    currentBasicIndex = idx;
+    let html = '';
+    
+    if (currentBasicIndex === 0) {
+      html = `
+        <li class="po-breadcrumb-item">
+          <span class="po-breadcrumb-item-activate" aria-current="page">PO Portal</span>
+          <button class="po-breadcrumb-expand-btn" data-step="1" title="Clique no > para avançar para PO Breadcrumb" aria-label="Avançar para PO Breadcrumb">
+            <i data-lucide="chevron-right"></i>
+          </button>
+        </li>
+      `;
+    } else {
+      html = `
+        <li class="po-breadcrumb-item">
+          <a href="#" class="po-breadcrumb-link" data-step="0">PO Portal</a>
+          <i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i>
+        </li>
+        <li class="po-breadcrumb-item">
+          <span class="po-breadcrumb-item-activate" aria-current="page">PO Breadcrumb</span>
+        </li>
+      `;
+    }
+
+    basicList.innerHTML = html;
+    refreshIcons();
+  }
+
+  basicList?.addEventListener('click', e => {
+    const link = e.target.closest('[data-step]');
+    if (!link) return;
+    e.preventDefault();
+    const idx = parseInt(link.dataset.step);
+    renderBasicBreadcrumb(idx);
+    toast(`Navegando para: ${basicSteps[idx]}!`, 'success');
+  });
+
+  // 2. PO Breadcrumb Favorito: Navegação Livre Bidirecional com botão >
+  const favList = root.querySelector('#favBreadcrumbList');
+  const favSteps = ['Início', 'Comercial', 'Clientes', 'Clínica Aurora Saúde'];
+  let currentFavIndex = 3;
+
+  function renderFavBreadcrumb(idx) {
+    if (!favList) return;
+    currentFavIndex = idx;
+    let html = '';
+    favSteps.forEach((step, i) => {
+      if (i < currentFavIndex) {
+        html += `<li class="po-breadcrumb-item"><a href="#" class="po-breadcrumb-link" data-fav-step="${i}">${step}</a><i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i></li>`;
+      } else if (i === currentFavIndex) {
+        if (currentFavIndex < favSteps.length - 1) {
+          html += `
+            <li class="po-breadcrumb-item">
+              <span class="po-breadcrumb-item-activate" aria-current="page">${step}</span>
+              <button class="po-breadcrumb-expand-btn" data-fav-step="${currentFavIndex + 1}" title="Clique no > para avançar para ${favSteps[currentFavIndex + 1]}" aria-label="Avançar para ${favSteps[currentFavIndex + 1]}">
+                <i data-lucide="chevron-right"></i>
+              </button>
+            </li>
+          `;
+        } else {
+          html += `<li class="po-breadcrumb-item"><span class="po-breadcrumb-item-activate" aria-current="page">${step}</span></li>`;
+        }
+      }
+    });
+    favList.innerHTML = html;
+    refreshIcons();
+  }
+
+  favList?.addEventListener('click', e => {
+    const link = e.target.closest('[data-fav-step]');
+    if (!link) return;
+    e.preventDefault();
+    const idx = parseInt(link.dataset.favStep);
+    renderFavBreadcrumb(idx);
+    toast(`Navegando para: ${favSteps[idx]}!`, 'success');
+  });
+
+  // 3. Breadcrumb Collapsed: Cliques nos itens do menu
+  root.querySelectorAll('.po-dropdown-menu button[data-toast]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const parentMenu = btn.closest('.po-dropdown-menu');
+      if (parentMenu) parentMenu.hidden = true;
+    });
+  });
+
+  // 4. Breadcrumb Labs Interactive com suporte ao botão >
   const addBreadcrumbBtn = root.querySelector('#labsAddBreadcrumbBtn');
   const breadcrumbInput = root.querySelector('#labsBreadcrumbLabel');
   const breadcrumbList = root.querySelector('#labsBreadcrumbList');
   const resetBreadcrumbBtn = root.querySelector('#labsResetBreadcrumbBtn');
+  let labsSteps = ['Início', 'Painel Geral'];
+  let currentLabsIndex = 1;
 
-  if (breadcrumbList) {
-    // Delegação para voltar a qualquer nível anterior clicado no Labs
-    breadcrumbList.addEventListener('click', event => {
-      const link = event.target.closest('.po-breadcrumb-link');
-      if (!link) return;
-      event.preventDefault();
-
-      const clickedLi = link.closest('.po-breadcrumb-item');
-      if (!clickedLi) return;
-
-      const title = link.textContent.trim();
-
-      // Remove todos os níveis posteriores ao clicado
-      let next = clickedLi.nextElementSibling;
-      while (next) {
-        const toRemove = next;
-        next = next.nextElementSibling;
-        toRemove.remove();
+  function renderLabsBreadcrumb() {
+    if (!breadcrumbList) return;
+    let html = '';
+    labsSteps.forEach((step, i) => {
+      if (i < currentLabsIndex) {
+        html += `<li class="po-breadcrumb-item"><a href="#" class="po-breadcrumb-link" data-labs-step="${i}">${step}</a><i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i></li>`;
+      } else if (i === currentLabsIndex) {
+        if (currentLabsIndex < labsSteps.length - 1) {
+          html += `
+            <li class="po-breadcrumb-item">
+              <span class="po-breadcrumb-item-activate" aria-current="page">${step}</span>
+              <button class="po-breadcrumb-expand-btn" data-labs-step="${currentLabsIndex + 1}" title="Clique no > para avançar para ${labsSteps[currentLabsIndex + 1]}" aria-label="Avançar para ${labsSteps[currentLabsIndex + 1]}">
+                <i data-lucide="chevron-right"></i>
+              </button>
+            </li>
+          `;
+        } else {
+          html += `<li class="po-breadcrumb-item"><span class="po-breadcrumb-item-activate" aria-current="page">${step}</span></li>`;
+        }
       }
-
-      // Converte o item clicado no nível ativo atual
-      clickedLi.innerHTML = `<span class="po-breadcrumb-item-activate" aria-current="page">${escapeHTML(title)}</span>`;
-      refreshIcons();
-      toast(`Voltando para o nível: "${title}"`, 'success');
     });
+    breadcrumbList.innerHTML = html;
+    refreshIcons();
   }
 
-  // Navegação para as outras amostras de breadcrumb
-  root.querySelectorAll('.po-breadcrumb:not(#labsBreadcrumbTarget) .po-breadcrumb-link').forEach(link => {
-    link.addEventListener('click', event => {
-      event.preventDefault();
-      const title = link.textContent.trim();
-      const navContainer = link.closest('.po-breadcrumb-item-container');
-      const clickedLi = link.closest('.po-breadcrumb-item');
-
-      if (navContainer && clickedLi) {
-        let next = clickedLi.nextElementSibling;
-        while (next) {
-          const toRemove = next;
-          next = next.nextElementSibling;
-          toRemove.remove();
-        }
-        clickedLi.innerHTML = `<span class="po-breadcrumb-item-activate" aria-current="page">${escapeHTML(title)}</span>`;
-        refreshIcons();
-      }
-      toast(`Navegando para o nível: "${title}"`);
-    });
+  breadcrumbList?.addEventListener('click', e => {
+    const link = e.target.closest('[data-labs-step]');
+    if (!link) return;
+    e.preventDefault();
+    const idx = parseInt(link.dataset.labsStep);
+    currentLabsIndex = idx;
+    renderLabsBreadcrumb();
+    toast(`Navegando para: ${labsSteps[idx]}!`, 'success');
   });
 
-  if (addBreadcrumbBtn && breadcrumbInput && breadcrumbList) {
+  if (addBreadcrumbBtn && breadcrumbInput) {
     addBreadcrumbBtn.addEventListener('click', () => {
       const label = breadcrumbInput.value.trim();
       if (!label) {
@@ -2781,38 +2850,19 @@ function bindPreviewEvents(name) {
         breadcrumbInput.focus();
         return;
       }
-
-      // Converte o crumb ativo atual em link navegável
-      const activeItem = breadcrumbList.querySelector('.po-breadcrumb-item-activate');
-      if (activeItem) {
-        const parentLi = activeItem.parentElement;
-        const currentText = activeItem.textContent;
-        parentLi.innerHTML = `<a href="#/inicio" class="po-breadcrumb-link">${escapeHTML(currentText)}</a><i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i>`;
-      }
-
-      // Adiciona o novo crumb ativo
-      const newLi = document.createElement('li');
-      newLi.className = 'po-breadcrumb-item';
-      newLi.innerHTML = `<span class="po-breadcrumb-item-activate" aria-current="page">${escapeHTML(label)}</span>`;
-      breadcrumbList.appendChild(newLi);
-
+      labsSteps.splice(currentLabsIndex + 1);
+      labsSteps.push(label);
+      currentLabsIndex = labsSteps.length - 1;
+      renderLabsBreadcrumb();
       breadcrumbInput.value = '';
       breadcrumbInput.focus();
-      refreshIcons();
       toast(`Nível "${label}" adicionado ao breadcrumb!`);
     });
 
     resetBreadcrumbBtn?.addEventListener('click', () => {
-      breadcrumbList.innerHTML = `
-        <li class="po-breadcrumb-item">
-          <a href="#/inicio" class="po-breadcrumb-link">Início</a>
-          <i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i>
-        </li>
-        <li class="po-breadcrumb-item">
-          <span class="po-breadcrumb-item-activate" aria-current="page">Painel Geral</span>
-        </li>
-      `;
-      refreshIcons();
+      labsSteps = ['Início', 'Painel Geral'];
+      currentLabsIndex = 1;
+      renderLabsBreadcrumb();
       toast('Breadcrumb restaurado.');
     });
   }

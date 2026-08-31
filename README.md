@@ -18,20 +18,20 @@
 
 </div>
 
-## 🌟 Por que WF willFran?
+## Por que WF willFran?
 
 Desenvolvido para equipes e desenvolvedores que precisam da robustez e elegância visual do **Design System Portinari (PO UI / TOTVS)**, mas que **não querem a sobrecarga, lentidão ou complexidade** de frameworks como Angular, React ou Node.js.
 
-- 🚀 **Zero Build & Zero Config**: Abra diretamente no navegador com duplo clique ou sirva em qualquer servidor HTTP.
-- 🔌 **Universal & Agnóstico**: Compatível com qualquer backend ou tecnologia (**PHP, Python/Django/Flask, Java/Spring, ASP.NET/C#, Ruby on Rails, Protheus ADVPL/TLPP, TOTVS Fluig ou HTML estático**).
-- 🎨 **Fidelidade Portinari**: Cores oficiais (Eggplant `#753399`), tipografia (*Manrope* / *DM Sans*), espaçamentos, sombras e micro-interações fiéis.
-- 🌗 **Dark Mode Inteligente**: Alternância de tema claro/escuro nativa com suporte a detecção de preferência de sistema e persistência em `localStorage`.
-- 📋 **Copy & Paste Instantâneo**: Visualize o código fonte formatado em **HTML**, **CSS** ou **JavaScript** e copie com 1 clique.
-- 🧪 **Laboratórios Interativos (Labs)**: Teste propriedades, filtros, estados dinâmicos e validações em tempo real antes de aplicar no seu projeto.
+-  **Zero Build & Zero Config**: Abra diretamente no navegador com duplo clique ou sirva em qualquer servidor HTTP.
+-  **Universal & Agnóstico**: Compatível com qualquer backend ou tecnologia (**PHP, Python/Django/Flask, Java/Spring, ASP.NET/C#, Ruby on Rails, Protheus ADVPL/TLPP, TOTVS Fluig ou HTML estático**).
+-  **Fidelidade Portinari**: Cores oficiais (Eggplant `#753399`), tipografia (*Manrope* / *DM Sans*), espaçamentos, sombras e micro-interações fiéis.
+-  **Dark Mode Inteligente**: Alternância de tema claro/escuro nativa com suporte a detecção de preferência de sistema e persistência em `localStorage`.
+-  **Copy & Paste Instantâneo**: Visualize o código fonte formatado em **HTML**, **CSS** ou **JavaScript** e copie com 1 clique.
+-  **Laboratórios Interativos (Labs)**: Teste propriedades, filtros, estados dinâmicos e validações em tempo real antes de aplicar no seu projeto.
 
 ---
 
-## 🚀 Como Executar
+##  Como Executar
 
 ### Opção 1: Direto no Navegador (Mais Rápido)
 Basta clonar o repositório e abrir o arquivo `index.html` em qualquer navegador moderno.
@@ -57,7 +57,7 @@ Abra seu navegador em: **`http://localhost:8080`**
 
 ---
 
-## 📦 Como Usar em Seus Projetos
+##  Como Usar em Seus Projetos
 
 Você pode utilizar o pacote pré-empacotado localizado na pasta `po-vanilla/`:
 
@@ -100,7 +100,7 @@ Você pode utilizar o pacote pré-empacotado localizado na pasta `po-vanilla/`:
 
 ---
 
-## 🧩 Catálogo de Componentes (89 Componentes e Templates)
+##  Catálogo de Componentes (89 Componentes e Templates)
 
 <details open>
 <summary><b>1. Navegação (8 Componentes)</b></summary>
@@ -233,27 +233,24 @@ Você pode utilizar o pacote pré-empacotado localizado na pasta `po-vanilla/`:
 
 ---
 
-## 🎨 Tokens de Design & Customização (CSS Variables)
+##  Tokens de Design & Customização (CSS Variables)
 
 Você pode personalizar completamente a identidade visual do projeto alterando as variáveis no `:root`:
 
 ```css
 :root {
-  /* Cor Primária da Marca */
-  --brand: #753399;           /* Roxo Oficial Portinari */
-  --brand-hover: #602580;     /* Estado Hover */
-  --brand-soft: #f4eaf8;      /* Fundo Suave / Destaque */
+
+  --brand: #753399;          
+  --brand-hover: #602580;     
+  --brand-soft: #f4eaf8;
+
+  --success: #168862;         
+  --warning: #c86f0a;        
+  --danger: #c83c4d;         
+  --info: #1769aa;            
   
-  /* Cores Semânticas */
-  --success: #168862;         /* Verde Sucesso */
-  --warning: #c86f0a;         /* Laranja Alerta */
-  --danger: #c83c4d;          /* Vermelho Erro */
-  --info: #1769aa;            /* Azul Informativo */
-  
-  /* Tipografia */
   --font-family: 'DM Sans', 'Manrope', -apple-system, sans-serif;
   
-  /* Bordas e Sombras */
   --radius: 6px;
   --radius-lg: 10px;
   --shadow: 0 10px 30px rgba(39, 27, 48, 0.10);

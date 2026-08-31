@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Catálogo de componentes inspirados no PO UI, recriados em HTML, CSS e JavaScript puro.">
+  <title>WF willFran — Componentes HTML, CSS e JS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/po-ui/css/po-theme-default.min.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="icon-button mobile-menu" id="menuToggle" aria-label="Abrir menu" aria-expanded="false"><i data-lucide="menu"></i></button>
+      <a class="brand" href="#/inicio" aria-label="WF willFran - início">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span><b>WF</b> willFran</span>
+      </a>
+      <div class="top-search">
+        <i data-lucide="search" aria-hidden="true"></i>
+        <input id="globalSearch" type="search" placeholder="Buscar componente..." autocomplete="off" aria-label="Buscar componente">
+        <kbd>Ctrl K</kbd>
+      </div>
+      <nav class="top-actions" aria-label="Ações globais">
+        <button class="icon-button" id="themeToggle" aria-label="Alternar tema"><i data-lucide="moon"></i></button>
+      </nav>
+    </header>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head"><span class="eyebrow">BIBLIOTECA</span><span class="count" id="componentCount">0</span></div>
+      <nav id="componentNav" aria-label="Componentes"></nav>
+      <div class="sidebar-foot"><span class="status-dot"></span><div><b>wilFran edition</b><small>HTML · CSS · JavaScript</small></div></div>
+    </aside>
+
+    <main id="main" class="main" tabindex="-1">
+      <section id="homeView" class="home-view">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="hero-label">DESIGN SYSTEM · SEM FRAMEWORK</span>
+            <h1>Componentes para<br><em>trabalho de verdade.</em></h1>
+            <p>Uma releitura do catálogo PO UI em HTML semântico, CSS moderno e JavaScript puro. Acessível, responsivo e pronto para copiar.</p>
+            <div class="hero-actions"><button class="po-button primary" data-open="po-button">Explorar componentes <i data-lucide="arrow-right"></i></button><button class="po-button ghost" id="showAllButton">Ver catálogo</button></div>
+          </div>
+          <div class="hero-demo" aria-label="Demonstração visual">
+            <div class="demo-window">
+              <div class="window-bar"><i></i><i></i><i></i><span>novo-pedido.html</span></div>
+              <div class="mini-form">
+                <div class="mini-title"><span>Novo pedido</span><span class="po-tag success">Rascunho</span></div>
+                <label>Cliente <span>●</span><input value="Clínica Aurora" readonly></label>
+                <div class="mini-row"><label>Entrega<input value="18/09/2026" readonly></label><label>Prioridade<select><option>Normal</option></select></label></div>
+                <div class="mini-total"><span>Total</span><b>R$ 4.820,00</b></div>
+                <button class="po-button primary">Confirmar pedido</button>
+              </div>
+            </div>
+            <div class="float-card float-one"><span><i data-lucide="check"></i></span><div><b>Pedido salvo</b><small>Agora mesmo</small></div></div>
+            <div class="float-card float-two"><b id="heroCount">0</b><small>componentes</small></div>
+          </div>
+        </div>
+
+        <section class="catalog" id="catalog">
+          <div class="section-heading"><div><span class="eyebrow">CATÁLOGO</span><h2>Encontre o componente certo</h2></div><div class="filters" id="filters" role="group" aria-label="Filtrar componentes"></div></div>
+          <div class="component-grid" id="componentGrid"></div>
+          <div class="empty-state" id="emptyState" hidden><i data-lucide="search-x"></i><h3>Nenhum componente encontrado</h3><p>Tente buscar por outro nome ou categoria.</p></div>
+        </section>
+      </section>
+
+      <section id="detailView" class="detail-view" hidden>
+        <button class="back-link" id="backButton"><i data-lucide="arrow-left"></i> Todos os componentes</button>
+        <div class="detail-header">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap">
+              <span class="hero-label" style="margin-bottom:0">DESIGN SYSTEM · SEM FRAMEWORK</span>
+              <span class="component-category" id="detailCategory"></span>
+            </div>
+            <h1 id="detailTitle"></h1>
+            <p id="detailDescription"></p>
+          </div>
+          <span class="zero-deps"><i data-lucide="circle-check"></i> Pronto para copiar</span>
+        </div>
+        <div class="detail-tabs" role="tablist"><button class="active" role="tab" data-tab="preview" aria-selected="true">Exemplo</button><button role="tab" data-tab="code" aria-selected="false">Código</button></div>
+        <div class="tab-panel active" id="previewPanel" role="tabpanel">
+          <div class="preview-toolbar"><span>PREVIEW</span><div><button data-viewport="desktop" class="active" aria-label="Visualização desktop"><i data-lucide="monitor"></i></button><button data-viewport="mobile" aria-label="Visualização mobile"><i data-lucide="smartphone"></i></button></div></div>
+          <div class="preview-stage" id="previewStage"><div id="componentPreview"></div></div>
+        </div>
+        <div class="tab-panel" id="codePanel" role="tabpanel">
+          <div class="code-head">
+            <div class="code-languages" role="tablist" aria-label="Linguagem do código">
+              <button class="active" role="tab" data-language="html" aria-selected="true"><i data-lucide="file-code"></i> HTML</button>
+              <button role="tab" data-language="css" aria-selected="false"><i data-lucide="palette"></i> CSS</button>
+              <button role="tab" data-language="js" aria-selected="false"><i data-lucide="terminal"></i> JavaScript</button>
+            </div>
+            <div class="code-actions">
+              <span class="code-file-badge" id="codeFileBadge">po-button.html</span>
+              <button class="code-action-btn" id="downloadCode" title="Baixar arquivo no seu computador"><i data-lucide="download"></i><span>Baixar</span></button>
+              <button class="code-action-btn primary" id="copyCode"><i data-lucide="copy"></i><span>Copiar HTML</span></button>
+            </div>
+          </div>
+          <div class="code-container">
+            <pre><code id="codeBlock"></code></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+  
+  <!-- Modal Padrão -->
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="po-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head"><h2 id="modalTitle">Confirmar ação</h2><button class="icon-button" data-close-modal aria-label="Fechar"><i data-lucide="x"></i></button></div>
+      <p>Deseja confirmar esta operação? Esta janela é totalmente controlada em HTML, CSS e JavaScript puro.</p>
+      <div class="modal-actions"><button class="po-button ghost" data-close-modal>Cancelar</button><button class="po-button primary" data-confirm-modal>Confirmar</button></div>
+    </div>
+  </div>
+
+  <!-- Modal de Lookup de Dados -->
+  <div class="modal-backdrop" id="lookupModalBackdrop" hidden>
+    <div class="po-modal" style="width:min(100%, 650px)" role="dialog" aria-modal="true" aria-labelledby="lookupModalTitle">
+      <div class="modal-head"><h2 id="lookupModalTitle">Selecionar Registro (Lookup)</h2><button class="icon-button" data-close-lookup aria-label="Fechar"><i data-lucide="x"></i></button></div>
+      <div style="margin-bottom:14px;display:flex;gap:8px">
+        <input class="po-control" id="lookupFilterInput" placeholder="Filtrar registros..." style="flex:1">
+        <button class="po-button primary"><i data-lucide="search"></i> Buscar</button>
+      </div>
+      <div style="max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:6px;margin-bottom:16px">
+        <table class="po-table">
+          <thead><tr><th>Código</th><th>Razão Social / Nome</th><th>Cidade</th><th>Ação</th></tr></thead>
+          <tbody>
+            <tr><td>CLI-001</td><td>Clínica Aurora Saúde</td><td>Fortaleza</td><td><button class="po-button sm primary" data-select-lookup="Clínica Aurora Saúde">Selecionar</button></td></tr>
+            <tr><td>CLI-002</td><td>Mercado Central Distribuição</td><td>Recife</td><td><button class="po-button sm primary" data-select-lookup="Mercado Central Distribuição">Selecionar</button></td></tr>
+            <tr><td>CLI-003</td><td>Studio Norte Arquitetura</td><td>São Paulo</td><td><button class="po-button sm primary" data-select-lookup="Studio Norte Arquitetura">Selecionar</button></td></tr>
+            <tr><td>CLI-004</td><td>Hospital São Mateus</td><td>Rio de Janeiro</td><td><button class="po-button sm primary" data-select-lookup="Hospital São Mateus">Selecionar</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-actions"><button class="po-button ghost" data-close-lookup>Fechar</button></div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

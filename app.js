@@ -162,7 +162,7 @@ const components = Object.entries(groups).flatMap(([category, names]) =>
   names.map(name => ({
     name,
     category,
-    description: descriptions[name] || 'Componente reutilizável do PO UI Vanilla.'
+    description: descriptions[name] || 'Componente reutilizável do willfran.'
   }))
 );
 
@@ -3562,7 +3562,7 @@ function createPreview(name) {
 function componentHTML(name) {
   const rawPreview = createPreview(name);
   return `<!-- ==========================================
-     PO UI Vanilla Component: ${name}
+     WF WillFran Component: ${name}
      Design System sem framework
      ========================================== -->
 ${rawPreview.replace(/ style="animation-delay:[^"]*"/g, '')}
@@ -3800,7 +3800,7 @@ function componentCSS(name) {
 }`;
 
   return `/* =========================================================
-   PO UI Vanilla CSS: ${name}
+   willfran CSS: ${name}
    Design System · Sem Framework
    ========================================================= */
 :root {
@@ -3828,7 +3828,7 @@ function componentJavascript(name) {
 document.querySelectorAll('.po-button[data-toast]').forEach(button => {
   button.addEventListener('click', () => {
     const msg = button.dataset.toast || 'Botão clicado!';
-    PO.toast(msg, button.classList.contains('danger') ? 'danger' : 'success');
+    willfran.toast(msg, button.classList.contains('danger') ? 'danger' : 'success');
   });
 });`,
 
@@ -3917,7 +3917,7 @@ if (window.lucide) {
 }`;
 
   return `// =========================================================
-// PO UI Vanilla JavaScript: ${name}
+// willfran JavaScript: ${name}
 // Controle Interativo sem Framework
 // =========================================================
 ${code}`;
@@ -3943,7 +3943,7 @@ function highlightCode(code, lang) {
     kws.forEach(kw => {
       safe = safe.replace(new RegExp('\\b(' + kw + ')\\b', 'g'), '<span class="tok-kw">$1</span>');
     });
-    const builtins = ['document', 'window', 'console', 'localStorage', 'sessionStorage', 'Math', 'JSON', 'Array', 'Object', 'lucide', 'PO'];
+    const builtins = ['document', 'window', 'console', 'localStorage', 'sessionStorage', 'Math', 'JSON', 'Array', 'Object', 'lucide', 'willfran'];
     builtins.forEach(b => {
       safe = safe.replace(new RegExp('\\b(' + b + ')\\b', 'g'), '<span class="tok-fn" style="color:#79c0ff">$1</span>');
     });

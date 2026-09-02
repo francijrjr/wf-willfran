@@ -59,7 +59,7 @@ Abra seu navegador em: **`http://localhost:8080`**
 
 ##  Como Usar em Seus Projetos
 
-Você pode utilizar o pacote pré-empacotado localizado na pasta `po-vanilla/`:
+Você pode utilizar o pacote pré-empacotado localizado na pasta `willfran/`:
 
 ```html
 <!doctype html>
@@ -74,7 +74,7 @@ Você pode utilizar o pacote pré-empacotado localizado na pasta `po-vanilla/`:
   
   <script src="https://unpkg.com/lucide@latest"></script>
   
-  <link rel="stylesheet" href="po-vanilla/css/po-vanilla.css">
+  <link rel="stylesheet" href="willfran/css/willfran.css">
 </head>
 <body>
 
@@ -84,7 +84,7 @@ Você pode utilizar o pacote pré-empacotado localizado na pasta `po-vanilla/`:
 
   <span class="po-tag success">Homologado</span>
 
-  <script src="po-vanilla/js/po-vanilla.js"></script>
+  <script src="willfran/js/willfran.js"></script>
   <script>
     lucide.createIcons();
   </script>
@@ -253,7 +253,7 @@ Você pode personalizar completamente a identidade visual do projeto alterando a
 
 ---
 
-## 📁 Estrutura de Diretórios
+##  Estrutura de Diretórios
 
 ```text
 ├── index.html                  # Catálogo interativo de componentes com busca e preview
@@ -263,17 +263,17 @@ Você pode personalizar completamente a identidade visual do projeto alterando a
 ├── assets/                     # Recursos gráficos e temas complementares
 │   ├── images/
 │   └── po-ui/
-└── po-vanilla/                 # Pacote distribuível para integração direta em sistemas
+└── willfran/                   # Pacote distribuível para integração direta em sistemas
     ├── index.html              # Demonstração do pacote standalone
     ├── css/
-    │   └── po-vanilla.css      # CSS consolidado e otimizado
+    │   └── willfran.css        # CSS consolidado e otimizado
     └── js/
-        └── po-vanilla.js       # Comportamentos JS auxiliares (modais, toasts, etc.)
+        └── willfran.js         # Comportamentos JS auxiliares (modais, toasts, etc.)
 ```
 
 ---
 
-## 🤝 Como Contribuir
+##  Como Contribuir
 
 Contribuições são muito bem-vindas! Siga os passos:
 
@@ -285,7 +285,7 @@ Contribuições são muito bem-vindas! Siga os passos:
 
 ---
 
-## 📄 Licença
+## Licença
 
 Distribuído sob a licença **MIT**. Consulte o arquivo `LICENSE` para obter mais detalhes.
 

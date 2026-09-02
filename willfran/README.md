@@ -1,4 +1,4 @@
-﻿# PO UI Vanilla — Biblioteca HTML, CSS e JavaScript
+# willfran — Biblioteca HTML, CSS e JavaScript
 
 Releitura completa e fiel de **100% dos componentes e templates oficiais do [PO UI](https://po-ui.io)** (Design System da TOTVS / Portinari) utilizando exclusivamente **HTML5 semântico, CSS3 moderno (Custom Properties / Tokens) e JavaScript puro (Vanilla)**, sem qualquer necessidade do framework Angular.
 
@@ -7,22 +7,22 @@ Releitura completa e fiel de **100% dos componentes e templates oficiais do [PO 
 ## 🚀 Como Usar no seu Projeto
 
 ### 1. Inclusão dos Arquivos
-Basta copiar a pasta po-vanilla/ para seu projeto e importar as folhas de estilo e scripts:
+Basta copiar a pasta `willfran/` para seu projeto e importar as folhas de estilo e scripts:
 
 `html
 <!DOCTYPE html>
 <html lang=pt-BR>
 <head>
   <meta charset=UTF-8>
-  <title>Minha Aplicação PO UI Vanilla</title>
+  <title>Minha Aplicação willfran</title>
   
   <!-- Fontes Oficiais -->
   <link rel=preconnect href=https://fonts.googleapis.com>
   <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
   <link href=https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap rel=stylesheet>
   
-  <!-- Estilos PO UI Vanilla -->
-  <link rel=stylesheet href=po-vanilla/css/po-vanilla.css>
+  <!-- Estilos willfran -->
+  <link rel=stylesheet href=willfran/css/willfran.css>
 </head>
 <body>
 
@@ -32,9 +32,9 @@ Basta copiar a pasta po-vanilla/ para seu projeto e importar as folhas de estilo
   <!-- Exemplo: Tag PO UI -->
   <span class=po-tag success>● Ativo</span>
 
-  <!-- Ícones Lucide + Script PO Vanilla -->
+  <!-- Ícones Lucide + Script willfran -->
   <script src=https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js></script>
-  <script src=po-vanilla/js/po-vanilla.js></script>
+  <script src=willfran/js/willfran.js></script>
 </body>
 </html>
 `

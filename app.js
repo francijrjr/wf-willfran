@@ -129,7 +129,7 @@ const descriptions = {
   'po-icon': 'Biblioteca de ícones SVG vetorizados e responsivos.',
   'po-image': 'Componente de imagem com tratamento de fallback e proporção controlada.',
   'po-label': 'Rótulo textual tipográfico padronizado para elementos e formulários.',
-  'po-logo': 'Logotipo institucional da TOTVS e marcas do ecossistema PO UI.',
+  'po-logo': 'Logotipo institucional e marcas do ecossistema PO UI.',
   'po-search': 'Campo de busca rápido com disparo instantâneo e botão de limpeza.',
   'po-timer': 'Temporizador e cronômetro digital em formato MM:SS com controles de pausar/reset.',
 
@@ -528,7 +528,7 @@ function createPreview(name) {
         <p>Utilize links PO UI para navegar entre páginas ou para referências externas com transição suave:</p>
         <div class="showcase-row">
           <a href="#/componente/po-table" class="po-link"><i data-lucide="arrow-right"></i> Ir para a Tabela de Dados</a>
-          <a href="https://po-ui.io/documentation" target="_blank" class="po-link">Documentação Oficial TOTVS <i data-lucide="external-link"></i></a>
+          <a href="https://po-ui.io/documentation" target="_blank" class="po-link">Documentação do PO UI <i data-lucide="external-link"></i></a>
         </div>
       </div>
     `, 'Hiperlinks Estilizados (PO Link)'),
@@ -593,7 +593,7 @@ function createPreview(name) {
               <span class="required"><i data-lucide="building" style="width:14px;height:14px;color:var(--brand)"></i> Razão Social da Empresa</span>
               <div class="po-input-group has-icon-left">
                 <span class="po-input-icon-left"><i data-lucide="briefcase"></i></span>
-                <input class="po-control" value="TOTVS Soluções em Software S/A" placeholder="Digite a razão social">
+                <input class="po-control" value="WF Soluções em Software S/A" placeholder="Digite a razão social">
               </div>
               <small><i data-lucide="info" style="width:12px;height:12px"></i> Conforme constar no Cartão CNPJ da Receita Federal.</small>
             </label>
@@ -722,7 +722,7 @@ function createPreview(name) {
               <span class="required">Senha Corporativa</span>
               <div class="po-input-group has-icon-left has-icon-right">
                 <span class="po-input-icon-left"><i data-lucide="lock"></i></span>
-                <input class="po-control" type="password" id="passDemoInput" value="Totvs@Portinari2026" placeholder="••••••••">
+                <input class="po-control" type="password" id="passDemoInput" value="Willfran@2026" placeholder="••••••••">
                 <button type="button" class="po-addon-btn" id="passDemoToggleBtn" title="Alternar visibilidade"><i data-lucide="eye"></i></button>
               </div>
               <small>Mínimo de 8 caracteres com letras maiúsculas, números e símbolos.</small>
@@ -1614,7 +1614,7 @@ function createPreview(name) {
 
     'po-dynamic-form': wrap(`
       <div class="showcase-stack">
-        ${field('Nome do Produto', '<input class="po-control" value="TOTVS Fluig Platform">')}
+        ${field('Nome do Produto', '<input class="po-control" value="Plataforma Fluig">')}
         <div class="showcase-row">
           <div style="flex:1">${field('Categoria', '<select class="po-control"><option>Software</option><option>Serviços</option></select>')}</div>
           <div style="flex:1">${field('Preço (R$)', '<input class="po-control" value="8.900,00">')}</div>
@@ -1627,7 +1627,7 @@ function createPreview(name) {
     'po-dynamic-view': wrap(`
       <div class="po-widget">
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:16px">
-          <div class="po-info"><span>Nome do Item</span><b>TOTVS Protheus ERP</b></div>
+          <div class="po-info"><span>Nome do Item</span><b>Protheus ERP</b></div>
           <div class="po-info"><span>Versão Atual</span><b>12.1.2410</b></div>
           <div class="po-info"><span>Suporte</span><b style="color:var(--success)">Ativo 24/7</b></div>
           <div class="po-info"><span>Última Atualização</span><b>18/08/2026</b></div>
@@ -1665,7 +1665,7 @@ function createPreview(name) {
             <span class="po-tag warning">● Em Andamento</span>
             <span class="po-tag danger">● Bloqueado</span>
             <span class="po-tag info">● Informativo</span>
-            <span class="po-tag brand">● TOTVS Portinari</span>
+            <span class="po-tag brand">● Portinari</span>
           </div>
         </div>
       </div>
@@ -2090,7 +2090,7 @@ function createPreview(name) {
             <div class="po-breadcrumb-items">
               <ul class="po-breadcrumb-item-container">
                 <li class="po-breadcrumb-item">
-                  <a href="#/inicio" class="po-breadcrumb-link">TOTVS Protheus</a>
+                  <a href="#/inicio" class="po-breadcrumb-link">Protheus</a>
                   <i class="po-breadcrumb-icon-arrow" data-lucide="chevron-right"></i>
                 </li>
                 <li class="po-breadcrumb-item dropdown-wrap">
@@ -2395,15 +2395,15 @@ function createPreview(name) {
               
               <div style="display:grid;gap:4px;font-size:12px;color:var(--muted)">
                 <div><b>Telefone:</b> +55 (11) 98765-4321</div>
-                <div><b>E-mail:</b> marina.almeida@totvs.com.br</div>
-                <div><b>Unidade:</b> TOTVS Matriz São Paulo</div>
+                <div><b>E-mail:</b> marina.almeida@willfran.com.br</div>
+                <div><b>Unidade:</b> WF Matriz São Paulo</div>
               </div>
             </div>
           </div>
 
           <div class="showcase-row" style="margin-top:14px">
             <button class="po-button primary" data-toast="Iniciando chamada para Marina Almeida (+55 11 98765-4321)..."><i data-lucide="phone"></i> Ligar para Contato</button>
-            <button class="po-button ghost" data-toast="Abrindo cliente de e-mail para marina.almeida@totvs.com.br"><i data-lucide="mail"></i> Enviar E-mail</button>
+            <button class="po-button ghost" data-toast="Abrindo cliente de e-mail para marina.almeida@willfran.com.br"><i data-lucide="mail"></i> Enviar E-mail</button>
           </div>
         </div>
       </div>
@@ -2719,7 +2719,7 @@ function createPreview(name) {
 
     'po-helper': wrap(`
       <div class="showcase-stack">
-        ${field('Código Único SKU', '<input class="po-control" value="TOTVS-SKU-990">', 'O código SKU deve possuir 12 dígitos alfanuméricos.')}
+        ${field('Código Único SKU', '<input class="po-control" value="WF-SKU-990">', 'O código SKU deve possuir 12 dígitos alfanuméricos.')}
         <div class="po-alert success"><i data-lucide="info"></i> Dica: Você pode gerar códigos SKU em lote via integração API.</div>
       </div>
     `, 'Ajuda e Dicas Contextuais (PO Helper)'),
@@ -2759,7 +2759,7 @@ function createPreview(name) {
     `, 'Rótulos Tipográficos (PO Label)'),
 
     'po-logo': wrap(`
-      <div class="po-logo-demo">TOTVS <span>PO UI</span></div>
+      <div class="po-logo-demo">WF <span>willFran</span></div>
     `, 'Assinatura Visual de Marca (PO Logo)'),
 
     'po-search': wrap(`
@@ -3221,7 +3221,7 @@ function createPreview(name) {
         <div style="margin-top:20px;text-align:center">
           <span style="font-size:11px;color:var(--muted);position:relative;display:block;margin-bottom:12px">ou acesse com conta corporativa</span>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <button class="po-button ghost sm" data-toast="Autenticando via TOTVS ID..."><i data-lucide="shield"></i> TOTVS ID</button>
+            <button class="po-button ghost sm" data-toast="Autenticando via acesso corporativo..."><i data-lucide="shield"></i> Acesso corporativo</button>
             <button class="po-button ghost sm" data-toast="Autenticando via Microsoft 365..."><i data-lucide="layout-grid"></i> Microsoft 365</button>
           </div>
         </div>
@@ -3328,7 +3328,7 @@ function createPreview(name) {
                 <span class="po-avatar md" style="background:var(--brand)" id="dynamicDetailAvatar">ERP</span>
                 <div>
                   <div style="display:flex;align-items:center;gap:10px">
-                    <h3 style="margin:0;font:800 22px 'Manrope',sans-serif;color:var(--ink)" id="dynamicDetailTitle">Integração TOTVS Protheus REST API</h3>
+                    <h3 style="margin:0;font:800 22px 'Manrope',sans-serif;color:var(--ink)" id="dynamicDetailTitle">Integração Protheus REST API</h3>
                     <span class="po-tag success" id="dynamicDetailStatusTag">Operacional</span>
                   </div>
                   <small style="color:var(--muted)" id="dynamicDetailSubtitle">Schema: SCH-PROTHEUS-V2 · ID do Registro: #INT-2026-9081</small>
@@ -3369,8 +3369,8 @@ function createPreview(name) {
             <div>
               <div class="po-detail-section-title"><i data-lucide="server"></i> 1. Especificações Técnicas do Endpoint</div>
               <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px" id="dynamicFieldsSection1">
-                <div class="po-detail-info-card"><span>Nome do Serviço</span><b>Integração TOTVS Protheus</b></div>
-                <div class="po-detail-info-card"><span>URL Base do Endpoint</span><b style="color:var(--brand);font-family:monospace">https://api.erp.totvs.com.br/v2</b></div>
+                <div class="po-detail-info-card"><span>Nome do Serviço</span><b>Integração Protheus</b></div>
+                <div class="po-detail-info-card"><span>URL Base do Endpoint</span><b style="color:var(--brand);font-family:monospace">https://api.erp.willfran.com.br/v2</b></div>
                 <div class="po-detail-info-card"><span>Método HTTP Padrão</span><b>POST / GET (OAuth 2.0)</b></div>
                 <div class="po-detail-info-card"><span>Tempo Limite (Timeout)</span><b>30 segundos</b></div>
                 <div class="po-detail-info-card"><span>Tentativas em Falha (Retry)</span><b>3 tentativas automáticas</b></div>
@@ -3397,13 +3397,13 @@ function createPreview(name) {
               <button class="po-button ghost sm" style="color:#ffffff" data-toast="Schema JSON copiado para a área de transferência!"><i data-lucide="copy"></i> Copiar JSON</button>
             </div>
             <pre style="margin:0;padding:16px;background:#0d0a14;border-radius:8px;font-size:12px;line-height:1.6;overflow-x:auto;color:#a3e635" id="dynamicJsonCodeBlock">{
-  "title": "Integração TOTVS Protheus REST API",
+  "title": "Integração Protheus REST API",
   "version": "2.4.0",
   "schemaId": "SCH-PROTHEUS-V2",
   "status": "Operacional",
   "fields": [
-    { "property": "serviceName", "label": "Nome do Serviço", "type": "string", "value": "Integração TOTVS Protheus" },
-    { "property": "endpointUrl", "label": "URL Base do Endpoint", "type": "url", "value": "https://api.erp.totvs.com.br/v2" },
+    { "property": "serviceName", "label": "Nome do Serviço", "type": "string", "value": "Integração Protheus" },
+    { "property": "endpointUrl", "label": "URL Base do Endpoint", "type": "url", "value": "https://api.erp.willfran.com.br/v2" },
     { "property": "httpMethod", "label": "Método HTTP", "type": "string", "value": "POST / GET" },
     { "property": "timeout", "label": "Timeout (s)", "type": "number", "value": 30 },
     { "property": "authType", "label": "Tipo de Autenticação", "type": "string", "value": "OAuth 2.0 Bearer" },
@@ -5441,7 +5441,7 @@ function bindPreviewEvents(name) {
         }
         toast('Schema de "Nota Fiscal Eletrônica (NF-e)" carregado e renderizado!', 'success');
       } else {
-        if (titleEl) titleEl.textContent = 'Integração TOTVS Protheus REST API';
+        if (titleEl) titleEl.textContent = 'Integração Protheus REST API';
         if (subEl) subEl.textContent = 'Schema: SCH-PROTHEUS-V2 · ID do Registro: #INT-2026-9081';
         if (avatarEl) { avatarEl.textContent = 'ERP'; avatarEl.style.background = 'var(--brand)'; }
         if (tagEl) { tagEl.className = 'po-tag success'; tagEl.textContent = 'Operacional'; }
@@ -5452,8 +5452,8 @@ function bindPreviewEvents(name) {
         if (kpi4) kpi4.textContent = 'Hoje, 14:32:05';
         if (sec1) {
           sec1.innerHTML = `
-            <div class="po-detail-info-card"><span>Nome do Serviço</span><b>Integração TOTVS Protheus</b></div>
-            <div class="po-detail-info-card"><span>URL Base do Endpoint</span><b style="color:var(--brand);font-family:monospace">https://api.erp.totvs.com.br/v2</b></div>
+            <div class="po-detail-info-card"><span>Nome do Serviço</span><b>Integração Protheus</b></div>
+            <div class="po-detail-info-card"><span>URL Base do Endpoint</span><b style="color:var(--brand);font-family:monospace">https://api.erp.willfran.com.br/v2</b></div>
             <div class="po-detail-info-card"><span>Método HTTP Padrão</span><b>POST / GET (OAuth 2.0)</b></div>
             <div class="po-detail-info-card"><span>Tempo Limite (Timeout)</span><b>30 segundos</b></div>
             <div class="po-detail-info-card"><span>Tentativas em Falha</span><b>3 tentativas automáticas</b></div>
@@ -5470,10 +5470,10 @@ function bindPreviewEvents(name) {
         }
         if (jsonCode) {
           jsonCode.textContent = JSON.stringify({
-            title: "Integração TOTVS Protheus REST API",
+            title: "Integração Protheus REST API",
             schemaId: "SCH-PROTHEUS-V2",
             status: "Operacional",
-            endpoint: "https://api.erp.totvs.com.br/v2",
+            endpoint: "https://api.erp.willfran.com.br/v2",
             timeout: 30
           }, null, 2);
         }

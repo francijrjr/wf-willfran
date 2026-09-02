@@ -1,6 +1,6 @@
 # willfran — Biblioteca HTML, CSS e JavaScript
 
-Releitura completa e fiel de **100% dos componentes e templates oficiais do [PO UI](https://po-ui.io)** (Design System da TOTVS / Portinari) utilizando exclusivamente **HTML5 semântico, CSS3 moderno (Custom Properties / Tokens) e JavaScript puro (Vanilla)**, sem qualquer necessidade do framework Angular.
+Releitura em HTML, CSS e JavaScript dos componentes e templates do [PO UI](https://po-ui.io), inspirada no design system Portinari e utilizável sem a obrigatoriedade do framework Angular.
 
 ---
 
@@ -45,7 +45,7 @@ Basta copiar a pasta `willfran/` para seu projeto e importar as folhas de estilo
 
 `css
 :root {
-  --brand: #753399;        /* Roxo oficial PO UI / TOTVS */
+  --brand: #753399;        /* Cor principal da interface */
   --brand-hover: #602580;
   --brand-soft: #f4eaf8;
   --ink: #24212a;          /* Texto principal */

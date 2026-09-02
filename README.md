@@ -1,16 +1,25 @@
 <div align="center">
 
-# 💎 WF willFran (wilFran Edition)
-### Design System Corporativo PO UI / Portinari em HTML, CSS e JavaScript Puro
+# WF willFran
+
+### Componentes corporativos inspirados no ecossistema PO UI, sem Angular
+
+<p align="center"><em>E se você pudesse usar a experiência visual do PO UI sem precisar criar um projeto Angular?</em></p>
 
 <p align="center">
-  <b>Releitura completa de 89 componentes e templates corporativos oficiais do PO UI sem qualquer dependência de Angular, Node.js ou etapas de build.</b>
+  <strong>HTML + CSS + JavaScript.</strong><br>
+  Sem CLI. Sem build obrigatório. Sem framework obrigatório.
+</p>
+
+<p align="center">
+  Use com <strong>PHP • ASP.NET • Java • Python • Fluig • ADVPL • React • Vue • Angular • HTML</strong>
 </p>
 
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
-[![Zero Dependencies](https://img.shields.io/badge/Zero%20Dependencies-100%25-success?style=for-the-badge)](https://github.com/francijrjr/wf-willfran)
+[![No Build](https://img.shields.io/badge/Build-Não%20obrigatório-168862?style=for-the-badge)](https://github.com/francijrjr/wf-willfran)
+[![89 Components](https://img.shields.io/badge/Componentes-89-753399?style=for-the-badge)](https://github.com/francijrjr/wf-willfran)
 [![Dark Mode](https://img.shields.io/badge/Dark%20Mode-Nativo-753399?style=for-the-badge)](https://github.com/francijrjr/wf-willfran)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
@@ -20,23 +29,38 @@
 
 ## Por que WF willFran?
 
-Desenvolvido para equipes e desenvolvedores que precisam da robustez e elegância visual do **Design System Portinari (PO UI / TOTVS)**, mas que **não querem a sobrecarga, lentidão ou complexidade** de frameworks como Angular, React ou Node.js.
+O WF willFran leva uma experiência visual corporativa inspirada no PO UI para projetos que não utilizam Angular — ou que precisam adotar componentes gradualmente, sem alterar toda a arquitetura do frontend.
 
--  **Zero Build & Zero Config**: Abra diretamente no navegador com duplo clique ou sirva em qualquer servidor HTTP.
--  **Universal & Agnóstico**: Compatível com qualquer backend ou tecnologia (**PHP, Python/Django/Flask, Java/Spring, ASP.NET/C#, Ruby on Rails, Protheus ADVPL/TLPP, TOTVS Fluig ou HTML estático**).
--  **Fidelidade Portinari**: Cores oficiais (Eggplant `#753399`), tipografia (*Manrope* / *DM Sans*), espaçamentos, sombras e micro-interações fiéis.
--  **Dark Mode Inteligente**: Alternância de tema claro/escuro nativa com suporte a detecção de preferência de sistema e persistência em `localStorage`.
--  **Copy & Paste Instantâneo**: Visualize **HTML**, **CSS** e **JavaScript** separadamente ou copie a opção **Completo** em um único arquivo.
--  **Laboratórios Interativos (Labs)**: Teste propriedades, filtros, estados dinâmicos e validações em tempo real antes de aplicar no seu projeto.
+Ele foi pensado especialmente para **sistemas Fluig, aplicações corporativas legadas, portais internos e projetos server-rendered** que precisam manter consistência visual usando tecnologias simples da web.
+
+| O que você recebe | Como funciona |
+| --- | --- |
+| **89 componentes e templates** | Exemplos navegáveis, responsivos e prontos para adaptação |
+| **JavaScript por componente** | Cada exemplo copia somente o comportamento necessário |
+| **Código completo** | HTML, CSS e JavaScript reunidos em um único documento |
+| **Integração progressiva** | Use um componente isolado ou adote o pacote completo |
+| **Tema claro e escuro** | Alternância nativa com preferência persistida no navegador |
+| **Labs interativos** | Teste estados, propriedades, filtros e validações antes de copiar |
+
+### Onde ele se encaixa
+
+- **Fluig e Protheus:** interfaces personalizadas sem exigir uma aplicação Angular completa.
+- **PHP, Java, Python e ASP.NET:** componentes para páginas renderizadas no servidor.
+- **HTML legado:** modernização visual gradual, tela por tela.
+- **React, Vue ou Angular:** estilos e exemplos que podem servir como base para componentes próprios.
+- **Protótipos corporativos:** criação rápida de fluxos com aparência consistente.
+
+> **Nota:** WF willFran é um projeto independente, inspirado na experiência visual do ecossistema PO UI, e não substitui a biblioteca original.
 
 ---
 
-##  Como Executar
+## Como executar
 
-### Opção 1: Direto no Navegador (Mais Rápido)
-Basta clonar o repositório e abrir o arquivo `index.html` em qualquer navegador moderno.
+### Opção 1: diretamente no navegador
 
-### Opção 2: Servidor Local Simples
+Clone o repositório e abra o arquivo `index.html` em um navegador moderno. Nenhuma instalação é necessária.
+
+### Opção 2: servidor local
 
 ```bash
 # Clone o repositório
@@ -53,15 +77,21 @@ npx serve .
 php -S localhost:8080
 ```
 
-Abra seu navegador em: **`http://localhost:8080`**
+Depois, acesse **`http://localhost:8080`**.
 
 ---
 
-##  Como Usar em Seus Projetos
+## Como usar no seu projeto
 
-No catálogo, escolha um componente e abra a aba **Código**. As opções HTML, CSS e JavaScript mostram cada parte separadamente. O HTML apresenta somente o componente, sem os cards e títulos usados pelo catálogo, e o JavaScript utiliza a mesma rotina executada pelo preview. A opção **Completo** gera um documento HTML pronto, com os estilos dentro de `<style>` e o comportamento dentro de `<script>`, que pode ser copiado ou baixado diretamente.
+No catálogo, escolha um componente e abra a aba **Código**:
 
-Você pode utilizar o pacote pré-empacotado localizado na pasta `willfran/`:
+1. Use **HTML**, **CSS** ou **JavaScript** para copiar somente a parte necessária.
+2. Escolha **Completo** para gerar um documento pronto com tudo reunido.
+3. Cole o código no seu projeto e adapte textos, dados e ações ao seu fluxo.
+
+O HTML copiado contém somente a estrutura real do componente, sem o card ou o título de apresentação do catálogo. O JavaScript também é específico para o componente escolhido.
+
+Para usar vários componentes, carregue o pacote disponível na pasta `willfran/`:
 
 ```html
 <!doctype html>
@@ -96,7 +126,9 @@ Você pode utilizar o pacote pré-empacotado localizado na pasta `willfran/`:
 
 ---
 
-##  Catálogo de Componentes (89 Componentes e Templates)
+## Catálogo de componentes
+
+São **89 componentes e templates** organizados por finalidade.
 
 <details open>
 <summary><b>1. Navegação (8 Componentes)</b></summary>
@@ -218,7 +250,7 @@ Você pode utilizar o pacote pré-empacotado localizado na pasta `willfran/`:
 - `po-page-list`: Catálogo de clientes com busca em tempo real, seleção em lote, barra de ações e paginação funcional.
 - `po-page-detail`: Ficha cadastral 360° com navegação por 4 abas (*Cadastrais*, *Histórico de Pedidos*, *Anexos*, *Auditoria*), KPIs e labs dinâmicos.
 - `po-page-edit`: Formulário de edição organizado em seções lógicas com validação estrita de campos obrigatórios (`*`).
-- `po-page-login`: Tela de autenticação com layout em card Portinari, alternador de visibilidade de senha, seletor de ambiente, simulação de loading e suporte a SSO (TOTVS ID / Microsoft 365).
+- `po-page-login`: Tela de autenticação com layout em card Portinari, alternador de visibilidade de senha, seletor de ambiente, simulação de loading e suporte a SSO corporativo e Microsoft 365.
 - `po-page-dynamic-table`: Tabela com colunas e dados gerados dinamicamente via JSON Schema com alternador de código fonte.
 - `po-page-dynamic-edit`: Formulário gerado por schema de configuração com validação de parâmetros.
 - `po-page-dynamic-detail`: Ficha de detalhes gerada por schema com alternador JSON vs UI e alternador dinâmico de modelos (*ERP Protheus*, *Cliente*, *NF-e*).
@@ -229,7 +261,7 @@ Você pode utilizar o pacote pré-empacotado localizado na pasta `willfran/`:
 
 ---
 
-##  Tokens de Design & Customização (CSS Variables)
+## Tokens de design e customização
 
 Você pode personalizar completamente a identidade visual do projeto alterando as variáveis no `:root`:
 
@@ -255,7 +287,7 @@ Você pode personalizar completamente a identidade visual do projeto alterando a
 
 ---
 
-##  Estrutura de Diretórios
+## Estrutura de diretórios
 
 ```text
 ├── index.html                  # Catálogo interativo de componentes com busca e preview
@@ -275,7 +307,7 @@ Você pode personalizar completamente a identidade visual do projeto alterando a
 
 ---
 
-##  Como Contribuir
+## Como contribuir
 
 Contribuições são muito bem-vindas! Siga os passos:
 
@@ -295,5 +327,5 @@ Distribuído sob a licença **MIT**. Consulte o arquivo `LICENSE` para obter mai
 
 <div align="center">
   <sub>Desenvolvido com dedicação para a comunidade de desenvolvedores corporativos.</sub><br>
-  <b>WF willFran — wilFran Edition</b>
+  <b>WF willFran — componentes corporativos sem framework obrigatório.</b>
 </div>

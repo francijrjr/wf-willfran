@@ -13,7 +13,10 @@
 
       const item = document.createElement('div');
       item.className = 'toast ' + type;
-      item.innerHTML = '<i data-lucide="' + (type === 'danger' ? 'alert-octagon' : type === 'warning' ? 'alert-triangle' : 'check-circle') + '"></i><span>' + message + '</span>';
+      item.innerHTML = '<i data-lucide="' + (type === 'danger' ? 'alert-octagon' : type === 'warning' ? 'alert-triangle' : 'check-circle') + '"></i>';
+      const text = document.createElement('span');
+      text.textContent = message;
+      item.appendChild(text);
       region.appendChild(item);
 
       if (global.lucide) global.lucide.createIcons();
@@ -31,6 +34,12 @@
     },
 
     init: function () {
+      document.querySelectorAll('[data-toast]').forEach(button => {
+        button.addEventListener('click', () => {
+          willfran.toast(button.dataset.toast || 'Ação concluída.');
+        });
+      });
+
       document.querySelectorAll('.accordion-item > button').forEach(button => {
         button.addEventListener('click', () => {
           button.parentElement.classList.toggle('open');
@@ -67,7 +76,76 @@
         });
       });
 
-      document.querySelectorAll('[data-close-modal]').forEach(button => {
+      const passwordButton = document.querySelector('#passDemoToggleBtn');
+      const passwordInput = document.querySelector('#passDemoInput');
+      passwordButton?.addEventListener('click', () => {
+        if (passwordInput) passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+      });
+
+      document.querySelectorAll('.po-button-group button').forEach(button => {
+        button.addEventListener('click', () => {
+          const group = button.closest('.po-button-group');
+          group?.querySelectorAll('button').forEach(item => item.classList.toggle('active', item === button));
+        });
+      });
+
+      document.querySelectorAll('[data-menu-item]').forEach(button => {
+        button.addEventListener('click', () => {
+          const menu = button.closest('.po-menu-demo');
+          menu?.querySelectorAll('[data-menu-item]').forEach(item => {
+            item.classList.toggle('active', item === button);
+            if (item === button) item.setAttribute('aria-current', 'page');
+            else item.removeAttribute('aria-current');
+          });
+          const feedback = menu?.querySelector('.po-menu-feedback');
+          if (feedback) feedback.textContent = 'Selecionado: ' + button.dataset.menuLabel;
+        });
+      });
+
+      document.querySelectorAll('[data-open-modal]').forEach(button => {
+        button.addEventListener('click', () => willfran.openModal('#modalBackdrop'));
+      });
+
+      document.querySelector('#openLookupBtn')?.addEventListener('click', () => {
+        willfran.openModal('#lookupModalBackdrop');
+      });
+
+      const selectAll = document.querySelector('#selectAllDemo');
+      selectAll?.addEventListener('change', event => {
+        document.querySelectorAll('#tableDemoBody input[type="checkbox"]').forEach(checkbox => {
+          checkbox.checked = event.target.checked;
+        });
+      });
+
+      document.querySelectorAll('.po-listbox button').forEach(button => {
+        button.addEventListener('click', () => {
+          button.parentElement?.querySelectorAll('button').forEach(item => item.classList.toggle('active', item === button));
+        });
+      });
+
+      document.querySelectorAll('[data-tree]').forEach(button => {
+        button.addEventListener('click', () => {
+          const branch = button.closest('.po-tree-branch');
+          const list = branch?.querySelector(':scope > ul');
+          if (!list) return;
+          const expanded = button.getAttribute('aria-expanded') !== 'true';
+          list.classList.toggle('collapsed', !expanded);
+          button.setAttribute('aria-expanded', String(expanded));
+          branch.setAttribute('aria-expanded', String(expanded));
+          button.querySelector('[data-lucide]')?.setAttribute('data-lucide', expanded ? 'chevron-down' : 'chevron-right');
+          if (global.lucide) global.lucide.createIcons();
+        });
+      });
+
+      document.querySelectorAll('[data-tree-file]').forEach(button => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('[data-tree-file]').forEach(item => item.classList.toggle('active', item === button));
+          const feedback = button.closest('.po-tree')?.querySelector('.po-tree-feedback');
+          if (feedback) feedback.textContent = 'Selecionado: ' + button.textContent.trim();
+        });
+      });
+
+      document.querySelectorAll('[data-close-modal], [data-close-lookup]').forEach(button => {
         button.addEventListener('click', () => {
           const backdrop = button.closest('.modal-backdrop');
           if (backdrop) backdrop.hidden = true;

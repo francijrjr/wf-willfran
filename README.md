@@ -26,7 +26,7 @@ Desenvolvido para equipes e desenvolvedores que precisam da robustez e elegânci
 -  **Universal & Agnóstico**: Compatível com qualquer backend ou tecnologia (**PHP, Python/Django/Flask, Java/Spring, ASP.NET/C#, Ruby on Rails, Protheus ADVPL/TLPP, TOTVS Fluig ou HTML estático**).
 -  **Fidelidade Portinari**: Cores oficiais (Eggplant `#753399`), tipografia (*Manrope* / *DM Sans*), espaçamentos, sombras e micro-interações fiéis.
 -  **Dark Mode Inteligente**: Alternância de tema claro/escuro nativa com suporte a detecção de preferência de sistema e persistência em `localStorage`.
--  **Copy & Paste Instantâneo**: Visualize o código fonte formatado em **HTML**, **CSS** ou **JavaScript** e copie com 1 clique.
+-  **Copy & Paste Instantâneo**: Visualize **HTML**, **CSS** e **JavaScript** separadamente ou copie a opção **Completo** em um único arquivo.
 -  **Laboratórios Interativos (Labs)**: Teste propriedades, filtros, estados dinâmicos e validações em tempo real antes de aplicar no seu projeto.
 
 ---
@@ -58,6 +58,8 @@ Abra seu navegador em: **`http://localhost:8080`**
 ---
 
 ##  Como Usar em Seus Projetos
+
+No catálogo, escolha um componente e abra a aba **Código**. As opções HTML, CSS e JavaScript mostram cada parte separadamente. O HTML apresenta somente o componente, sem os cards e títulos usados pelo catálogo, e o JavaScript utiliza a mesma rotina executada pelo preview. A opção **Completo** gera um documento HTML pronto, com os estilos dentro de `<style>` e o comportamento dentro de `<script>`, que pode ser copiado ou baixado diretamente.
 
 Você pode utilizar o pacote pré-empacotado localizado na pasta `willfran/`:
 

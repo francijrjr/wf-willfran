@@ -2185,20 +2185,25 @@ function createPreview(name) {
     `, 'Abas Contextuais'),
 
     'po-menu': wrap(`
-      <div class="po-menu-demo">
-        <button class="active">${icon('home')} Dashboard</button>
-        <button>${icon('users')} Clientes</button>
-        <button>${icon('shopping-bag')} Pedidos</button>
-        <button>${icon('chart-no-axes-column')} Relatórios</button>
-        <button>${icon('settings')} Configurações</button>
+      <nav class="po-menu-demo" aria-label="Navegação principal">
+        <span class="po-menu-label">Workspace</span>
+        <button class="active" data-menu-item data-menu-label="Dashboard" aria-current="page">${icon('layout-dashboard')} <span>Dashboard</span><small>12</small></button>
+        <button data-menu-item data-menu-label="Clientes">${icon('users')} <span>Clientes</span></button>
+        <button data-menu-item data-menu-label="Pedidos">${icon('shopping-bag')} <span>Pedidos</span><small>5</small></button>
+        <button data-menu-item data-menu-label="Relatórios">${icon('chart-no-axes-column')} <span>Relatórios</span></button>
+        <button data-menu-item data-menu-label="Configurações">${icon('settings')} <span>Configurações</span></button>
+        <p class="po-menu-feedback" aria-live="polite">Selecionado: Dashboard</p>
       </div>
     `, 'Menu de Navegação Lateral'),
 
     'po-menu-panel': wrap(`
-      <div class="po-menu-demo" style="width:100%">
-        <button class="active">${icon('plus')} Cadastrar Novo Cliente</button>
-        <button>${icon('upload')} Importar Planilha CSV</button>
-        <button>${icon('file-text')} Emitir Extrato</button>
+      <div class="po-menu-demo po-menu-panel-demo" aria-label="Ações rápidas">
+        <span class="po-menu-label">Ações rápidas</span>
+        <button class="active" data-menu-item data-menu-label="Cadastrar cliente" aria-current="page">${icon('user-plus')} <span><b>Cadastrar cliente</b><em>Crie um novo perfil</em></span>${icon('chevron-right')}</button>
+        <button data-menu-item data-menu-label="Importar planilha">${icon('file-up')} <span><b>Importar planilha</b><em>Envie um arquivo CSV</em></span>${icon('chevron-right')}</button>
+        <button data-menu-item data-menu-label="Emitir extrato">${icon('receipt-text')} <span><b>Emitir extrato</b><em>Gere um documento</em></span>${icon('chevron-right')}</button>
+        <button data-menu-item data-menu-label="Compartilhar dados">${icon('share-2')} <span><b>Compartilhar dados</b><em>Copie um link seguro</em></span>${icon('chevron-right')}</button>
+        <p class="po-menu-feedback" aria-live="polite">Selecionado: Cadastrar cliente</p>
       </div>
     `, 'Painel de Menu de Ações'),
 
@@ -2213,29 +2218,31 @@ function createPreview(name) {
     `, 'Barra de Navegação Superior'),
 
     'po-tree-view': wrap(`
-      <div class="po-tree">
-        <ul>
-          <li>
-            <button data-tree>−</button> 📁 Raiz do Projeto
-            <ul>
-              <li>
-                <button data-tree>−</button> 📁 src
-                <ul>
-                  <li>📄 index.html</li>
-                  <li>📄 styles.css</li>
-                  <li>📄 app.js</li>
+      <div class="po-tree" role="tree" aria-label="Arquivos do projeto">
+        <ul role="group">
+          <li class="po-tree-branch" role="treeitem" aria-expanded="true">
+            <button class="po-tree-row" data-tree aria-expanded="true">${icon('chevron-down')} ${icon('folder-open')} <span>willfran</span></button>
+            <ul role="group">
+              <li class="po-tree-branch" role="treeitem" aria-expanded="true">
+                <button class="po-tree-row" data-tree aria-expanded="true">${icon('chevron-down')} ${icon('folder-open')} <span>src</span></button>
+                <ul role="group">
+                  <li role="treeitem"><button class="po-tree-row po-tree-file active" data-tree-file>${icon('file-code-2')} <span>index.html</span></button></li>
+                  <li role="treeitem"><button class="po-tree-row po-tree-file" data-tree-file>${icon('file-type-2')} <span>styles.css</span></button></li>
+                  <li role="treeitem"><button class="po-tree-row po-tree-file" data-tree-file>${icon('file-json-2')} <span>app.js</span></button></li>
                 </ul>
               </li>
-              <li>
-                <button data-tree>+</button> 📁 assets
-                <ul class="collapsed">
-                  <li>🖼️ logo.svg</li>
-                  <li>🖼️ banner.png</li>
+              <li class="po-tree-branch" role="treeitem" aria-expanded="false">
+                <button class="po-tree-row" data-tree aria-expanded="false">${icon('chevron-right')} ${icon('folder')} <span>assets</span></button>
+                <ul class="collapsed" role="group">
+                  <li role="treeitem"><button class="po-tree-row po-tree-file" data-tree-file>${icon('image')} <span>logo.svg</span></button></li>
+                  <li role="treeitem"><button class="po-tree-row po-tree-file" data-tree-file>${icon('image')} <span>banner.png</span></button></li>
                 </ul>
               </li>
+              <li role="treeitem"><button class="po-tree-row po-tree-file" data-tree-file>${icon('file-text')} <span>README.md</span></button></li>
             </ul>
           </li>
         </ul>
+        <p class="po-tree-feedback" aria-live="polite">Selecionado: index.html</p>
       </div>
     `, 'Navegação em Árvore (Tree View)'),
 
@@ -3559,22 +3566,55 @@ function createPreview(name) {
   `, displayName(name));
 }
 
-function componentHTML(name) {
-  const rawPreview = createPreview(name);
-  return `<!-- ==========================================
-     WF WillFran Component: ${name}
-     Design System sem framework
-     ========================================== -->
-${rawPreview.replace(/ style="animation-delay:[^"]*"/g, '')}
+function componentProductionMarkup(name) {
+  const template = document.createElement('template');
+  template.innerHTML = createPreview(name).replace(/ style="animation-delay:[^"]*"/g, '');
 
-<!-- Carregamento de Ícones Lucide -->
-<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"><\/script>
-<script>
-  lucide.createIcons();
-<\/script>`;
+  const showcase = template.content.querySelector('.showcase');
+  if (!showcase) return template.innerHTML.trim();
+
+  showcase.querySelector(':scope > .showcase-title')?.remove();
+  const stack = showcase.querySelector(':scope > .showcase-stack');
+  let contentRoot = showcase;
+
+  if (stack?.firstElementChild) {
+    contentRoot = stack.firstElementChild.cloneNode(true);
+    const firstChild = contentRoot.firstElementChild;
+    const demoHeading = firstChild?.matches('h4') || firstChild?.querySelector('h4') ? firstChild : null;
+    const isPresentationShell = Boolean(demoHeading) || /border\s*:/i.test(contentRoot.getAttribute('style') || '');
+    demoHeading?.remove();
+    contentRoot.dataset.unwrapForCode = String(isPresentationShell);
+  }
+
+  let markup;
+  if (contentRoot === showcase) {
+    markup = showcase.innerHTML.trim();
+  } else {
+    const shouldUnwrap = contentRoot.dataset.unwrapForCode === 'true';
+    delete contentRoot.dataset.unwrapForCode;
+    markup = shouldUnwrap ? contentRoot.innerHTML.trim() : contentRoot.outerHTML.trim();
+  }
+
+  if (name === 'po-modal') {
+    const modal = document.querySelector('#modalBackdrop');
+    if (modal) markup += `\n\n${modal.outerHTML}`;
+  }
+
+  if (name === 'po-lookup') {
+    const lookup = document.querySelector('#lookupModalBackdrop');
+    if (lookup) markup += `\n\n${lookup.outerHTML}`;
+  }
+
+  return markup;
 }
 
-function componentCSS(name) {
+function componentHTML(name) {
+  return `<div id="componentPreview">
+${componentProductionMarkup(name)}
+</div>`;
+}
+
+function componentFallbackCSS(name) {
   const cssSnippets = {
     // 1. AÇÕES & MENUS
     'po-button': `/* Estilos PO UI: Botão e Variantes */
@@ -3823,104 +3863,334 @@ ${specific}`;
 }
 
 function componentJavascript(name) {
-  const interactiveScripts = {
-    'po-button': `// PO UI Button: Disparo de Ações
-document.querySelectorAll('.po-button[data-toast]').forEach(button => {
-  button.addEventListener('click', () => {
-    const msg = button.dataset.toast || 'Botão clicado!';
-    willfran.toast(msg, button.classList.contains('danger') ? 'danger' : 'success');
-  });
-});`,
+  const template = document.createElement('template');
+  template.innerHTML = componentHTML(name);
+  const has = selector => Boolean(template.content.querySelector(selector));
+  const scripts = [];
+  let needsToast = false;
 
-    'po-button-group': `// PO UI Button Group: Seleção de Opção Ativa
-document.querySelectorAll('.po-button-group button').forEach(button => {
-  button.addEventListener('click', () => {
-    const parent = button.parentElement;
-    parent.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-    console.log('Opção selecionada:', button.textContent.trim());
-  });
-});`,
-
-    'po-dropdown': `// PO UI Dropdown: Abertura e Fechamento Contextual
-document.querySelectorAll('[data-dropdown]').forEach(trigger => {
-  trigger.addEventListener('click', (event) => {
-    event.stopPropagation();
-    const menu = trigger.nextElementSibling;
-    if (menu) menu.hidden = !menu.hidden;
-  });
-});
-
-// Fechar ao clicar fora
-document.addEventListener('click', (event) => {
-  if (!event.target.closest('.dropdown-wrap')) {
-    document.querySelectorAll('.po-dropdown-menu').forEach(menu => menu.hidden = true);
-  }
-});`,
-
-    'po-modal': `// PO UI Modal: Abertura e Fechamento
-const modalBackdrop = document.querySelector('#modalBackdrop');
-const openBtn = document.querySelector('[data-open-modal]');
-
-openBtn?.addEventListener('click', () => {
-  modalBackdrop.hidden = false;
-});
-
-modalBackdrop?.querySelectorAll('[data-close-modal]').forEach(btn => {
-  btn.addEventListener('click', () => modalBackdrop.hidden = true);
-});
-
-// Fechar com tecla ESC
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && modalBackdrop) modalBackdrop.hidden = true;
-});`,
-
-    'po-accordion': `// PO UI Accordion: Expandir e Recolher Seções
-document.querySelectorAll('.accordion-item > button').forEach(button => {
-  button.addEventListener('click', () => {
-    button.parentElement.classList.toggle('open');
-  });
-});`,
-
-    'po-tabs': `// PO UI Tabs: Alternância de Abas
-document.querySelectorAll('.po-tabs-head button').forEach(button => {
-  button.addEventListener('click', () => {
-    const parent = button.parentElement;
-    parent.querySelectorAll('button').forEach(tab => tab.classList.toggle('active', tab === button));
-    const content = parent.closest('.po-tabs')?.querySelector('.po-tab-content');
-    if (content) content.textContent = 'Visualizando conteúdo de ' + button.textContent;
-  });
-});`,
-
-    'po-password': `// PO UI Password: Revelar / Ocultar Senha
-const toggleBtn = document.querySelector('#togglePassword');
-const passInput = document.querySelector('#passwordDemo');
-
-toggleBtn?.addEventListener('click', () => {
-  const isPass = passInput.type === 'password';
-  passInput.type = isPass ? 'text' : 'password';
-});`,
-
-    'po-table': `// PO UI Table: Seleção de Linhas e Checkbox Geral
-const selectAll = document.querySelector('.po-table th input[type="checkbox"]');
-selectAll?.addEventListener('change', (e) => {
-  document.querySelectorAll('.po-table tbody input[type="checkbox"]').forEach(chk => {
-    chk.checked = e.target.checked;
-  });
-});`
+  const add = (selector, code, usesToast = false) => {
+    if (!has(selector)) return;
+    scripts.push(code);
+    needsToast ||= usesToast;
   };
 
-  const code = interactiveScripts[name] || `// PO UI ${name}: Inicialização e Comportamento
-console.log('Componente ${name} carregado.');
-if (window.lucide) {
-  lucide.createIcons();
-}`;
+  add('[data-toast]', `root.querySelectorAll('[data-toast]').forEach(button => {
+  button.addEventListener('click', () => showToast(button.dataset.toast));
+});`, true);
 
-  return `// =========================================================
-// willfran JavaScript: ${name}
-// Controle Interativo sem Framework
-// =========================================================
-${code}`;
+  add('.po-button-group button', `root.querySelectorAll('.po-button-group button').forEach(button => {
+  button.addEventListener('click', () => {
+    const group = button.closest('.po-button-group');
+    group.querySelectorAll('button').forEach(item => item.classList.toggle('active', item === button));
+  });
+});`);
+
+  add('.accordion-item > button', `root.querySelectorAll('.accordion-item > button').forEach(button => {
+  button.addEventListener('click', () => button.parentElement.classList.toggle('open'));
+});`);
+
+  add('.po-tabs-head button', `root.querySelectorAll('.po-tabs-head button').forEach(button => {
+  button.addEventListener('click', () => {
+    const tabs = button.closest('.po-tabs');
+    tabs.querySelectorAll('.po-tabs-head button').forEach(item => item.classList.toggle('active', item === button));
+    const content = tabs.querySelector('.po-tab-content');
+    if (content) content.textContent = 'Conteúdo de ' + button.textContent.trim();
+  });
+});`);
+
+  add('[data-dropdown], [data-popover]', `root.querySelectorAll('[data-dropdown], [data-popover]').forEach(trigger => {
+  trigger.addEventListener('click', event => {
+    event.stopPropagation();
+    const content = trigger.nextElementSibling;
+    if (content) content.hidden = !content.hidden;
+  });
+});
+
+document.addEventListener('click', event => {
+  if (!event.target.closest('.dropdown-wrap, .popover-wrap')) {
+    root.querySelectorAll('.po-dropdown-menu, .po-popover').forEach(element => element.hidden = true);
+  }
+});`);
+
+  add('[data-popover-close]', `root.querySelectorAll('[data-popover-close]').forEach(button => {
+  button.addEventListener('click', () => {
+    const popover = button.closest('.po-popover');
+    if (popover) popover.hidden = true;
+  });
+});`);
+
+  add('[data-menu-item]', `root.querySelectorAll('[data-menu-item]').forEach(button => {
+  button.addEventListener('click', () => {
+    const menu = button.closest('.po-menu-demo');
+    menu.querySelectorAll('[data-menu-item]').forEach(item => {
+      item.classList.toggle('active', item === button);
+      if (item === button) item.setAttribute('aria-current', 'page');
+      else item.removeAttribute('aria-current');
+    });
+    const feedback = menu.querySelector('.po-menu-feedback');
+    if (feedback) feedback.textContent = 'Selecionado: ' + button.dataset.menuLabel;
+  });
+});`);
+
+  add('[data-tree]', `root.querySelectorAll('[data-tree]').forEach(button => {
+  button.addEventListener('click', () => {
+    const branch = button.closest('.po-tree-branch');
+    const list = branch.querySelector(':scope > ul');
+    const expanded = button.getAttribute('aria-expanded') !== 'true';
+    list.classList.toggle('collapsed', !expanded);
+    button.setAttribute('aria-expanded', String(expanded));
+    branch.setAttribute('aria-expanded', String(expanded));
+    button.querySelector('[data-lucide]')?.setAttribute('data-lucide', expanded ? 'chevron-down' : 'chevron-right');
+    if (window.lucide) window.lucide.createIcons();
+  });
+});`);
+
+  add('[data-tree-file]', `root.querySelectorAll('[data-tree-file]').forEach(button => {
+  button.addEventListener('click', () => {
+    root.querySelectorAll('[data-tree-file]').forEach(item => item.classList.toggle('active', item === button));
+    const feedback = root.querySelector('.po-tree-feedback');
+    if (feedback) feedback.textContent = 'Selecionado: ' + button.textContent.trim();
+  });
+});`);
+
+  add('.po-listbox button', `root.querySelectorAll('.po-listbox button').forEach(button => {
+  button.addEventListener('click', () => {
+    button.parentElement.querySelectorAll('button').forEach(item => item.classList.toggle('active', item === button));
+  });
+});`);
+
+  add('[data-open-modal]', `const modal = root.querySelector('#modalBackdrop');
+root.querySelector('[data-open-modal]').addEventListener('click', () => modal.hidden = false);
+modal.querySelectorAll('[data-close-modal], [data-confirm-modal]').forEach(button => {
+  button.addEventListener('click', () => modal.hidden = true);
+});`);
+
+  add('#openLookupBtn', `const lookup = root.querySelector('#lookupModalBackdrop');
+root.querySelector('#openLookupBtn').addEventListener('click', () => lookup.hidden = false);
+lookup.querySelectorAll('[data-close-lookup]').forEach(button => {
+  button.addEventListener('click', () => lookup.hidden = true);
+});`);
+
+  add('#passDemoToggleBtn', `const password = root.querySelector('#passDemoInput');
+root.querySelector('#passDemoToggleBtn').addEventListener('click', () => {
+  password.type = password.type === 'password' ? 'text' : 'password';
+});`);
+
+  add('[data-toggle-password]', `root.querySelectorAll('[data-toggle-password]').forEach(button => {
+  button.addEventListener('click', () => {
+    const input = button.parentElement.querySelector('input');
+    if (input) input.type = input.type === 'password' ? 'text' : 'password';
+  });
+});`);
+
+  add('#selectAllDemo', `const selectAll = root.querySelector('#selectAllDemo');
+selectAll.addEventListener('change', () => {
+  root.querySelectorAll('#tableDemoBody input[type="checkbox"]').forEach(checkbox => {
+    checkbox.checked = selectAll.checked;
+  });
+});`);
+
+  add('.po-clean-btn', `root.querySelectorAll('.po-clean-btn').forEach(button => {
+  button.addEventListener('click', () => {
+    const input = button.closest('.po-input-group').querySelector('input, textarea');
+    input.value = '';
+    input.focus();
+    input.dispatchEvent(new Event('input'));
+  });
+});`);
+
+  add('#cleanDemoAllBtn', `root.querySelector('#cleanDemoAllBtn').addEventListener('click', () => {
+  root.querySelectorAll('input, select, textarea').forEach(field => field.value = '');
+});`);
+
+  add('.multiselect-remove', `root.querySelectorAll('.multiselect-remove').forEach(button => {
+  button.addEventListener('click', () => button.closest('.po-tag').remove());
+});`);
+
+  add('#stepperNextBtn', `const steps = [...root.querySelectorAll('#stepperDemo .po-step')];
+const content = root.querySelector('#stepperStepContent');
+let currentStep = Math.max(0, steps.findIndex(step => step.classList.contains('active')));
+
+function updateStepper() {
+  steps.forEach((step, index) => {
+    step.classList.toggle('active', index === currentStep);
+    step.classList.toggle('done', index < currentStep);
+  });
+  if (content) content.textContent = 'Etapa ' + (currentStep + 1) + ' de ' + steps.length;
+}
+
+root.querySelector('#stepperNextBtn').addEventListener('click', () => {
+  currentStep = Math.min(currentStep + 1, steps.length - 1);
+  updateStepper();
+});
+
+root.querySelector('#stepperPrevBtn')?.addEventListener('click', () => {
+  currentStep = Math.max(currentStep - 1, 0);
+  updateStepper();
+});`);
+
+  add('#progressBar', `const progressBar = root.querySelector('#progressBar');
+const progressText = root.querySelector('#progressText');
+
+root.querySelector('#advanceProgressBtn')?.addEventListener('click', () => {
+  const value = Math.min(Number(progressBar.dataset.value || 0) + 10, 100);
+  progressBar.dataset.value = value;
+  progressBar.style.width = value + '%';
+  if (progressText) progressText.textContent = value + '%';
+});
+
+root.querySelector('#resetProgressBtn')?.addEventListener('click', () => {
+  progressBar.dataset.value = 0;
+  progressBar.style.width = '0%';
+  if (progressText) progressText.textContent = '0%';
+});`);
+
+  add('#calendarBasic .calendar-day', `root.querySelectorAll('#calendarBasic .calendar-day:not(.other-month)').forEach(day => {
+  day.addEventListener('click', () => {
+    root.querySelectorAll('#calendarBasic .calendar-day').forEach(item => item.classList.remove('selected'));
+    day.classList.add('selected');
+  });
+});`);
+
+  add('#textareaDemoInput', `const textarea = root.querySelector('#textareaDemoInput');
+const counter = root.querySelector('#textareaDemoCounter');
+textarea.addEventListener('input', () => counter.textContent = textarea.value.length + ' / 500');`);
+
+  add('#localSearchDemo', `const search = root.querySelector('#localSearchDemo');
+const hint = root.querySelector('#localSearchHint');
+search.addEventListener('input', () => {
+  if (hint) hint.textContent = search.value ? 'Buscando por: ' + search.value : 'Digite para pesquisar';
+});`);
+
+  add('[data-cmd]', `root.querySelectorAll('[data-cmd]').forEach(button => {
+  button.addEventListener('click', () => document.execCommand(button.dataset.cmd, false, null));
+});`);
+
+  add('#dynamicDetailToggleJsonBtn', `const renderedView = root.querySelector('#dynamicDetailRenderedView');
+const jsonView = root.querySelector('#dynamicDetailJsonView');
+root.querySelector('#dynamicDetailToggleJsonBtn').addEventListener('click', () => {
+  const showingJson = !jsonView.hidden;
+  jsonView.hidden = showingJson;
+  renderedView.hidden = !showingJson;
+});`);
+
+  add('#textareaDemoInput', `root.querySelector('#textareaDemoInput').dispatchEvent(new Event('input'));`);
+
+  const iconInit = has('[data-lucide]')
+    ? `if (window.lucide) window.lucide.createIcons({ attrs: { 'stroke-width': 1.9 } });`
+    : '';
+
+  const toastHelper = needsToast ? `function showToast(message) {
+  const toast = document.createElement('div');
+  toast.textContent = message || 'Ação concluída.';
+  Object.assign(toast.style, {
+    position: 'fixed', right: '24px', bottom: '24px', zIndex: '9999',
+    padding: '12px 16px', color: '#fff', background: '#24212a',
+    borderRadius: '6px', boxShadow: '0 10px 30px rgba(0,0,0,.2)'
+  });
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2600);
+}` : '';
+
+  return [`const root = document.querySelector('#componentPreview');`, toastHelper, ...scripts, iconInit]
+    .filter(Boolean)
+    .join('\n\n');
+}
+
+function bundledCatalogCSS(name, markup) {
+  const localSheet = [...document.styleSheets].find(sheet =>
+    sheet.href && /(?:^|\/)styles\.css(?:\?|$)/.test(sheet.href)
+  );
+
+  if (localSheet) {
+    try {
+      const template = document.createElement('template');
+      template.innerHTML = markup;
+      const elements = [...template.content.querySelectorAll('*')];
+      const classes = new Set(elements.flatMap(element => [...element.classList]));
+      const ids = new Set(elements.map(element => element.id).filter(Boolean));
+      const tags = new Set(elements.map(element => element.tagName.toLowerCase()));
+
+      const selectorMatches = selector => selector.split(',').some(part => {
+        const value = part.trim();
+        if (value.includes(':root') || /(^|\s)(html|body)(?=$|[\s.:#\[])/.test(value) || value === '*') return true;
+
+        const selectorClasses = [...value.matchAll(/\.([a-zA-Z0-9_-]+)/g)].map(match => match[1]);
+        if (selectorClasses.some(className => classes.has(className))) return true;
+
+        const selectorIds = [...value.matchAll(/#([a-zA-Z0-9_-]+)/g)].map(match => match[1]);
+        if (selectorIds.some(id => ids.has(id))) return true;
+
+        if (selectorClasses.length || selectorIds.length) return false;
+        return [...tags].some(tag => new RegExp(`(^|[\\s>+~])${tag}(?=$|[\\s>+~.:#\\[])`, 'i').test(value));
+      });
+
+      const serializeRules = rules => [...rules].map(rule => {
+        if (rule.selectorText) return selectorMatches(rule.selectorText) ? rule.cssText : '';
+        if (rule.cssRules && rule.conditionText) {
+          const nested = serializeRules(rule.cssRules);
+          return nested ? `@media ${rule.conditionText} {\n${nested}\n}` : '';
+        }
+        if (rule.cssRules && rule.name) return rule.cssText;
+        return '';
+      }).filter(Boolean).join('\n\n');
+
+      return serializeRules(localSheet.cssRules) || componentFallbackCSS(name);
+    } catch (_) {
+      return componentFallbackCSS(name);
+    }
+  }
+
+  return componentFallbackCSS(name);
+}
+
+function componentCSS(name) {
+  return bundledCatalogCSS(name, componentHTML(name));
+}
+
+function componentComplete(name) {
+  const markup = componentHTML(name);
+  const styles = bundledCatalogCSS(name, markup);
+  const behavior = componentJavascript(name);
+
+  return `<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${displayName(name)} | willfran</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+${styles}
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      margin: 0;
+      padding: clamp(20px, 5vw, 64px);
+      background: var(--canvas);
+    }
+
+    .standalone-component {
+      width: min(100%, 960px);
+    }
+  </style>
+</head>
+<body>
+  <main class="standalone-component">
+${markup}
+  </main>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"><\/script>
+  <script>
+${behavior}
+  <\/script>
+</body>
+</html>`;
 }
 
 function highlightCode(code, lang) {
@@ -3952,9 +4222,16 @@ function highlightCode(code, lang) {
 }
 
 function createCode(name, language = state.codeLanguage) {
+  if (language === 'complete') return componentComplete(name);
   if (language === 'css') return componentCSS(name);
   if (language === 'js') return componentJavascript(name);
   return componentHTML(name);
+}
+
+function codeLanguageLabel(language) {
+  if (language === 'js') return 'JavaScript';
+  if (language === 'complete') return 'Completo';
+  return language.toUpperCase();
 }
 
 function updateCodeView() {
@@ -3962,17 +4239,19 @@ function updateCodeView() {
   const rawCode = createCode(state.current.name, state.codeLanguage);
   const codeBlock = $('#codeBlock');
   if (codeBlock) {
-    codeBlock.innerHTML = highlightCode(rawCode, state.codeLanguage);
+    const highlightLanguage = state.codeLanguage === 'complete' ? 'html' : state.codeLanguage;
+    codeBlock.innerHTML = highlightCode(rawCode, highlightLanguage);
     codeBlock.dataset.raw = rawCode;
   }
   
   const ext = state.codeLanguage === 'js' ? 'js' : state.codeLanguage === 'css' ? 'css' : 'html';
   const linesCount = rawCode.split('\n').length;
   const badge = $('#codeFileBadge');
-  if (badge) badge.textContent = `${state.current.name}.${ext} · ${linesCount} linhas`;
+  const filename = state.codeLanguage === 'complete' ? `${state.current.name}-completo.${ext}` : `${state.current.name}.${ext}`;
+  if (badge) badge.textContent = `${filename} · ${linesCount} linhas`;
 
   const copyBtnText = $('#copyCode span');
-  if (copyBtnText) copyBtnText.textContent = `Copiar ${state.codeLanguage === 'js' ? 'JavaScript' : state.codeLanguage.toUpperCase()}`;
+  if (copyBtnText) copyBtnText.textContent = `Copiar ${codeLanguageLabel(state.codeLanguage)}`;
 }
 
 function downloadFile(filename, content) {
@@ -4304,15 +4583,6 @@ function bindPreviewEvents(name) {
     });
   }
 
-  // Password toggle
-  root.querySelector('#togglePassword')?.addEventListener('click', () => {
-    const pass = root.querySelector('#passwordDemo');
-    if (pass) {
-      pass.type = pass.type === 'password' ? 'text' : 'password';
-      toast(`Senha ${pass.type === 'password' ? 'ocultada' : 'visível'}`);
-    }
-  });
-
   // Clean button
   root.querySelector('#cleanDemoBtn')?.addEventListener('click', () => {
     const input = root.querySelector('#cleanDemoInput');
@@ -4323,13 +4593,40 @@ function bindPreviewEvents(name) {
     }
   });
 
+  // Menus
+  root.querySelectorAll('[data-menu-item]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const menu = btn.closest('.po-menu-demo');
+      menu.querySelectorAll('[data-menu-item]').forEach(item => {
+        item.classList.toggle('active', item === btn);
+        if (item === btn) item.setAttribute('aria-current', 'page');
+        else item.removeAttribute('aria-current');
+      });
+      const feedback = menu.querySelector('.po-menu-feedback');
+      if (feedback) feedback.textContent = `Selecionado: ${btn.dataset.menuLabel}`;
+    });
+  });
+
   // Tree view
   root.querySelectorAll('[data-tree]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const list = btn.parentElement.querySelector('ul');
+      const branch = btn.closest('.po-tree-branch');
+      const list = branch?.querySelector(':scope > ul');
       if (!list) return;
-      list.classList.toggle('collapsed');
-      btn.textContent = list.classList.contains('collapsed') ? '+' : '−';
+      const expanded = btn.getAttribute('aria-expanded') !== 'true';
+      list.classList.toggle('collapsed', !expanded);
+      btn.setAttribute('aria-expanded', String(expanded));
+      branch.setAttribute('aria-expanded', String(expanded));
+      btn.querySelector('[data-lucide]')?.setAttribute('data-lucide', expanded ? 'chevron-down' : 'chevron-right');
+      refreshIcons();
+    });
+  });
+
+  root.querySelectorAll('[data-tree-file]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      root.querySelectorAll('[data-tree-file]').forEach(item => item.classList.toggle('active', item === btn));
+      const feedback = root.querySelector('.po-tree-feedback');
+      if (feedback) feedback.textContent = `Selecionado: ${btn.textContent.trim()}`;
     });
   });
 
@@ -5730,7 +6027,7 @@ function bindAppEvents() {
     });
   });
 
-  // Abas de linguagem de código (HTML / CSS / JS)
+  // Abas de código (HTML / CSS / JS / Completo)
   $$('.code-languages button').forEach(button => {
     button.addEventListener('click', () => {
       state.codeLanguage = button.dataset.language;
@@ -5754,15 +6051,16 @@ function bindAppEvents() {
   // Copiar código
   $('#copyCode')?.addEventListener('click', async event => {
     if (!state.current) return;
+    const copyButton = event.currentTarget;
     const rawCode = $('#codeBlock')?.dataset.raw || createCode(state.current.name, state.codeLanguage);
     await copyText(rawCode);
-    const langLabel = state.codeLanguage === 'js' ? 'JavaScript' : state.codeLanguage.toUpperCase();
+    const langLabel = codeLanguageLabel(state.codeLanguage);
     toast(`Código ${langLabel} de ${state.current.name} copiado para a área de transferência!`);
     
-    event.currentTarget.innerHTML = `<i data-lucide="check"></i><span>Copiado!</span>`;
+    copyButton.innerHTML = `<i data-lucide="check"></i><span>Copiado!</span>`;
     refreshIcons();
     setTimeout(() => {
-      event.currentTarget.innerHTML = `<i data-lucide="copy"></i><span>Copiar ${langLabel}</span>`;
+      copyButton.innerHTML = `<i data-lucide="copy"></i><span>Copiar ${langLabel}</span>`;
       refreshIcons();
     }, 1800);
   });
@@ -5771,7 +6069,9 @@ function bindAppEvents() {
   $('#downloadCode')?.addEventListener('click', () => {
     if (!state.current) return;
     const ext = state.codeLanguage === 'js' ? 'js' : state.codeLanguage === 'css' ? 'css' : 'html';
-    const filename = `${state.current.name}.${ext}`;
+    const filename = state.codeLanguage === 'complete'
+      ? `${state.current.name}-completo.${ext}`
+      : `${state.current.name}.${ext}`;
     const rawCode = $('#codeBlock')?.dataset.raw || createCode(state.current.name, state.codeLanguage);
     downloadFile(filename, rawCode);
   });
